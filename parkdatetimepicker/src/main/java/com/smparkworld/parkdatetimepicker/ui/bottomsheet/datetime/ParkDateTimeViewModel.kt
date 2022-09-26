@@ -1,4 +1,4 @@
-package com.smparkworld.parkdatetimepicker.ui.bottomsheet
+package com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime
 
 import androidx.lifecycle.ViewModel
 

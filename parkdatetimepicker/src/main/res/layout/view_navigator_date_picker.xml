@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.smparkworld.parkdatetimepicker.ui.CircleImageButton
+            android:id="@+id/btn_prev"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:textColor="#141719"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:foreground="?selectableItemBackground"
+            app:layout_constraintTop_toTopOf="@id/btn_prev"
+            app:layout_constraintStart_toEndOf="@id/btn_prev"
+            app:layout_constraintEnd_toStartOf="@id/btn_next"
+            app:layout_constraintBottom_toBottomOf="@id/btn_prev"
+            android:text="1997년 12월" />
+
+        <com.smparkworld.parkdatetimepicker.ui.CircleImageButton
+            android:id="@+id/btn_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:weightSum="7"
+            app:layout_constraintTop_toBottomOf="@id/btn_prev"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/label_sun"
+                android:textStyle="bold"
+                android:textColor="#141719"
+                android:textSize="13dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/label_mon"
+                android:textStyle="bold"
+                android:textColor="#141719"
+                android:textSize="13dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/label_tue"
+                android:textStyle="bold"
+                android:textColor="#141719"
+                android:textSize="13dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/label_wed"
+                android:textStyle="bold"
+                android:textColor="#141719"
+                android:textSize="13dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/label_thu"
+                android:textStyle="bold"
+                android:textColor="#141719"
+                android:textSize="13dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/label_fri"
+                android:textStyle="bold"
+                android:textColor="#141719"
+                android:textSize="13dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/label_sat"
+                android:textStyle="bold"
+                android:textColor="#141719"
+                android:textSize="13dp"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

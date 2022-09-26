@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CircleImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:padding">@dimen/view_circle_button_default_padding</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+    </style>
+</resources>
