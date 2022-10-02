@@ -21,42 +21,19 @@ class ParkDateTimePicker private constructor() {
     companion object {
 
         @JvmStatic
-        fun builder(activity: FragmentActivity): Builder {
+        fun builder(activity: FragmentActivity): ParkDateTimePickerBuilder {
             return BuilderImpl(activity.supportFragmentManager)
         }
 
         @JvmStatic
-        fun builder(fragment: Fragment): Builder {
+        fun builder(fragment: Fragment): ParkDateTimePickerBuilder {
             return BuilderImpl(fragment.parentFragmentManager)
         }
     }
 
-    interface Builder {
-
-        fun setDateListener(listener: DateListener): Builder
-
-        fun setDateRangeListener(listener: DateRangeListener): Builder
-
-        fun setTimeListener(listener: TimeListener): Builder
-
-        fun setDateTimeListener(listener: DateTimeListener): Builder
-
-        fun setDateTimeRangeListener(listener: DateTimeRangeListener): Builder
-
-        fun setTitle(title: String): Builder
-
-        fun setTitle(@StringRes titleResId: Int): Builder
-
-        fun setTextColor(colorCode: String): Builder
-
-        fun setTextColor(@ColorRes colorResId: Int): Builder
-
-        fun show()
-    }
-
     private class BuilderImpl(
         private val fragmentManager: FragmentManager
-    ) : Builder {
+    ) : ParkDateTimePickerBuilder {
 
         private var dateListener: DateListener? = null
         private var dateTimeListener: DateTimeListener? = null
@@ -72,47 +49,47 @@ class ParkDateTimePicker private constructor() {
         private var textColorCode: String? = null
         private var textColorResId: Int? = null
 
-        override fun setDateListener(listener: DateListener): Builder {
+        override fun setDateListener(listener: DateListener): ParkDateTimePickerBuilder {
             dateListener = listener
             return this
         }
 
-        override fun setDateRangeListener(listener: DateRangeListener): Builder {
+        override fun setDateRangeListener(listener: DateRangeListener): ParkDateTimePickerBuilder {
             dateRangeListener = listener
             return this
         }
 
-        override fun setTimeListener(listener: TimeListener): Builder {
+        override fun setTimeListener(listener: TimeListener): ParkDateTimePickerBuilder {
             timeListener = listener
             return this
         }
 
-        override fun setDateTimeListener(listener: DateTimeListener): Builder {
+        override fun setDateTimeListener(listener: DateTimeListener): ParkDateTimePickerBuilder {
             dateTimeListener = listener
             return this
         }
 
-        override fun setDateTimeRangeListener(listener: DateTimeRangeListener): Builder {
+        override fun setDateTimeRangeListener(listener: DateTimeRangeListener): ParkDateTimePickerBuilder {
             dateTimeRangeListener = listener
             return this
         }
 
-        override fun setTitle(title: String): Builder {
+        override fun setTitle(title: String): ParkDateTimePickerBuilder {
             this.title = title
             return this
         }
 
-        override fun setTitle(@StringRes titleResId: Int): Builder {
+        override fun setTitle(@StringRes titleResId: Int): ParkDateTimePickerBuilder {
             this.titleResId = titleResId
             return this
         }
 
-        override fun setTextColor(colorCode: String): Builder {
+        override fun setTextColor(colorCode: String): ParkDateTimePickerBuilder {
             textColorCode = colorCode
             return this
         }
 
-        override fun setTextColor(@ColorInt colorResId: Int): Builder {
+        override fun setTextColor(@ColorInt colorResId: Int): ParkDateTimePickerBuilder {
             textColorResId = colorResId
             return this
         }
