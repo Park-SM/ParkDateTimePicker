@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageButton
 import com.smparkworld.parkdatetimepicker.R
 
-class CircleImageButton @JvmOverloads constructor(
+internal class CircleImageButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttrs: Int = R.attr.circleImageButtonStyle
 ) : AppCompatImageButton(context, attrs, defStyleAttrs) {
 
