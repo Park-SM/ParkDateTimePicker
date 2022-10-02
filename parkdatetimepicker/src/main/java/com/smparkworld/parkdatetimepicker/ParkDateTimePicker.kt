@@ -1,17 +1,17 @@
 package com.smparkworld.parkdatetimepicker
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.smparkworld.parkdatetimepicker.model.SelectedDate
-import com.smparkworld.parkdatetimepicker.model.SelectedDateTime
-import com.smparkworld.parkdatetimepicker.model.SelectedTime
+import com.smparkworld.parkdatetimepicker.model.ExtraKey
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.range.DateTimeRangeListener
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeFragment
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeMode
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.range.TimeRangeListener
 
 class ParkDateTimePicker private constructor() {
 
@@ -36,8 +36,6 @@ class ParkDateTimePicker private constructor() {
 
         fun setTimeListener(listener: TimeListener): Builder
 
-        fun setTimeRangeListener(listener: TimeRangeListener): Builder
-
         fun setDateTimeListener(listener: DateTimeListener): Builder
 
         fun setDateTimeRangeListener(listener: DateTimeRangeListener): Builder
@@ -48,6 +46,14 @@ class ParkDateTimePicker private constructor() {
     private class BuilderImpl(
         private val fragmentManager: FragmentManager
     ) : Builder {
+
+        private var dateListener: DateListener? = null
+        private var dateTimeListener: DateTimeListener? = null
+
+        private var dateRangeListener: DateRangeListener? = null
+        private var dateTimeRangeListener: DateTimeRangeListener? = null
+
+        private var timeListener: TimeListener? = null
 
         override fun setDateListener(listener: DateListener): Builder {
             TODO("Not yet implemented")
@@ -61,12 +67,9 @@ class ParkDateTimePicker private constructor() {
             TODO("Not yet implemented")
         }
 
-        override fun setTimeRangeListener(listener: TimeRangeListener): Builder {
-            TODO("Not yet implemented")
-        }
-
         override fun setDateTimeListener(listener: DateTimeListener): Builder {
-            TODO("Not yet implemented")
+            dateTimeListener = listener
+            return this
         }
 
         override fun setDateTimeRangeListener(listener: DateTimeRangeListener): Builder {
@@ -74,7 +77,17 @@ class ParkDateTimePicker private constructor() {
         }
 
         override fun show() {
-            TODO("Not yet implemented")
+            val fragment = DateTimeFragment()
+            val bundle = Bundle()
+
+            when {
+                (dateTimeListener != null) -> {
+                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME)
+                    fragment.setListeners(dateTimeListener!!)
+                }
+            }
+
+            fragment.show(fragmentManager, DateTimeFragment::class.simpleName)
         }
     }
 }

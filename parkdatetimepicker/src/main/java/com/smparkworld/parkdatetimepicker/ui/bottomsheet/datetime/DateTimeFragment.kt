@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
+import com.smparkworld.parkdatetimepicker.model.BaseListener
 
-internal class ParkDateTimeFragment : BottomSheetDialogFragment() {
+internal class DateTimeFragment : BottomSheetDialogFragment() {
 
-    private val vm: ParkDateTimeViewModel by lazy {
-        ViewModelProvider(this)[ParkDateTimeViewModel::class.java]
+    private lateinit var listener: BaseListener
+
+    private val vm: DateTimeViewModel by lazy {
+        ViewModelProvider(this)[DateTimeViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -32,5 +35,9 @@ internal class ParkDateTimeFragment : BottomSheetDialogFragment() {
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
 
+    }
+
+    fun setListeners(listener: BaseListener) {
+        this.listener = listener
     }
 }
