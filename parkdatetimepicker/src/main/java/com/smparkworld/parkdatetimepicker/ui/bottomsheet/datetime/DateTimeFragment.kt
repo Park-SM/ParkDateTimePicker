@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.model.BaseListener
+import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.ToolbarStatus
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
 
@@ -27,6 +31,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
 
         initViews(binding)
         initObservers(binding)
+        parseArgument()
         return binding.root
     }
 
@@ -34,12 +39,25 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         return R.style.BottomSheetDialogTheme
     }
 
+    private fun parseArgument() {
+        vm.setMode(arguments?.getSerializable(ExtraKey.EXTRA_MODE) as? DateTimeMode)
+    }
+    
     private fun initViews(binding: FragmentDatetimeBinding) {
-
+        
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
-
+        vm.toolbarStatus.observe(viewLifecycleOwner) { status ->
+            when(status) {
+                ToolbarStatus.DATE -> {
+                    binding.layoutDateNavigator.container.isVisible = true
+                }
+                ToolbarStatus.TIME -> {
+                    binding.layoutDateNavigator.container.isVisible = false
+                }
+            }
+        }
     }
 
     fun setListeners(listener: BaseListener) {

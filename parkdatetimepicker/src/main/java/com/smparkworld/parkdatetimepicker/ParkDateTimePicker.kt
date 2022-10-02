@@ -1,6 +1,9 @@
 package com.smparkworld.parkdatetimepicker
 
 import android.os.Bundle
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -8,9 +11,9 @@ import com.smparkworld.parkdatetimepicker.model.ExtraKey
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeFragment
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
 
 class ParkDateTimePicker private constructor() {
@@ -40,6 +43,14 @@ class ParkDateTimePicker private constructor() {
 
         fun setDateTimeRangeListener(listener: DateTimeRangeListener): Builder
 
+        fun setTitle(title: String): Builder
+
+        fun setTitle(@StringRes titleResId: Int): Builder
+
+        fun setTextColor(colorCode: String): Builder
+
+        fun setTextColor(@ColorRes colorResId: Int): Builder
+
         fun show()
     }
 
@@ -55,16 +66,25 @@ class ParkDateTimePicker private constructor() {
 
         private var timeListener: TimeListener? = null
 
+        private var title: String? = null
+        private var titleResId: Int? = null
+
+        private var textColorCode: String? = null
+        private var textColorResId: Int? = null
+
         override fun setDateListener(listener: DateListener): Builder {
-            TODO("Not yet implemented")
+            dateListener = listener
+            return this
         }
 
         override fun setDateRangeListener(listener: DateRangeListener): Builder {
-            TODO("Not yet implemented")
+            dateRangeListener = listener
+            return this
         }
 
         override fun setTimeListener(listener: TimeListener): Builder {
-            TODO("Not yet implemented")
+            timeListener = listener
+            return this
         }
 
         override fun setDateTimeListener(listener: DateTimeListener): Builder {
@@ -73,36 +93,70 @@ class ParkDateTimePicker private constructor() {
         }
 
         override fun setDateTimeRangeListener(listener: DateTimeRangeListener): Builder {
-            TODO("Not yet implemented")
+            dateTimeRangeListener = listener
+            return this
+        }
+
+        override fun setTitle(title: String): Builder {
+            this.title = title
+            return this
+        }
+
+        override fun setTitle(@StringRes titleResId: Int): Builder {
+            this.titleResId = titleResId
+            return this
+        }
+
+        override fun setTextColor(colorCode: String): Builder {
+            textColorCode = colorCode
+            return this
+        }
+
+        override fun setTextColor(@ColorInt colorResId: Int): Builder {
+            textColorResId = colorResId
+            return this
         }
 
         override fun show() {
             val fragment = DateTimeFragment()
-            val bundle = Bundle()
+            val arguments = Bundle()
+
+            title?.let {
+                arguments.putString(ExtraKey.EXTRA_TITLE, it)
+            }
+            titleResId?.let {
+                arguments.putInt(ExtraKey.EXTRA_TITLE_RES_ID, it)
+            }
+            textColorCode?.let {
+                arguments.putString(ExtraKey.EXTRA_TEXT_COLOR_CODE, it)
+            }
+            textColorResId?.let {
+                arguments.putInt(ExtraKey.EXTRA_TEXT_COLOR_RES_ID, it)
+            }
 
             when {
                 (dateListener != null) -> {
-                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE)
+                    arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE)
                     fragment.setListeners(dateListener!!)
                 }
                 (dateTimeListener != null) -> {
-                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME)
+                    arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME)
                     fragment.setListeners(dateTimeListener!!)
                 }
                 (dateRangeListener != null) -> {
-                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE_RANGE)
+                    arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE_RANGE)
                     fragment.setListeners(dateRangeListener!!)
                 }
                 (dateTimeRangeListener != null) -> {
-                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME_RANGE)
+                    arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME_RANGE)
                     fragment.setListeners(dateTimeRangeListener!!)
                 }
                 (timeListener != null) -> {
-                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.TIME)
+                    arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.TIME)
                     fragment.setListeners(timeListener!!)
                 }
             }
-
+            fragment.arguments = arguments
             fragment.show(fragmentManager, DateTimeFragment::class.simpleName)
         }
     }
