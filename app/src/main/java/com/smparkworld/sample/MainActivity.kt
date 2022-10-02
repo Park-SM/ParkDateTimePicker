@@ -1,8 +1,8 @@
 package com.smparkworld.sample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smparkworld.parkdatetimepicker.ParkDateTimePicker
 import com.smparkworld.sample.databinding.ActivityMainBinding

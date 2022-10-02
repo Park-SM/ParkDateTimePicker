@@ -137,23 +137,23 @@ class ParkDateTimePicker private constructor() {
             when {
                 (dateListener != null) -> {
                     arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE)
-                    fragment.setListeners(dateListener!!)
+                    fragment.setListener(dateListener!!)
                 }
                 (dateTimeListener != null) -> {
                     arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME)
-                    fragment.setListeners(dateTimeListener!!)
+                    fragment.setListener(dateTimeListener!!)
                 }
                 (dateRangeListener != null) -> {
                     arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE_RANGE)
-                    fragment.setListeners(dateRangeListener!!)
+                    fragment.setListener(dateRangeListener!!)
                 }
                 (dateTimeRangeListener != null) -> {
                     arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME_RANGE)
-                    fragment.setListeners(dateTimeRangeListener!!)
+                    fragment.setListener(dateTimeRangeListener!!)
                 }
                 (timeListener != null) -> {
                     arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.TIME)
-                    fragment.setListeners(timeListener!!)
+                    fragment.setListener(timeListener!!)
                 }
             }
             fragment.arguments = arguments

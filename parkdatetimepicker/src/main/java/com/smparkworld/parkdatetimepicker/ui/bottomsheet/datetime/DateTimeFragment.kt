@@ -1,13 +1,16 @@
 package com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
+import com.smparkworld.parkdatetimepicker.core.ColorManager
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
@@ -16,7 +19,7 @@ import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.ToolbarS
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
 
-    private lateinit var listener: BaseListener
+    private var listener: BaseListener? = null
 
     private val vm: DateTimeViewModel by lazy {
         ViewModelProvider(this)[DateTimeViewModel::class.java]
@@ -29,9 +32,9 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     ): View {
         val binding = FragmentDatetimeBinding.inflate(inflater, container, false)
 
+        initArguments(binding)
         initViews(binding)
         initObservers(binding)
-        parseArgument()
         return binding.root
     }
 
@@ -39,13 +42,30 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         return R.style.BottomSheetDialogTheme
     }
 
-    private fun parseArgument() {
-        vm.setMode(arguments?.getSerializable(ExtraKey.EXTRA_MODE) as? DateTimeMode)
+    fun setListener(listener: BaseListener) {
+        this.listener = listener
+    }
+
+    private fun initArguments(binding: FragmentDatetimeBinding) {
+        vm.init(arguments?.getSerializable(ExtraKey.EXTRA_MODE) as? DateTimeMode, listener)
+
+        arguments?.getString(ExtraKey.EXTRA_TEXT_COLOR_CODE)?.let {
+            ColorManager.setTextColor(Color.parseColor(it))
+        }
+        arguments?.getInt(ExtraKey.EXTRA_TEXT_COLOR_RES_ID, -1)?.let {
+            if (it > 0) ColorManager.setTextColor(ContextCompat.getColor(requireContext(), it))
+        }
+        arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
+            binding.title.text = it
+        }
+        arguments?.getInt(ExtraKey.EXTRA_TITLE_RES_ID, -1)?.let {
+            if (it > 0) binding.title.setText(it)
+        }
     }
     
     private fun initViews(binding: FragmentDatetimeBinding) {
         binding.layoutDateNavigator.btnPrev.setOnClickListener {
-            
+
         }
         binding.layoutDateNavigator.btnNext.setOnClickListener {
 
@@ -53,6 +73,17 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.layoutDateNavigator.title.setOnClickListener {
 
         }
+        ColorManager.applyTextColor(binding.title)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.title)
+        ColorManager.applyImageTint(binding.layoutDateNavigator.btnPrev)
+        ColorManager.applyImageTint(binding.layoutDateNavigator.btnNext)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.sun)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.mon)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.tue)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.wed)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.thu)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.fri)
+        ColorManager.applyTextColor(binding.layoutDateNavigator.sat)
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
@@ -66,9 +97,5 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
                 }
             }
         }
-    }
-
-    fun setListeners(listener: BaseListener) {
-        this.listener = listener
     }
 }
