@@ -81,9 +81,25 @@ class ParkDateTimePicker private constructor() {
             val bundle = Bundle()
 
             when {
+                (dateListener != null) -> {
+                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE)
+                    fragment.setListeners(dateListener!!)
+                }
                 (dateTimeListener != null) -> {
                     bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME)
                     fragment.setListeners(dateTimeListener!!)
+                }
+                (dateRangeListener != null) -> {
+                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE_RANGE)
+                    fragment.setListeners(dateRangeListener!!)
+                }
+                (dateTimeRangeListener != null) -> {
+                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME_RANGE)
+                    fragment.setListeners(dateTimeRangeListener!!)
+                }
+                (timeListener != null) -> {
+                    bundle.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.TIME)
+                    fragment.setListeners(timeListener!!)
                 }
             }
 
