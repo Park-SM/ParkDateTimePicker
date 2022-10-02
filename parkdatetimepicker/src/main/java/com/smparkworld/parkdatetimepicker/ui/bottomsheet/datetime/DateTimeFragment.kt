@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 
@@ -27,6 +28,10 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         initViews(binding)
         initObservers(binding)
         return binding.root
+    }
+
+    override fun getTheme(): Int {
+        return R.style.BottomSheetDialogTheme
     }
 
     private fun initViews(binding: FragmentDatetimeBinding) {
