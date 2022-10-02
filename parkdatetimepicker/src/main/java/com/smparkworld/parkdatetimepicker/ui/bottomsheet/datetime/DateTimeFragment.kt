@@ -44,7 +44,15 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
     
     private fun initViews(binding: FragmentDatetimeBinding) {
-        
+        binding.layoutDateNavigator.btnPrev.setOnClickListener {
+            
+        }
+        binding.layoutDateNavigator.btnNext.setOnClickListener {
+
+        }
+        binding.layoutDateNavigator.title.setOnClickListener {
+
+        }
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {

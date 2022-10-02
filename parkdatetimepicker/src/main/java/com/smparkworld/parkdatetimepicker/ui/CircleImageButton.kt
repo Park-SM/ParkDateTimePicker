@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 import com.smparkworld.parkdatetimepicker.R
 
 internal class CircleImageButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttrs: Int = R.attr.circleImageButtonStyle
+    context: Context, attrs: AttributeSet? = null, defStyleAttrs: Int = 0
 ) : AppCompatImageButton(context, attrs, defStyleAttrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

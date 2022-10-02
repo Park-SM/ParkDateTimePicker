@@ -10,10 +10,11 @@
 
         <com.smparkworld.parkdatetimepicker.ui.CircleImageButton
             android:id="@+id/btn_prev"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_arrow_left"
             android:tint="@color/black"
+            style="@style/CircleImageButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -35,10 +36,11 @@
 
         <com.smparkworld.parkdatetimepicker.ui.CircleImageButton
             android:id="@+id/btn_next"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_arrow_right"
             android:tint="@color/black"
+            style="@style/CircleImageButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
