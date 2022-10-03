@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
 
-object ColorManager {
+internal object ColorManager {
 
     @ColorInt
     private var textColorInt: Int? = null
