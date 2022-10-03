@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model
 
-enum class ToolbarStatus {
+internal enum class ToolbarStatus {
     DATE,
     TIME
 }

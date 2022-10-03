@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,8 @@ import com.smparkworld.parkdatetimepicker.core.ColorManager
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateFragment
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.ToolbarStatus
 
@@ -23,6 +26,10 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
 
     private val vm: DateTimeViewModel by lazy {
         ViewModelProvider(this)[DateTimeViewModel::class.java]
+    }
+
+    private val dateVm: DateViewModel by lazy {
+        ViewModelProvider(requireActivity())[DateViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -47,7 +54,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
 
     private fun initArguments(binding: FragmentDatetimeBinding) {
-        vm.init(arguments?.getSerializable(ExtraKey.EXTRA_MODE) as? DateTimeMode, listener)
+        vm.init(listener)
 
         arguments?.getString(ExtraKey.EXTRA_TEXT_COLOR_CODE)?.let {
             ColorManager.setTextColor(Color.parseColor(it))
@@ -91,11 +98,15 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             when(status) {
                 ToolbarStatus.DATE -> {
                     binding.layoutDateNavigator.container.isVisible = true
+                    childFragmentManager.beginTransaction().add(R.id.fragment_container, DateFragment(), DateFragment::class.simpleName).commit()
                 }
                 ToolbarStatus.TIME -> {
                     binding.layoutDateNavigator.container.isVisible = false
                 }
             }
+        }
+        dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
+            Toast.makeText(requireContext(), "Selected date is $selectedDate", Toast.LENGTH_SHORT).show()
         }
     }
 }
