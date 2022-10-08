@@ -2,6 +2,7 @@ package com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -106,7 +107,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             }
         }
         dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
-            Toast.makeText(requireContext(), "Selected date is $selectedDate", Toast.LENGTH_SHORT).show()
+            Log.d("Test!!", "Selected date is $selectedDate")
         }
     }
 }

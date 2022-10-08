@@ -2,7 +2,7 @@ package com.smparkworld.parkdatetimepicker
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateListener
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DateListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
