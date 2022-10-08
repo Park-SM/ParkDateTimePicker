@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDateBinding
+import com.smparkworld.parkdatetimepicker.extension.getExtra
 import com.smparkworld.parkdatetimepicker.model.DefaultOption
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
 
@@ -30,9 +31,10 @@ internal class DateFragment : Fragment() {
     }
 
     private fun initArguments() {
-        val minYearDiff = arguments?.getInt(ExtraKey.EXTRA_MIN_YEAR_DIFF, DefaultOption.DEFAULT_MIN_YEAR_DIFF) ?: DefaultOption.DEFAULT_MIN_YEAR_DIFF
-        val maxYearDiff = arguments?.getInt(ExtraKey.EXTRA_MAX_YEAR_DIFF, DefaultOption.DEFAULT_MAX_YEAR_DIFF) ?: DefaultOption.DEFAULT_MAX_YEAR_DIFF
-        vm.init(minYearDiff, maxYearDiff)
+        vm.init(
+            minYearDiff = getExtra(ExtraKey.EXTRA_MIN_YEAR_DIFF, DefaultOption.DEFAULT_MIN_YEAR_DIFF),
+            maxYearDiff = getExtra(ExtraKey.EXTRA_MAX_YEAR_DIFF, DefaultOption.DEFAULT_MAX_YEAR_DIFF)
+        )
     }
 
     private fun initViews(binding: FragmentDateBinding) {
@@ -41,8 +43,7 @@ internal class DateFragment : Fragment() {
 
     private fun initObservers(binding: FragmentDateBinding) {
         vm.months.observe(viewLifecycleOwner) { months ->
-            val adapter = (binding.container.adapter as? DateMonthAdapter)
-            adapter?.submitList(months)
+            (binding.container.adapter as? DateMonthAdapter)?.submitList(months)
         }
     }
 }

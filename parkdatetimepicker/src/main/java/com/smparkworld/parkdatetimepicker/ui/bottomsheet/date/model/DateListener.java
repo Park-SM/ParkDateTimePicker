@@ -1,4 +1,4 @@
-package com.smparkworld.parkdatetimepicker.ui.bottomsheet.date;
+package com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model;
 
 import com.smparkworld.parkdatetimepicker.model.BaseListener;
 import com.smparkworld.parkdatetimepicker.model.SelectedDate;

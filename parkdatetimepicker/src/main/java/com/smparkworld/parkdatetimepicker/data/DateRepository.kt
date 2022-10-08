@@ -43,7 +43,6 @@ internal class DateRepositoryImpl(
                         id = dayDataIndex++,
                         monthId = monthDataIndex,
                         day = day,
-                        isSelected = false,
                         label = null
                     )
                     days.add(newDayData)
