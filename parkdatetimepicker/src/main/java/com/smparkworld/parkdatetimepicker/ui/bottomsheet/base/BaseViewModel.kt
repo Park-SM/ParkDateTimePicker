@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 
-open class BaseViewModel : ViewModel() {
+internal open class BaseViewModel : ViewModel() {
 
     private var cachedScope: CoroutineScope? = null
 
