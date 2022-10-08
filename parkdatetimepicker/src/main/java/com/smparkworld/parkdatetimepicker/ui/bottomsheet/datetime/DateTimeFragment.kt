@@ -41,9 +41,9 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     ): View {
         val binding = FragmentDatetimeBinding.inflate(inflater, container, false)
 
-        initArguments(binding)
         initViews(binding)
         initObservers(binding)
+        initArguments(binding)
         return binding.root
     }
 
