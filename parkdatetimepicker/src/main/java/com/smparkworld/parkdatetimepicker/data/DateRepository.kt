@@ -25,8 +25,17 @@ internal class DateRepositoryImpl(
             val months = mutableListOf<MonthData>()
             val monthIdToDaysMap = hashMapOf<Int, List<DayData>>()
 
+            val currentDate = SimpleDateFormat("yyyy-MM", Locale.KOREA).format(System.currentTimeMillis()).split("-")
+            val currentYear = currentDate[0].toInt()
+            val currentMonth = currentDate[1].toInt()
+
+            var currentMonthPosition = 0
             var dayDataIndex = 0
-            generateMonthData(minYearDiff, maxYearDiff) { monthDataIndex, year, month ->
+            generateMonthData(currentYear, minYearDiff, maxYearDiff) { monthDataIndex, year, month ->
+
+                if (currentYear == year && currentMonth == month) {
+                    currentMonthPosition = monthDataIndex
+                }
 
                 val days = mutableListOf<DayData>()
 
@@ -58,16 +67,20 @@ internal class DateRepositoryImpl(
                 monthIdToDaysMap[monthDataIndex] = days
             }
 
-            return@withContext DateData(months, monthIdToDaysMap)
+            return@withContext DateData(
+                months = months,
+                monthIdToDaysMap = monthIdToDaysMap,
+                currentMonthPosition = currentMonthPosition
+            )
         }
     }
 
     private suspend fun generateMonthData(
+        currentYear: Int,
         minYearDiff: Int,
         maxYearDiff: Int,
         perform: suspend (monthDataIndex: Int, year: Int, month: Int) -> Unit
     ) {
-        val currentYear = SimpleDateFormat("yyyy", Locale.KOREA).format(System.currentTimeMillis()).toInt()
         val minYear = currentYear - minYearDiff
         val maxYear = currentYear + maxYearDiff
         var idx = 0
