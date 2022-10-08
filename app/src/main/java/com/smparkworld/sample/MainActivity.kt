@@ -20,11 +20,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         binding.btnShow.setOnClickListener {
-            ParkDateTimePicker.builder(this)
-                .setDateTimeListener { dateTime ->
-                    Log.d("Test!!", "dateTime: $dateTime")
-                }
-                .show()
+            showDateTimePicker()
         }
+    }
+
+    private fun showDateTimePicker() {
+        ParkDateTimePicker.builder(this)
+            .setDateTimeListener { dateTime ->
+                Log.d("Test!!", "dateTime: $dateTime")
+            }
+            .show()
     }
 }

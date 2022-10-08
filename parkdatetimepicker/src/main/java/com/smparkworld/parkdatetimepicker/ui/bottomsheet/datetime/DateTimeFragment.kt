@@ -18,6 +18,7 @@ import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateFragment
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateViewModel
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.ToolbarStatus
 
@@ -72,42 +73,45 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
     
     private fun initViews(binding: FragmentDatetimeBinding) {
-        binding.layoutDateNavigator.btnPrev.setOnClickListener {
-
+        binding.layoutDateHeader.btnPrev.setOnClickListener {
+            dateVm.onClickCalendarControl(CalendarControlEvent.PrevPage)
         }
-        binding.layoutDateNavigator.btnNext.setOnClickListener {
-
+        binding.layoutDateHeader.btnNext.setOnClickListener {
+            dateVm.onClickCalendarControl(CalendarControlEvent.NextPage)
         }
-        binding.layoutDateNavigator.title.setOnClickListener {
-
+        binding.layoutDateHeader.title.setOnClickListener {
+            dateVm.onClickCalendarControl(CalendarControlEvent.JumpPage(2022, 1))
         }
         ColorManager.applyTextColor(binding.title)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.title)
-        ColorManager.applyImageTint(binding.layoutDateNavigator.btnPrev)
-        ColorManager.applyImageTint(binding.layoutDateNavigator.btnNext)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.sun)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.mon)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.tue)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.wed)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.thu)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.fri)
-        ColorManager.applyTextColor(binding.layoutDateNavigator.sat)
+        ColorManager.applyTextColor(binding.layoutDateHeader.title)
+        ColorManager.applyImageTint(binding.layoutDateHeader.btnPrev)
+        ColorManager.applyImageTint(binding.layoutDateHeader.btnNext)
+        ColorManager.applyTextColor(binding.layoutDateHeader.sun)
+        ColorManager.applyTextColor(binding.layoutDateHeader.mon)
+        ColorManager.applyTextColor(binding.layoutDateHeader.tue)
+        ColorManager.applyTextColor(binding.layoutDateHeader.wed)
+        ColorManager.applyTextColor(binding.layoutDateHeader.thu)
+        ColorManager.applyTextColor(binding.layoutDateHeader.fri)
+        ColorManager.applyTextColor(binding.layoutDateHeader.sat)
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
         vm.toolbarStatus.observe(viewLifecycleOwner) { status ->
             when(status) {
                 ToolbarStatus.DATE -> {
-                    binding.layoutDateNavigator.container.isVisible = true
+                    binding.layoutDateHeader.container.isVisible = true
                     childFragmentManager.beginTransaction().add(R.id.fragment_container, DateFragment(), DateFragment::class.simpleName).commit()
                 }
                 ToolbarStatus.TIME -> {
-                    binding.layoutDateNavigator.container.isVisible = false
+                    binding.layoutDateHeader.container.isVisible = false
                 }
             }
         }
         dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
             Log.d("Test!!", "Selected date is $selectedDate")
+        }
+        dateVm.selectedDateTitle.observe(viewLifecycleOwner) { title ->
+            binding.layoutDateHeader.title.text = title
         }
     }
 }
