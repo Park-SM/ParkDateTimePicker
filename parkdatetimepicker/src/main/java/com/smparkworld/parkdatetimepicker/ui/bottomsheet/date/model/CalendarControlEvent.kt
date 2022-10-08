@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model
 
-sealed class CalendarControlEvent {
+internal sealed class CalendarControlEvent {
 
     object PrevPage : CalendarControlEvent()
 

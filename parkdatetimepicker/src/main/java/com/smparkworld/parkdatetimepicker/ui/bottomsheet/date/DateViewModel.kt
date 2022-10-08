@@ -105,7 +105,7 @@ internal class DateViewModel(
     }
 
     private fun getDateTitle(dateData: DateData?, monthPosition: Int?): String? {
-        val monthData =  when {
+        val monthData = when {
             (dateData != null) -> {
                 dateData.months.getOrNull(dateData.currentMonthPosition)
             }
