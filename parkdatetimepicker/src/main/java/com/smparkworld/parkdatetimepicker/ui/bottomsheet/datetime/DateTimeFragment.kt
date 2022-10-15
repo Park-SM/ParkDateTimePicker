@@ -21,6 +21,7 @@ import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.ToolbarStatus
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeFragment
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
 
@@ -104,6 +105,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
                 }
                 ToolbarStatus.TIME -> {
                     binding.layoutDateHeader.container.isVisible = false
+                    childFragmentManager.beginTransaction().add(R.id.fragment_container, TimeFragment(), TimeFragment::class.simpleName).commit()
                 }
             }
         }

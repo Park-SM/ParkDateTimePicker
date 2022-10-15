@@ -13,4 +13,9 @@
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="AppTheme.NumberPicker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
