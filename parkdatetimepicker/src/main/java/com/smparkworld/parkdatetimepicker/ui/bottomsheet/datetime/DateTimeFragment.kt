@@ -2,13 +2,10 @@ package com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
@@ -16,16 +13,14 @@ import com.smparkworld.parkdatetimepicker.core.ColorManager
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateFragment
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.CalendarControlEvent
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.ToolbarStatus
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeFragment
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
 
     private var listener: BaseListener? = null
+    private val navigator: DateTimeFragmentNavigator = DateTimeFragmentNavigatorImpl()
 
     private val vm: DateTimeViewModel by lazy {
         ViewModelProvider(this)[DateTimeViewModel::class.java]
@@ -97,23 +92,30 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
-        vm.toolbarStatus.observe(viewLifecycleOwner) { status ->
-            when(status) {
-                ToolbarStatus.DATE -> {
-                    binding.layoutDateHeader.container.isVisible = true
-                    childFragmentManager.beginTransaction().add(R.id.fragment_container, DateFragment(), DateFragment::class.simpleName).commit()
-                }
-                ToolbarStatus.TIME -> {
-                    binding.layoutDateHeader.container.isVisible = false
-                    childFragmentManager.beginTransaction().add(R.id.fragment_container, TimeFragment(), TimeFragment::class.simpleName).commit()
-                }
-            }
+        vm.phase.observe(viewLifecycleOwner) { phaseData ->
+            navigateFragment(binding, phaseData.first, phaseData.second)
         }
         dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
-            Log.d("Test!!", "Selected date is $selectedDate")
+            vm.onSelectDate(selectedDate)
         }
         dateVm.selectedDateTitle.observe(viewLifecycleOwner) { title ->
             binding.layoutDateHeader.title.text = title
+        }
+    }
+
+    private fun navigateFragment(binding: FragmentDatetimeBinding, oldPhase: Phase?, newPhase: Phase) {
+        navigator.beginTransaction()
+            .addOldPhase(oldPhase)
+            .addNewPhase(newPhase)
+            .addOldPhaseHeaderView(getHeaderViewByPhase(binding, oldPhase))
+            .addNewPhaseHeaderView(getHeaderViewByPhase(binding, newPhase))
+            .commit(childFragmentManager)
+    }
+
+    private fun getHeaderViewByPhase(binding: FragmentDatetimeBinding, phase: Phase?): View? {
+        return when (phase) {
+            Phase.DATE -> binding.layoutDateHeader.root
+            else -> null
         }
     }
 }

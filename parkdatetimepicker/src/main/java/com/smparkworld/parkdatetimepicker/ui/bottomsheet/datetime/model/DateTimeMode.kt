@@ -5,6 +5,5 @@ internal enum class DateTimeMode {
     DATETIME,
     DATE_RANGE,
     DATETIME_RANGE,
-    TIME,
-    NONE
+    TIME
 }
