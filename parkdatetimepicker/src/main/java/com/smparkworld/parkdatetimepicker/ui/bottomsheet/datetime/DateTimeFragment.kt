@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.core.ColorManager
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
+import com.smparkworld.parkdatetimepicker.extension.viewModels
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateViewModel
@@ -22,13 +22,9 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     private var listener: BaseListener? = null
     private val navigator: DateTimeFragmentNavigator = DateTimeFragmentNavigatorImpl()
 
-    private val vm: DateTimeViewModel by lazy {
-        ViewModelProvider(this)[DateTimeViewModel::class.java]
-    }
+    private val vm: DateTimeViewModel by viewModels()
 
-    private val dateVm: DateViewModel by lazy {
-        ViewModelProvider(this)[DateViewModel::class.java]
-    }
+    private val dateVm: DateViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
