@@ -33,10 +33,12 @@ internal class TimeFragment : Fragment() {
         binding.pickerHour.minValue = 1
         binding.pickerHour.maxValue = 12
         binding.pickerHour.wrapSelectorWheel = true
+        binding.pickerHour.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
 
         binding.pickerMinute.minValue = 0
         binding.pickerMinute.maxValue = 59
         binding.pickerMinute.setFormatter { String.format("%02d", it) }
+        binding.pickerMinute.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
     }
 
     private fun initObservers(binding: FragmentTimeBinding) {

@@ -16,12 +16,12 @@ import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
 internal typealias PhaseTransactionData = Pair<Phase?, Phase>
 
 internal class DateTimeViewModel(
-    private val savedStateHandle: SavedStateHandle,
-    private val navigator: DateTimeModeNavigator = DateTimeModeNavigatorImpl()
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var oldPhase: Phase? = null
     private var listener: BaseListener? = null
+    private val navigator: DateTimeModeNavigator = DateTimeModeNavigatorImpl()
 
     private val _phase = MutableLiveData<PhaseTransactionData>()
     val phase: LiveData<PhaseTransactionData> get() = _phase
@@ -29,28 +29,23 @@ internal class DateTimeViewModel(
     fun init(listener: BaseListener?) {
         this.listener = listener
 
-        val newPhase = navigator.init(
+        val initPhase = navigator.init(
             mode = savedStateHandle.get<DateTimeMode>(ExtraKey.EXTRA_MODE)
         )
-        _phase.value = getPhaseTransactionData(newPhase)
+        _phase.value = getPhaseTransactionData(initPhase)
     }
 
     fun onSelectDate(selectedDate: SelectedDate) {
         Log.d("Test!!", "Selected date is $selectedDate")
 
-        val newPhase = navigator.getNextPhase(oldPhase).also {
-            if (it == Phase.DONE) onDone()
-        }
-        _phase.value = getPhaseTransactionData(newPhase)
+        _phase.value = getPhaseTransactionData(
+            newPhase = navigator.getNextPhase(oldPhase)
+        )
     }
 
     private fun getPhaseTransactionData(newPhase: Phase): PhaseTransactionData {
-        val tmpOldPhase = oldPhase
-        oldPhase = newPhase
-        return (tmpOldPhase to newPhase)
-    }
-
-    private fun onDone() {
-        Log.d("Test!!", "Invoked onDone function.")
+        return (oldPhase to newPhase).also {
+            oldPhase = newPhase
+        }
     }
 }

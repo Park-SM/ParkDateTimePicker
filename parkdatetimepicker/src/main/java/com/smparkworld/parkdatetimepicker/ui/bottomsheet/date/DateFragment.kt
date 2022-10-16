@@ -15,7 +15,7 @@ import com.smparkworld.parkdatetimepicker.model.ExtraKey
 internal class DateFragment : Fragment() {
 
     private val vm: DateViewModel by lazy {
-        ViewModelProvider(requireActivity())[DateViewModel::class.java]
+        ViewModelProvider(requireParentFragment())[DateViewModel::class.java]
     }
 
     private val viewPagerCallback by lazy {

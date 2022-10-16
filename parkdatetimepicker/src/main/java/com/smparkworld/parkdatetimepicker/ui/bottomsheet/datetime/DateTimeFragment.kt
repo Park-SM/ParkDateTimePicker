@@ -27,7 +27,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
 
     private val dateVm: DateViewModel by lazy {
-        ViewModelProvider(requireActivity())[DateViewModel::class.java]
+        ViewModelProvider(this)[DateViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -69,6 +69,8 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
     
     private fun initViews(binding: FragmentDatetimeBinding) {
+        navigator.clearFragments(childFragmentManager)
+
         binding.layoutDateHeader.btnPrev.setOnClickListener {
             dateVm.onClickCalendarControl(CalendarControlEvent.PrevPage)
         }
@@ -109,7 +111,8 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             .addNewPhase(newPhase)
             .addOldPhaseHeaderView(getHeaderViewByPhase(binding, oldPhase))
             .addNewPhaseHeaderView(getHeaderViewByPhase(binding, newPhase))
-            .commit(childFragmentManager)
+            .addOnDone(::dismiss)
+            .commit(R.id.fragment_container, childFragmentManager)
     }
 
     private fun getHeaderViewByPhase(binding: FragmentDatetimeBinding, phase: Phase?): View? {
