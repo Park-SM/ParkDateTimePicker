@@ -1,51 +1,61 @@
 package com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.smparkworld.parkdatetimepicker.core.navigator.DateTimeModeNavigator
-import com.smparkworld.parkdatetimepicker.core.navigator.DateTimeModeNavigatorImpl
+import com.smparkworld.parkdatetimepicker.core.DateTimeModeNavigator
+import com.smparkworld.parkdatetimepicker.core.DateTimeModeNavigatorImpl
+import com.smparkworld.parkdatetimepicker.core.ListenerManager
+import com.smparkworld.parkdatetimepicker.core.ListenerManagerImpl
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
 import com.smparkworld.parkdatetimepicker.model.SelectedDate
+import com.smparkworld.parkdatetimepicker.model.SelectedTime
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
-
-internal typealias PhaseTransactionData = Pair<Phase?, Phase>
 
 internal class DateTimeViewModel(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var oldPhase: Phase? = null
-    private var listener: BaseListener? = null
+    private val listenerManager: ListenerManager = ListenerManagerImpl()
     private val navigator: DateTimeModeNavigator = DateTimeModeNavigatorImpl()
 
     private val _phase = MutableLiveData<PhaseTransactionData>()
     val phase: LiveData<PhaseTransactionData> get() = _phase
 
-    fun init(listener: BaseListener?) {
-        this.listener = listener
+    private val selectedDates = mutableListOf<SelectedDate>()
+    private val selectedTimes = mutableListOf<SelectedTime>()
 
-        val initPhase = navigator.init(
-            mode = savedStateHandle.get<DateTimeMode>(ExtraKey.EXTRA_MODE)
-        )
-        _phase.value = getPhaseTransactionData(initPhase)
+    fun init(listener: BaseListener?) {
+        val mode = savedStateHandle.get<DateTimeMode>(ExtraKey.EXTRA_MODE) ?: DEFAULT_MODE
+
+        listenerManager.init(mode, listener)
+        navigator.init(mode, ::onDone).let {
+            _phase.value = it
+        }
     }
 
     fun onSelectDate(selectedDate: SelectedDate) {
-        Log.d("Test!!", "Selected date is $selectedDate")
-
-        _phase.value = getPhaseTransactionData(
-            newPhase = navigator.getNextPhase(oldPhase)
-        )
+        selectedDates.add(selectedDate)
+        gotoNextPhase()
     }
 
-    private fun getPhaseTransactionData(newPhase: Phase): PhaseTransactionData {
-        return (oldPhase to newPhase).also {
-            oldPhase = newPhase
-        }
+    fun onSelectTime(selectedTime: SelectedTime) {
+        selectedTimes.add(selectedTime)
+        gotoNextPhase()
+    }
+
+    private fun onDone() {
+        listenerManager.onDone(selectedDates, selectedTimes)
+    }
+
+    private fun gotoNextPhase() {
+        _phase.value = navigator.getNextPhase()
+    }
+
+    companion object {
+        private val DEFAULT_MODE = DateTimeMode.DATETIME
     }
 }

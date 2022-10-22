@@ -27,7 +27,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
     private fun navigateTransaction(transaction: PhaseTransactionInternal, manager: FragmentManager, @IdRes containerId: Int) {
         if (checkDonePhase(transaction, manager)) return
 
-        val oldFragment = manager.findFragmentByTag(transaction.oldPhase?.getFragmentTag())
+        val oldFragment = manager.findFragmentByTag(transaction.oldPhase.getFragmentTag())
         val newFragment = manager.findFragmentByTag(transaction.newPhase.getFragmentTag())
 
         navigateHeaderTransaction(
@@ -147,7 +147,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
         private val onCommit: (transaction: PhaseTransactionInternal, manager: FragmentManager, containerId: Int) -> Unit
     ) : PhaseTransaction {
 
-        var oldPhase: Phase? = null
+        lateinit var oldPhase: Phase
             private set
 
         lateinit var newPhase: Phase
@@ -162,7 +162,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
         var onDone: (() -> Unit)? = null
             private set
 
-        override fun addOldPhase(oldPhase: Phase?): PhaseTransaction {
+        override fun addOldPhase(oldPhase: Phase): PhaseTransaction {
             this.oldPhase = oldPhase
             return this
         }
@@ -193,7 +193,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
         }
 
         private fun checkValidation() {
-            if (::newPhase.isInitialized.not()) {
+            if (::oldPhase.isInitialized.not() && ::newPhase.isInitialized.not()) {
                 throw IllegalArgumentException(ERROR_INVALID_ARGUMENT_STATE)
             }
         }
@@ -202,6 +202,6 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
     companion object {
 
         private const val DURATION = 200L
-        private const val ERROR_INVALID_ARGUMENT_STATE = "New phase must be initialize."
+        private const val ERROR_INVALID_ARGUMENT_STATE = "New phase and old phase must be initialize."
     }
 }
