@@ -33,9 +33,9 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     ): View {
         val binding = FragmentDatetimeBinding.inflate(inflater, container, false)
 
+        initArguments(binding)
         initViews(binding)
         initObservers(binding)
-        initArguments(binding)
         return binding.root
     }
 
@@ -50,11 +50,11 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     private fun initArguments(binding: FragmentDatetimeBinding) {
         vm.init(listener)
 
-        arguments?.getString(ExtraKey.EXTRA_TEXT_COLOR_CODE)?.let {
-            ColorManager.setTextColor(Color.parseColor(it))
+        arguments?.getString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE)?.let {
+            ColorManager.setPrimaryColor(Color.parseColor(it))
         }
-        arguments?.getInt(ExtraKey.EXTRA_TEXT_COLOR_RES_ID, -1)?.let {
-            if (it > 0) ColorManager.setTextColor(ContextCompat.getColor(requireContext(), it))
+        arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, -1)?.let {
+            if (it > 0) ColorManager.setPrimaryColor(ContextCompat.getColor(requireContext(), it))
         }
         arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
             binding.title.text = it
@@ -76,17 +76,22 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.layoutDateHeader.title.setOnClickListener {
             dateVm.onClickCalendarControl(CalendarControlEvent.JumpPage(2022, 1))
         }
-        ColorManager.applyTextColor(binding.title)
-        ColorManager.applyTextColor(binding.layoutDateHeader.title)
-        ColorManager.applyImageTint(binding.layoutDateHeader.btnPrev)
-        ColorManager.applyImageTint(binding.layoutDateHeader.btnNext)
-        ColorManager.applyTextColor(binding.layoutDateHeader.sun)
-        ColorManager.applyTextColor(binding.layoutDateHeader.mon)
-        ColorManager.applyTextColor(binding.layoutDateHeader.tue)
-        ColorManager.applyTextColor(binding.layoutDateHeader.wed)
-        ColorManager.applyTextColor(binding.layoutDateHeader.thu)
-        ColorManager.applyTextColor(binding.layoutDateHeader.fri)
-        ColorManager.applyTextColor(binding.layoutDateHeader.sat)
+        binding.layoutTimeHeader.done.text = "선택 완료"
+        binding.layoutTimeHeader.done.setOnClickListener {
+
+        }
+        ColorManager.applyPrimaryColor(binding.title)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.title)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.btnNext)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.sun)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.mon)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.tue)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.wed)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.thu)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.fri)
+        ColorManager.applyPrimaryColor(binding.layoutDateHeader.sat)
+        ColorManager.applyPrimaryColor(binding.layoutTimeHeader.done)
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
@@ -114,6 +119,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     private fun getHeaderViewByPhase(binding: FragmentDatetimeBinding, phase: Phase?): View? {
         return when (phase) {
             Phase.DATE -> binding.layoutDateHeader.root
+            Phase.TIME -> binding.layoutTimeHeader.root
             else -> null
         }
     }

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.parkdatetimepicker.R
+import com.smparkworld.parkdatetimepicker.core.ColorManager
 import com.smparkworld.parkdatetimepicker.databinding.ItemDateDayBinding
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DayUiModel
 
@@ -59,11 +60,13 @@ internal class DateDayAdapter(
 
         private fun setSelection(isSelected: Boolean) {
             if (isSelected) {
-                binding.day.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
                 binding.day.background = ContextCompat.getDrawable(binding.root.context, R.drawable.shape_date_day_selected)
+                binding.day.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
+                ColorManager.applyPrimaryColor(binding.day, ColorManager.Options.BACKGROUND_TINT)
             } else {
-                binding.day.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
                 binding.day.background = null
+                binding.day.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                ColorManager.applyPrimaryColor(binding.day)
             }
         }
     }
