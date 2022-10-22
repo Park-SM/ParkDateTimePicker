@@ -1,18 +1,24 @@
-package com.smparkworld.parkdatetimepicker.core.navigator
+package com.smparkworld.parkdatetimepicker.core
 
+import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
 
 internal class DateTimeModeNavigatorImpl : DateTimeModeNavigator {
 
     private lateinit var mode: DateTimeMode
+    private lateinit var onDone: () -> Unit
 
-    override fun init(mode: DateTimeMode?): Phase {
-        this.mode = mode ?: DEFAULT_MODE
-        return getNextPhase(Phase.INIT)
+    private var currentPhase: Phase = Phase.INIT
+
+    override fun init(mode: DateTimeMode, onDone: () -> Unit): PhaseTransactionData {
+        this.mode = mode
+        this.onDone = onDone
+
+        return getNextPhase()
     }
 
-    override fun getNextPhase(currentPhase: Phase?): Phase {
+    override fun getNextPhase(): PhaseTransactionData {
         assertInitialized()
         return when(mode) {
             DateTimeMode.DATETIME -> {
@@ -48,17 +54,22 @@ internal class DateTimeModeNavigatorImpl : DateTimeModeNavigator {
                 }
             }
             else -> throw IllegalStateException(ERROR_INVALID_PHASE)
+        }.let { newPhase ->
+            if (newPhase == Phase.DONE) onDone.invoke()
+
+            PhaseTransactionData(currentPhase, newPhase).also {
+                currentPhase = newPhase
+            }
         }
     }
 
     private fun assertInitialized() {
-        if (!::mode.isInitialized) {
+        if (!::mode.isInitialized && !::onDone.isInitialized) {
             throw IllegalStateException(ERROR_NOT_INITIALIZED)
         }
     }
 
     companion object {
-        private val DEFAULT_MODE = DateTimeMode.DATETIME
 
         private const val ERROR_NOT_INITIALIZED = "DateTimeMode is not initialized."
         private const val ERROR_INVALID_PHASE = "Invalid phase on DateTimeMode."

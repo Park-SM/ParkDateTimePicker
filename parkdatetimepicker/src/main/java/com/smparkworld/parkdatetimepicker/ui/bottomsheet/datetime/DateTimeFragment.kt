@@ -16,6 +16,7 @@ import com.smparkworld.parkdatetimepicker.model.ExtraKey
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeViewModel
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
 
@@ -25,6 +26,8 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     private val vm: DateTimeViewModel by viewModels()
 
     private val dateVm: DateViewModel by viewModels()
+
+    private val timeVm: TimeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,10 +79,11 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.layoutDateHeader.title.setOnClickListener {
             dateVm.onClickCalendarControl(CalendarControlEvent.JumpPage(2022, 1))
         }
-        binding.layoutTimeHeader.done.text = "선택 완료"
         binding.layoutTimeHeader.done.setOnClickListener {
-
+            timeVm.onClickDone()
         }
+        binding.layoutTimeHeader.done.text = "선택 완료"
+
         ColorManager.applyPrimaryColor(binding.title)
         ColorManager.applyPrimaryColor(binding.layoutDateHeader.title)
         ColorManager.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
@@ -96,7 +100,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
         vm.phase.observe(viewLifecycleOwner) { phaseData ->
-            navigateFragment(binding, phaseData.first, phaseData.second)
+            navigateFragment(binding, phaseData.oldPhase, phaseData.newPhase)
         }
         dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
             vm.onSelectDate(selectedDate)
@@ -104,9 +108,15 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         dateVm.selectedDateTitle.observe(viewLifecycleOwner) { title ->
             binding.layoutDateHeader.title.text = title
         }
+        timeVm.selectedTime.observe(viewLifecycleOwner) { selectedTime ->
+            vm.onSelectTime(selectedTime)
+        }
+        timeVm.selectedTimeTitle.observe(viewLifecycleOwner) { title ->
+            binding.layoutTimeHeader.title.text = title
+        }
     }
 
-    private fun navigateFragment(binding: FragmentDatetimeBinding, oldPhase: Phase?, newPhase: Phase) {
+    private fun navigateFragment(binding: FragmentDatetimeBinding, oldPhase: Phase, newPhase: Phase) {
         navigator.beginTransaction()
             .addOldPhase(oldPhase)
             .addNewPhase(newPhase)
@@ -116,7 +126,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             .commit(R.id.fragment_container, childFragmentManager)
     }
 
-    private fun getHeaderViewByPhase(binding: FragmentDatetimeBinding, phase: Phase?): View? {
+    private fun getHeaderViewByPhase(binding: FragmentDatetimeBinding, phase: Phase): View? {
         return when (phase) {
             Phase.DATE -> binding.layoutDateHeader.root
             Phase.TIME -> binding.layoutTimeHeader.root

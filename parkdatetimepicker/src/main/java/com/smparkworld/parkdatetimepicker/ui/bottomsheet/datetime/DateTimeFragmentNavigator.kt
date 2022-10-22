@@ -14,7 +14,7 @@ internal interface DateTimeFragmentNavigator {
 
 internal interface PhaseTransaction {
 
-    fun addOldPhase(oldPhase: Phase?): PhaseTransaction
+    fun addOldPhase(oldPhase: Phase): PhaseTransaction
 
     fun addNewPhase(newPhase: Phase): PhaseTransaction
 

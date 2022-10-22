@@ -1,6 +1,7 @@
 package com.smparkworld.parkdatetimepicker.extension
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -55,4 +56,11 @@ internal class ViewModelLazy<VM : ViewModel>(
         }
 
     override fun isInitialized(): Boolean = (cached != null)
+}
+
+internal fun <T> MutableLiveData<T>.updateAssign(perform: (T) -> Unit) {
+    val oldValue = this.value
+    if (oldValue != null) {
+        this.value = oldValue.apply(perform)
+    }
 }

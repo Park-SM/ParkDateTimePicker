@@ -2,6 +2,7 @@ package com.smparkworld.sample
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smparkworld.parkdatetimepicker.ParkDateTimePicker
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private fun showDateTimePicker() {
         ParkDateTimePicker.builder(this)
             .setDateTimeListener { dateTime ->
-                Log.d("Test!!", "dateTime: $dateTime")
+                Toast.makeText(this, dateTime.toString(), Toast.LENGTH_SHORT).show()
             }
             .show()
     }
