@@ -24,9 +24,9 @@ interface ParkDateTimePickerBuilder {
 
     fun setTitle(@StringRes titleResId: Int): ParkDateTimePickerBuilder
 
-    fun setTextColor(colorCode: String): ParkDateTimePickerBuilder
+    fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder
 
-    fun setTextColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
+    fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
 
     fun show()
 }
