@@ -45,8 +45,8 @@ class ParkDateTimePicker private constructor() {
         private var title: String? = null
         private var titleResId: Int? = null
 
-        private var textColorCode: String? = null
-        private var textColorResId: Int? = null
+        private var primaryColorCode: String? = null
+        private var primaryColorResId: Int? = null
 
         override fun setDateListener(listener: DateListener): ParkDateTimePickerBuilder {
             dateListener = listener
@@ -83,13 +83,13 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
-        override fun setTextColor(colorCode: String): ParkDateTimePickerBuilder {
-            textColorCode = colorCode
+        override fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder {
+            primaryColorCode = colorCode
             return this
         }
 
-        override fun setTextColor(@ColorInt colorResId: Int): ParkDateTimePickerBuilder {
-            textColorResId = colorResId
+        override fun setPrimaryColor(@ColorInt colorResId: Int): ParkDateTimePickerBuilder {
+            primaryColorResId = colorResId
             return this
         }
 
@@ -103,11 +103,11 @@ class ParkDateTimePicker private constructor() {
             titleResId?.let {
                 arguments.putInt(ExtraKey.EXTRA_TITLE_RES_ID, it)
             }
-            textColorCode?.let {
-                arguments.putString(ExtraKey.EXTRA_TEXT_COLOR_CODE, it)
+            primaryColorCode?.let {
+                arguments.putString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE, it)
             }
-            textColorResId?.let {
-                arguments.putInt(ExtraKey.EXTRA_TEXT_COLOR_RES_ID, it)
+            primaryColorResId?.let {
+                arguments.putInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, it)
             }
 
             when {

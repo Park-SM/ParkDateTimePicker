@@ -8,4 +8,6 @@
     <string name="label_fri">금</string>
     <string name="label_sat">토</string>
     <string name="label_sun">일</string>
+
+    <string name="time_divider">:</string>
 </resources>

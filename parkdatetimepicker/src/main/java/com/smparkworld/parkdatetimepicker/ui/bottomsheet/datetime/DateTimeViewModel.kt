@@ -4,33 +4,39 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.smparkworld.parkdatetimepicker.core.DateTimeModeNavigator
+import com.smparkworld.parkdatetimepicker.core.DateTimeModeNavigatorImpl
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
+import com.smparkworld.parkdatetimepicker.model.SelectedDate
+import com.smparkworld.parkdatetimepicker.model.SelectedTime
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.ToolbarStatus
 
 internal class DateTimeViewModel(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private lateinit var mode: DateTimeMode
+    private val navigator: DateTimeModeNavigator = DateTimeModeNavigatorImpl()
 
-    private var listener: BaseListener? = null
-
-    private val _toolbarStatus = MutableLiveData<ToolbarStatus>()
-    val toolbarStatus: LiveData<ToolbarStatus> get() = _toolbarStatus
+    private val _phase = MutableLiveData<PhaseTransactionData>()
+    val phase: LiveData<PhaseTransactionData> get() = _phase
 
     fun init(listener: BaseListener?) {
-        this.listener = listener
+        val mode = savedStateHandle.get<DateTimeMode>(ExtraKey.EXTRA_MODE) ?: DEFAULT_MODE
 
-        this.mode = savedStateHandle.get<DateTimeMode>(ExtraKey.EXTRA_MODE) ?: DateTimeMode.NONE
-        when(mode) {
-            DateTimeMode.TIME -> {
-                _toolbarStatus.value = ToolbarStatus.TIME
-            }
-            else -> {
-                _toolbarStatus.value = ToolbarStatus.DATE
-            }
-        }
+        _phase.value = navigator.init(mode, listener)
+    }
+
+    fun onSelectDate(selectedDate: SelectedDate) {
+        _phase.value = navigator.getNextPhase(selectedDate = selectedDate)
+    }
+
+    fun onSelectTime(selectedTime: SelectedTime) {
+        _phase.value = navigator.getNextPhase(selectedTime = selectedTime)
+    }
+
+    companion object {
+        private val DEFAULT_MODE = DateTimeMode.DATETIME
     }
 }

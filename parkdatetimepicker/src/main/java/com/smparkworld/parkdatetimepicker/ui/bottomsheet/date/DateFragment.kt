@@ -5,18 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDateBinding
 import com.smparkworld.parkdatetimepicker.extension.getExtra
+import com.smparkworld.parkdatetimepicker.extension.parentViewModels
 import com.smparkworld.parkdatetimepicker.model.DefaultOption
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
 
 internal class DateFragment : Fragment() {
 
-    private val vm: DateViewModel by lazy {
-        ViewModelProvider(requireActivity())[DateViewModel::class.java]
-    }
+    private val vm: DateViewModel by parentViewModels()
 
     private val viewPagerCallback by lazy {
         object: ViewPager2.OnPageChangeCallback() {
