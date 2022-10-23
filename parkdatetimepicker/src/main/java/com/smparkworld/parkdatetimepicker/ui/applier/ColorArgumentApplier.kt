@@ -1,4 +1,4 @@
-package com.smparkworld.parkdatetimepicker.core
+package com.smparkworld.parkdatetimepicker.ui.applier
 
 import android.content.res.ColorStateList
 import android.widget.ImageView
@@ -6,14 +6,22 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import com.smparkworld.parkdatetimepicker.ui.CircleButton
 
-internal object ColorManager {
+internal object ColorArgumentApplier {
 
     @ColorInt
     private var primaryColorInt: Int? = null
 
+    @ColorInt
+    private var highLightColorInt: Int? = null
+
     @JvmStatic
     fun setPrimaryColor(@ColorInt colorInt: Int) {
         primaryColorInt = colorInt
+    }
+
+    @JvmStatic
+    fun setHighLightColor(@ColorInt colorInt: Int) {
+        highLightColorInt = colorInt
     }
 
     @JvmStatic
@@ -48,6 +56,13 @@ internal object ColorManager {
     fun applyPrimaryColor(view: ImageView) {
         primaryColorInt?.let {
             view.imageTintList = ColorStateList.valueOf(it)
+        }
+    }
+
+    @JvmStatic
+    fun applyHighLightColor(view: TextView) {
+        highLightColorInt?.let {
+            view.setTextColor(it)
         }
     }
 

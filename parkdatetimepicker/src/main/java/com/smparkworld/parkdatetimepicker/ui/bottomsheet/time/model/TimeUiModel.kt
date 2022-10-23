@@ -6,7 +6,7 @@ internal data class TimeUiModel(
 
     override val id: Int,
 
-    var amPm: String? = null,
+    var amPm: String,
 
     var hour: Int,
 

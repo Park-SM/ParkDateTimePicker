@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DateListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeFragment
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
 
@@ -45,31 +48,43 @@ class ParkDateTimePicker private constructor() {
         private var title: String? = null
         private var titleResId: Int? = null
 
+        private var dayOfWeekTexts: Array<String>? = null
+
+        private var timeDoneText: String? = null
+
+        private var amPmTexts: Array<String>? = null
+
         private var primaryColorCode: String? = null
         private var primaryColorResId: Int? = null
 
+        private var highLightColorCode: String? = null
+        private var highLightColorResId: Int? = null
+
+        private var dateTitleFormatter: DateTitleFormatter? = null
+        private var timeTitleFormatter: TimeTitleFormatter? = null
+
         override fun setDateListener(listener: DateListener): ParkDateTimePickerBuilder {
-            dateListener = listener
+            this.dateListener = listener
             return this
         }
 
         override fun setDateRangeListener(listener: DateRangeListener): ParkDateTimePickerBuilder {
-            dateRangeListener = listener
+            this.dateRangeListener = listener
             return this
         }
 
         override fun setTimeListener(listener: TimeListener): ParkDateTimePickerBuilder {
-            timeListener = listener
+            this.timeListener = listener
             return this
         }
 
         override fun setDateTimeListener(listener: DateTimeListener): ParkDateTimePickerBuilder {
-            dateTimeListener = listener
+            this.dateTimeListener = listener
             return this
         }
 
         override fun setDateTimeRangeListener(listener: DateTimeRangeListener): ParkDateTimePickerBuilder {
-            dateTimeRangeListener = listener
+            this.dateTimeRangeListener = listener
             return this
         }
 
@@ -83,13 +98,48 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
+        override fun setDayOfWeekTexts(texts: Array<String>): ParkDateTimePickerBuilder {
+            this.dayOfWeekTexts = texts
+            return this
+        }
+
+        override fun setTimeDoneText(text: String): ParkDateTimePickerBuilder {
+            this.timeDoneText = text
+            return this
+        }
+
+        override fun setAmPmTexts(texts: Array<String>): ParkDateTimePickerBuilder {
+            this.amPmTexts = texts
+            return this
+        }
+
         override fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder {
-            primaryColorCode = colorCode
+            this.primaryColorCode = colorCode
             return this
         }
 
         override fun setPrimaryColor(@ColorInt colorResId: Int): ParkDateTimePickerBuilder {
-            primaryColorResId = colorResId
+            this.primaryColorResId = colorResId
+            return this
+        }
+
+        override fun setHighLightColor(colorCode: String): ParkDateTimePickerBuilder {
+            this.highLightColorCode = colorCode
+            return this
+        }
+
+        override fun setHighLightColor(colorResId: Int): ParkDateTimePickerBuilder {
+            this.highLightColorResId = colorResId
+            return this
+        }
+
+        override fun setDateTitleFormatter(formatter: DateTitleFormatter): ParkDateTimePickerBuilder {
+            this.dateTitleFormatter = formatter
+            return this
+        }
+
+        override fun setTimeTitleFormatter(formatter: TimeTitleFormatter): ParkDateTimePickerBuilder {
+            this.timeTitleFormatter = formatter
             return this
         }
 
@@ -103,11 +153,32 @@ class ParkDateTimePicker private constructor() {
             titleResId?.let {
                 arguments.putInt(ExtraKey.EXTRA_TITLE_RES_ID, it)
             }
+            dayOfWeekTexts?.let {
+                arguments.putStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_TEXTS, it)
+            }
+            timeDoneText?.let {
+                arguments.putString(ExtraKey.EXTRA_TIME_DONE_TEXT, it)
+            }
+            amPmTexts?.let {
+                arguments.putStringArray(ExtraKey.EXTRA_AM_PM_TEXTS, it)
+            }
             primaryColorCode?.let {
                 arguments.putString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE, it)
             }
             primaryColorResId?.let {
                 arguments.putInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, it)
+            }
+            highLightColorCode?.let {
+                arguments.putString(ExtraKey.EXTRA_HIGHLIGHT_COLOR_CODE, it)
+            }
+            highLightColorResId?.let {
+                arguments.putInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, it)
+            }
+            dateTitleFormatter?.let {
+                FormatArgumentApplier.setDateTitleFormatter(it)
+            }
+            timeTitleFormatter?.let {
+                FormatArgumentApplier.setTimeTitleFormatter(it)
             }
 
             when {
