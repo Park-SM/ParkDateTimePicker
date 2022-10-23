@@ -14,6 +14,14 @@ internal fun Fragment.getExtra(key: String, default: String): String {
     return arguments?.getString(key, default) ?: default
 }
 
+internal fun <T> MutableCollection<T>.addRequiredNonNullItem(element: T?, message: String? = null) {
+    if (element != null) {
+        add(element)
+    } else {
+        throw IllegalArgumentException(message ?: "Added item must be non-null.")
+    }
+}
+
 internal inline fun <reified VM : ViewModel> Fragment.viewModels(
     noinline getFactory: (() -> ViewModelProvider.Factory)? = null
 ): Lazy<VM> {

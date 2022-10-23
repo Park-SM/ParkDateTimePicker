@@ -1,61 +1,96 @@
 package com.smparkworld.parkdatetimepicker.core
 
+import com.smparkworld.parkdatetimepicker.extension.addRequiredNonNullItem
+import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
+import com.smparkworld.parkdatetimepicker.model.SelectedDate
+import com.smparkworld.parkdatetimepicker.model.SelectedTime
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
 
-internal class DateTimeModeNavigatorImpl : DateTimeModeNavigator {
+internal class DateTimeModeNavigatorImpl(
+    private val listenerManager: ListenerManager = ListenerManagerImpl()
+): DateTimeModeNavigator {
 
     private lateinit var mode: DateTimeMode
-    private lateinit var onDone: () -> Unit
 
     private var currentPhase: Phase = Phase.INIT
 
-    override fun init(mode: DateTimeMode, onDone: () -> Unit): PhaseTransactionData {
+    private val selectedDates = mutableListOf<SelectedDate>()
+    private val selectedTimes = mutableListOf<SelectedTime>()
+
+    override fun init(mode: DateTimeMode, listener: BaseListener?): PhaseTransactionData {
         this.mode = mode
-        this.onDone = onDone
+        listenerManager.init(mode, listener)
 
         return getNextPhase()
     }
 
-    override fun getNextPhase(): PhaseTransactionData {
+    override fun getNextPhase(
+        selectedDate: SelectedDate?,
+        selectedTime: SelectedTime?
+    ): PhaseTransactionData {
         assertInitialized()
         return when(mode) {
             DateTimeMode.DATETIME -> {
                 when(currentPhase) {
                     Phase.INIT -> Phase.DATE
-                    Phase.DATE -> Phase.TIME
-                    Phase.TIME -> Phase.DONE
+                    Phase.DATE -> {
+                        selectedDates.addRequiredNonNullItem(selectedDate)
+                        Phase.TIME
+                    }
+                    Phase.TIME -> {
+                        selectedTimes.addRequiredNonNullItem(selectedTime)
+                        Phase.DONE
+                    }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
                 }
             }
             DateTimeMode.DATETIME_RANGE -> {
                 when(currentPhase) {
                     Phase.INIT -> Phase.DATE_RANGE_FIRST
-                    Phase.DATE_RANGE_FIRST -> Phase.TIME_RANGE_FIRST
-                    Phase.TIME_RANGE_FIRST -> Phase.DATE_RANGE_SECOND
-                    Phase.DATE_RANGE_SECOND -> Phase.TIME_RANGE_SECOND
-                    Phase.TIME_RANGE_SECOND -> Phase.DONE
+                    Phase.DATE_RANGE_FIRST -> {
+                        selectedDates.addRequiredNonNullItem(selectedDate)
+                        Phase.TIME_RANGE_FIRST
+                    }
+                    Phase.TIME_RANGE_FIRST -> {
+                        selectedTimes.addRequiredNonNullItem(selectedTime)
+                        Phase.DATE_RANGE_SECOND
+                    }
+                    Phase.DATE_RANGE_SECOND -> {
+                        selectedDates.addRequiredNonNullItem(selectedDate)
+                        Phase.TIME_RANGE_SECOND
+                    }
+                    Phase.TIME_RANGE_SECOND -> {
+                        selectedTimes.addRequiredNonNullItem(selectedTime)
+                        Phase.DONE
+                    }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
                 }
             }
             DateTimeMode.DATE -> {
                 when (currentPhase) {
                     Phase.INIT -> Phase.DATE
-                    Phase.DATE -> Phase.DONE
+                    Phase.DATE -> {
+                        selectedDates.addRequiredNonNullItem(selectedDate)
+                        Phase.DONE
+                    }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
                 }
             }
             DateTimeMode.TIME -> {
                 when (currentPhase) {
                     Phase.INIT -> Phase.TIME
-                    Phase.TIME -> Phase.DONE
+                    Phase.TIME -> {
+                        selectedTimes.addRequiredNonNullItem(selectedTime)
+                        Phase.DONE
+                    }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
                 }
             }
             else -> throw IllegalStateException(ERROR_INVALID_PHASE)
         }.let { newPhase ->
-            if (newPhase == Phase.DONE) onDone.invoke()
+            if (newPhase == Phase.DONE) onDone()
 
             PhaseTransactionData(currentPhase, newPhase).also {
                 currentPhase = newPhase
@@ -64,9 +99,13 @@ internal class DateTimeModeNavigatorImpl : DateTimeModeNavigator {
     }
 
     private fun assertInitialized() {
-        if (!::mode.isInitialized && !::onDone.isInitialized) {
+        if (!::mode.isInitialized) {
             throw IllegalStateException(ERROR_NOT_INITIALIZED)
         }
+    }
+
+    private fun onDone() {
+        listenerManager.onDone(selectedDates, selectedTimes)
     }
 
     companion object {
