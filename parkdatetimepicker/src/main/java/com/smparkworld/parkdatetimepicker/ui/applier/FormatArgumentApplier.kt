@@ -3,7 +3,7 @@ package com.smparkworld.parkdatetimepicker.ui.applier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
 
-object FormatArgumentApplier {
+internal object FormatArgumentApplier {
 
     private var dateTitleFormatter: DateTitleFormatter = DateTitleFormatter { year, month ->
         "${year}.${String.format("%02d", month)}"
