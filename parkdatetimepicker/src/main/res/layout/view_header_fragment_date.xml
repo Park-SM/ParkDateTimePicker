@@ -59,10 +59,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/label_sun"
                 android:textColor="@color/black"
                 android:textSize="13dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="@string/label_sun"/>
 
             <TextView
                 android:id="@+id/mon"
@@ -70,10 +70,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/label_mon"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="13dp"/>
+                android:textSize="13dp"
+                tools:text="@string/label_mon"/>
 
             <TextView
                 android:id="@+id/tue"
@@ -81,10 +81,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/label_tue"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="13dp"/>
+                android:textSize="13dp"
+                tools:text="@string/label_tue"/>
 
             <TextView
                 android:id="@+id/wed"
@@ -92,10 +92,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/label_wed"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="13dp"/>
+                android:textSize="13dp"
+                tools:text="@string/label_wed"/>
 
             <TextView
                 android:id="@+id/thu"
@@ -103,10 +103,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/label_thu"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="13dp"/>
+                android:textSize="13dp"
+                tools:text="@string/label_thu"/>
 
             <TextView
                 android:id="@+id/fri"
@@ -114,10 +114,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/label_fri"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="13dp"/>
+                android:textSize="13dp"
+                tools:text="@string/label_fri"/>
 
             <TextView
                 android:id="@+id/sat"
@@ -125,10 +125,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/label_sat"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="13dp"/>
+                android:textSize="13dp"
+                tools:text="@string/label_sat"/>
 
         </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.smparkworld.parkdatetimepicker.core
+package com.smparkworld.parkdatetimepicker.ui.applier
 
 import android.content.res.ColorStateList
 import android.widget.ImageView
@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import com.smparkworld.parkdatetimepicker.ui.CircleButton
 
-internal object ColorArgumentManager {
+internal object ColorArgumentApplier {
 
     @ColorInt
     private var primaryColorInt: Int? = null

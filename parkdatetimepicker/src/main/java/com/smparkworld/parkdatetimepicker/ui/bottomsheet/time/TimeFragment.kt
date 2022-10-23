@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
+import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.databinding.FragmentTimeBinding
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.model.TimeUiModel
@@ -23,14 +24,15 @@ internal class TimeFragment : Fragment() {
 
         initViews(binding)
         initObservers(binding)
-        initArguments(binding)
         return binding.root
     }
 
     private fun initViews(binding: FragmentTimeBinding) {
         binding.pickerAmPm.minValue = 0
         binding.pickerAmPm.maxValue = 1
-        binding.pickerAmPm.displayedValues = arrayOf("AM", "PM")
+        binding.pickerAmPm.let {
+            TextArgumentApplier.applyAmPmTexts(it)
+        }
         binding.pickerAmPm.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         binding.pickerAmPm.setOnValueChangedListener { picker, _, value ->
             vm.onChangeValue(amPm = picker.displayedValues.getOrNull(value))
@@ -57,10 +59,6 @@ internal class TimeFragment : Fragment() {
         vm.selectedTimeUiModel.observe(viewLifecycleOwner) { uiModel ->
             applyTimeValues(binding, uiModel)
         }
-    }
-
-    private fun initArguments(binding: FragmentTimeBinding) {
-
     }
 
     private fun applyTimeValues(binding: FragmentTimeBinding, uiModel: TimeUiModel) {

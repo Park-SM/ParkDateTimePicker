@@ -28,6 +28,8 @@ interface ParkDateTimePickerBuilder {
 
     fun setTimeDoneText(text: String): ParkDateTimePickerBuilder
 
+    fun setAmPmTexts(texts: Array<String>): ParkDateTimePickerBuilder
+
     fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder
 
     fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
