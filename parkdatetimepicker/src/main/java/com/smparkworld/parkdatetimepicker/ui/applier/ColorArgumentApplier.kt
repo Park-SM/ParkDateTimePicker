@@ -11,9 +11,17 @@ internal object ColorArgumentApplier {
     @ColorInt
     private var primaryColorInt: Int? = null
 
+    @ColorInt
+    private var highLightColorInt: Int? = null
+
     @JvmStatic
     fun setPrimaryColor(@ColorInt colorInt: Int) {
         primaryColorInt = colorInt
+    }
+
+    @JvmStatic
+    fun setHighLightColor(@ColorInt colorInt: Int) {
+        highLightColorInt = colorInt
     }
 
     @JvmStatic
@@ -48,6 +56,13 @@ internal object ColorArgumentApplier {
     fun applyPrimaryColor(view: ImageView) {
         primaryColorInt?.let {
             view.imageTintList = ColorStateList.valueOf(it)
+        }
+    }
+
+    @JvmStatic
+    fun applyHighLightColor(view: TextView) {
+        highLightColorInt?.let {
+            view.setTextColor(it)
         }
     }
 

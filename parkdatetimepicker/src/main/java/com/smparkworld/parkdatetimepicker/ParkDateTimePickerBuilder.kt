@@ -34,5 +34,9 @@ interface ParkDateTimePickerBuilder {
 
     fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
 
+    fun setHighLightColor(colorCode: String): ParkDateTimePickerBuilder
+
+    fun setHighLightColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
+
     fun show()
 }

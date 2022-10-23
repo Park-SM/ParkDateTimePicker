@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,14 +12,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="1월 5일 오후 7 : 15"
             android:textColor="@color/blue"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@id/done"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/done"
-            app:layout_constraintBottom_toBottomOf="@id/done" />
+            app:layout_constraintBottom_toBottomOf="@id/done"
+            tools:text="1월 5일 오후 7 : 15"/>
 
         <com.smparkworld.parkdatetimepicker.ui.CircleButton
             android:id="@+id/done"
