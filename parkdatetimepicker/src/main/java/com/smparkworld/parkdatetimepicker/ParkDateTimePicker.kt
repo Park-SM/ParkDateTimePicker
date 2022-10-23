@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DateListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeFragment
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
 
@@ -56,6 +58,8 @@ class ParkDateTimePicker private constructor() {
 
         private var highLightColorCode: String? = null
         private var highLightColorResId: Int? = null
+
+        private var dateTitleFormatter: DateTitleFormatter? = null
 
         override fun setDateListener(listener: DateListener): ParkDateTimePickerBuilder {
             this.dateListener = listener
@@ -127,6 +131,11 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
+        override fun setDateTitleFormatter(formatter: DateTitleFormatter): ParkDateTimePickerBuilder {
+            this.dateTitleFormatter = formatter
+            return this
+        }
+
         override fun show() {
             val fragment = DateTimeFragment()
             val arguments = Bundle()
@@ -157,6 +166,9 @@ class ParkDateTimePicker private constructor() {
             }
             highLightColorResId?.let {
                 arguments.putInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, it)
+            }
+            dateTitleFormatter?.let {
+                FormatArgumentApplier.setDateTitleFormatter(it)
             }
 
             when {

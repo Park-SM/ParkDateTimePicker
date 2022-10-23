@@ -9,6 +9,7 @@ import com.smparkworld.parkdatetimepicker.data.DateRepository
 import com.smparkworld.parkdatetimepicker.data.DateRepositoryImpl
 import com.smparkworld.parkdatetimepicker.model.DateData
 import com.smparkworld.parkdatetimepicker.model.SelectedDate
+import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DayUiModel
@@ -40,10 +41,6 @@ internal class DateViewModel(
 
     private val _monthPosition = MutableLiveData<Int>()
     val monthPosition: LiveData<Int> get() = _monthPosition
-
-    private var dateTitleFormatter = DateTitleFormatter { year, month ->
-        "${year}년 ${String.format("%02d", month)}월"
-    }
 
     fun init(minYearDiff: Int, maxYearDiff: Int) {
         if (_dateData.value != null) return
@@ -114,6 +111,6 @@ internal class DateViewModel(
             }
             else -> return null
         }
-        return dateTitleFormatter.onChangeTitle(monthData?.year ?: 0, monthData?.month ?: 0)
+        return FormatArgumentApplier.formatDateTitle(monthData?.year ?: 0, monthData?.month ?: 0)
     }
 }
