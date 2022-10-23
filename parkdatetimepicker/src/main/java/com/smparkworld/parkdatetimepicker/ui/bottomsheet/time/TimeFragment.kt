@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
-import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.databinding.FragmentTimeBinding
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
+import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.model.TimeUiModel
 
 internal class TimeFragment : Fragment() {
@@ -62,11 +62,9 @@ internal class TimeFragment : Fragment() {
     }
 
     private fun applyTimeValues(binding: FragmentTimeBinding, uiModel: TimeUiModel) {
-        uiModel.amPm?.let {
-            val newValueIndex = binding.pickerAmPm.displayedValues.indexOf(it)
-            if (binding.pickerAmPm.value != newValueIndex) {
-                binding.pickerAmPm.value = newValueIndex
-            }
+        val newValueIndex = binding.pickerAmPm.displayedValues.indexOf(uiModel.amPm)
+        if (binding.pickerAmPm.value != newValueIndex) {
+            binding.pickerAmPm.value = newValueIndex
         }
         if (binding.pickerHour.value != uiModel.hour) {
             binding.pickerHour.value = uiModel.hour

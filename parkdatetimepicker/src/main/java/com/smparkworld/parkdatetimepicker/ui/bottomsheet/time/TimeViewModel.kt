@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.extension.updateAssign
 import com.smparkworld.parkdatetimepicker.model.SelectedTime
+import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.model.TimeUiModel
@@ -23,11 +24,7 @@ internal class TimeViewModel(
     val selectedTimeUiModel: LiveData<TimeUiModel> get() = _selectedTimeUiModel
 
     val selectedTimeTitle: LiveData<String> get() = Transformations.map(_selectedTimeUiModel) {
-        timeTitleFormatter.onChangeTitle(it.amPm, it.hour, it.minute)
-    }
-
-    private var timeTitleFormatter = TimeTitleFormatter { amPm, hour, minute ->
-        "$amPm $hour : ${String.format("%02d", minute)}"
+        FormatArgumentApplier.formatTimeTitle(it.amPm, it.hour, it.minute)
     }
 
     init {

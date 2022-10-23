@@ -14,6 +14,7 @@ import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeFragme
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
 
@@ -60,6 +61,7 @@ class ParkDateTimePicker private constructor() {
         private var highLightColorResId: Int? = null
 
         private var dateTitleFormatter: DateTitleFormatter? = null
+        private var timeTitleFormatter: TimeTitleFormatter? = null
 
         override fun setDateListener(listener: DateListener): ParkDateTimePickerBuilder {
             this.dateListener = listener
@@ -136,6 +138,11 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
+        override fun setTimeTitleFormatter(formatter: TimeTitleFormatter): ParkDateTimePickerBuilder {
+            this.timeTitleFormatter = formatter
+            return this
+        }
+
         override fun show() {
             val fragment = DateTimeFragment()
             val arguments = Bundle()
@@ -169,6 +176,9 @@ class ParkDateTimePicker private constructor() {
             }
             dateTitleFormatter?.let {
                 FormatArgumentApplier.setDateTitleFormatter(it)
+            }
+            timeTitleFormatter?.let {
+                FormatArgumentApplier.setTimeTitleFormatter(it)
             }
 
             when {
