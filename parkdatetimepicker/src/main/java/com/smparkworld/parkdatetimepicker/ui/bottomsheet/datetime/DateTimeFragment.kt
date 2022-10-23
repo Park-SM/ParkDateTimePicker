@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
-import com.smparkworld.parkdatetimepicker.core.CharacterManager
-import com.smparkworld.parkdatetimepicker.core.ColorManager
+import com.smparkworld.parkdatetimepicker.core.TextArgumentManager
+import com.smparkworld.parkdatetimepicker.core.ColorArgumentManager
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.extension.viewModels
 import com.smparkworld.parkdatetimepicker.model.BaseListener
@@ -55,19 +55,19 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         vm.init(listener)
 
         arguments?.getString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE)?.let {
-            ColorManager.setPrimaryColor(Color.parseColor(it))
+            ColorArgumentManager.setPrimaryColor(Color.parseColor(it))
         }
         arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, -1)?.let {
-            if (it > 0) ColorManager.setPrimaryColor(ContextCompat.getColor(requireContext(), it))
+            if (it > 0) ColorArgumentManager.setPrimaryColor(ContextCompat.getColor(requireContext(), it))
         }
         arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
             binding.title.text = it
         }
         arguments?.getStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_TEXTS)?.let {
-            CharacterManager.setDayOfWeekTexts(it)
+            TextArgumentManager.setDayOfWeekTexts(it)
         }
         arguments?.getString(ExtraKey.EXTRA_TIME_DONE_TEXT)?.let {
-            CharacterManager.setTimeDoneText(it)
+            TextArgumentManager.setTimeDoneText(it)
         }
         arguments?.getInt(ExtraKey.EXTRA_TITLE_RES_ID, -1)?.let {
             if (it > 0) binding.title.setText(it)
@@ -90,21 +90,21 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             timeVm.onClickDone()
         }
 
-        ColorManager.applyPrimaryColor(binding.title)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.title)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.btnNext)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.sun)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.mon)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.tue)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.wed)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.thu)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.fri)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.sat)
-        ColorManager.applyPrimaryColor(binding.layoutTimeHeader.done)
+        ColorArgumentManager.applyPrimaryColor(binding.title)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.title)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.btnNext)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.sun)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.mon)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.tue)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.wed)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.thu)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.fri)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutDateHeader.sat)
+        ColorArgumentManager.applyPrimaryColor(binding.layoutTimeHeader.done)
 
-        CharacterManager.applyDayOfWeekTexts(binding.layoutDateHeader)
-        CharacterManager.applyTimeDoneText(binding.layoutTimeHeader)
+        TextArgumentManager.applyDayOfWeekTexts(binding.layoutDateHeader)
+        TextArgumentManager.applyTimeDoneText(binding.layoutTimeHeader)
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {

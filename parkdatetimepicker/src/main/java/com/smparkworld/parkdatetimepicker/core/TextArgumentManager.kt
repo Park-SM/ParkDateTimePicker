@@ -3,7 +3,7 @@ package com.smparkworld.parkdatetimepicker.core
 import com.smparkworld.parkdatetimepicker.databinding.ViewHeaderFragmentDateBinding
 import com.smparkworld.parkdatetimepicker.databinding.ViewHeaderFragmentTimeBinding
 
-internal object CharacterManager {
+internal object TextArgumentManager {
 
     private var dayOfWeekTexts: Array<String>? = null
 
