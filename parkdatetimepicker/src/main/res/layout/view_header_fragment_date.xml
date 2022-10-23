@@ -32,7 +32,7 @@
             app:layout_constraintStart_toEndOf="@id/btn_prev"
             app:layout_constraintEnd_toStartOf="@id/btn_next"
             app:layout_constraintBottom_toBottomOf="@id/btn_prev"
-            android:text="1997년 12월" />
+            tools:text="1997년 12월" />
 
         <com.smparkworld.parkdatetimepicker.ui.CircleImageButton
             android:id="@+id/btn_next"
