@@ -45,7 +45,9 @@ class ParkDateTimePicker private constructor() {
         private var title: String? = null
         private var titleResId: Int? = null
 
-        private var dayOfWeekChars: Array<String>? = null
+        private var dayOfWeekTexts: Array<String>? = null
+
+        private var timeDoneText: String? = null
 
         private var primaryColorCode: String? = null
         private var primaryColorResId: Int? = null
@@ -85,8 +87,13 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
-        override fun setDayOfWeekChars(chars: Array<String>): ParkDateTimePickerBuilder {
-            this.dayOfWeekChars = chars
+        override fun setDayOfWeekTexts(texts: Array<String>): ParkDateTimePickerBuilder {
+            this.dayOfWeekTexts = texts
+            return this
+        }
+
+        override fun setTimeDoneText(text: String): ParkDateTimePickerBuilder {
+            this.timeDoneText = text
             return this
         }
 
@@ -110,8 +117,11 @@ class ParkDateTimePicker private constructor() {
             titleResId?.let {
                 arguments.putInt(ExtraKey.EXTRA_TITLE_RES_ID, it)
             }
-            dayOfWeekChars?.let {
-                arguments.putStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_CHARS, it)
+            dayOfWeekTexts?.let {
+                arguments.putStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_TEXTS, it)
+            }
+            timeDoneText?.let {
+                arguments.putString(ExtraKey.EXTRA_TIME_DONE_TEXT, it)
             }
             primaryColorCode?.let {
                 arguments.putString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE, it)

@@ -63,8 +63,11 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
             binding.title.text = it
         }
-        arguments?.getStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_CHARS)?.let {
-            CharacterManager.setDayOfWeekChars(it)
+        arguments?.getStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_TEXTS)?.let {
+            CharacterManager.setDayOfWeekTexts(it)
+        }
+        arguments?.getString(ExtraKey.EXTRA_TIME_DONE_TEXT)?.let {
+            CharacterManager.setTimeDoneText(it)
         }
         arguments?.getInt(ExtraKey.EXTRA_TITLE_RES_ID, -1)?.let {
             if (it > 0) binding.title.setText(it)
@@ -86,7 +89,6 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.layoutTimeHeader.done.setOnClickListener {
             timeVm.onClickDone()
         }
-        binding.layoutTimeHeader.done.text = "선택 완료"
 
         ColorManager.applyPrimaryColor(binding.title)
         ColorManager.applyPrimaryColor(binding.layoutDateHeader.title)
@@ -100,7 +102,9 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         ColorManager.applyPrimaryColor(binding.layoutDateHeader.fri)
         ColorManager.applyPrimaryColor(binding.layoutDateHeader.sat)
         ColorManager.applyPrimaryColor(binding.layoutTimeHeader.done)
-        CharacterManager.applyDayOfWeekChars(binding.layoutDateHeader)
+
+        CharacterManager.applyDayOfWeekTexts(binding.layoutDateHeader)
+        CharacterManager.applyTimeDoneText(binding.layoutTimeHeader)
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
