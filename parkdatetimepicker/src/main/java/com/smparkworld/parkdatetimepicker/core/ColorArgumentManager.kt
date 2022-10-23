@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import com.smparkworld.parkdatetimepicker.ui.CircleButton
 
-internal object ColorManager {
+internal object ColorArgumentManager {
 
     @ColorInt
     private var primaryColorInt: Int? = null
