@@ -59,7 +59,7 @@ internal class DateMonthAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(uiModel: MonthUiModel) {
-            binding.container.itemAnimator
+            binding.container.itemAnimator = null
             getAdapter(uiModel).submitList(uiModel.dayUiModels)
         }
 

@@ -42,12 +42,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/layout_date_header"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                layout="@layout/view_navigator_date_picker"/>
+                android:layout_height="60dp">
+
+                <include
+                    android:id="@+id/layout_date_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:visibility="invisible"
+                    layout="@layout/view_header_fragment_date"
+                    tools:visibility="visible"/>
+
+                <include
+                    android:id="@+id/layout_time_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:visibility="gone"
+                    layout="@layout/view_header_fragment_time" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
