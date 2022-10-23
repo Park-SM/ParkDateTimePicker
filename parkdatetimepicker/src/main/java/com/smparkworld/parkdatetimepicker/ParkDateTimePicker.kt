@@ -49,6 +49,8 @@ class ParkDateTimePicker private constructor() {
 
         private var timeDoneText: String? = null
 
+        private var amPmTexts: Array<String>? = null
+
         private var primaryColorCode: String? = null
         private var primaryColorResId: Int? = null
 
@@ -97,6 +99,11 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
+        override fun setAmPmTexts(texts: Array<String>): ParkDateTimePickerBuilder {
+            this.amPmTexts = texts
+            return this
+        }
+
         override fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder {
             primaryColorCode = colorCode
             return this
@@ -122,6 +129,9 @@ class ParkDateTimePicker private constructor() {
             }
             timeDoneText?.let {
                 arguments.putString(ExtraKey.EXTRA_TIME_DONE_TEXT, it)
+            }
+            amPmTexts?.let {
+                arguments.putStringArray(ExtraKey.EXTRA_AM_PM_TEXTS, it)
             }
             primaryColorCode?.let {
                 arguments.putString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE, it)

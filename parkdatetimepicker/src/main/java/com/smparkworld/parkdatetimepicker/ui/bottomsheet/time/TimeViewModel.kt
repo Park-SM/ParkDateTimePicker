@@ -3,6 +3,7 @@ package com.smparkworld.parkdatetimepicker.ui.bottomsheet.time
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.extension.updateAssign
 import com.smparkworld.parkdatetimepicker.model.SelectedTime
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.base.BaseViewModel
@@ -52,13 +53,13 @@ internal class TimeViewModel(
         val (hour, minute) = formatter.format(System.currentTimeMillis()).split(":").map { it.toInt() }
         val currentTime = if (hour > 12) {
             SelectedTime(
-                amPm = "AM",
+                amPm = TextArgumentApplier.getPmText(),
                 hour = hour - 12,
                 minute = minute
             )
         } else {
             SelectedTime(
-                amPm = "PM",
+                amPm = TextArgumentApplier.getAmText(),
                 hour = hour,
                 minute = minute
             )

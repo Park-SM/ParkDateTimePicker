@@ -7,6 +7,7 @@ internal object ExtraKey {
     const val EXTRA_TITLE_RES_ID = "extra_title_res_id"
     const val EXTRA_DAY_OF_WEEK_TEXTS = "extra_day_of_week_texts"
     const val EXTRA_TIME_DONE_TEXT = "extra_time_done_text"
+    const val EXTRA_AM_PM_TEXTS = "extra_am_pm_texts"
     const val EXTRA_PRIMARY_COLOR_CODE = "extra_primary_color_code"
     const val EXTRA_PRIMARY_COLOR_RES_ID = "extra_primary_color_res_id"
     const val EXTRA_MIN_YEAR_DIFF = "extra_min_year_diff"
