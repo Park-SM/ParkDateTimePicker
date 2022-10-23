@@ -7,6 +7,7 @@ import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeLis
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
 
 interface ParkDateTimePickerBuilder {
@@ -40,6 +41,8 @@ interface ParkDateTimePickerBuilder {
     fun setHighLightColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
 
     fun setDateTitleFormatter(formatter: DateTitleFormatter): ParkDateTimePickerBuilder
+
+    fun setTimeTitleFormatter(formatter: TimeTitleFormatter): ParkDateTimePickerBuilder
 
     fun show()
 }
