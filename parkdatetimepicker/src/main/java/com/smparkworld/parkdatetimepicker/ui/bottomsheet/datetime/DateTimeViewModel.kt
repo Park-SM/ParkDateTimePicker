@@ -11,11 +11,12 @@ import com.smparkworld.parkdatetimepicker.model.ExtraKey
 import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
 import com.smparkworld.parkdatetimepicker.model.SelectedDate
 import com.smparkworld.parkdatetimepicker.model.SelectedTime
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
 
 internal class DateTimeViewModel(
     private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val navigator: DateTimeModeNavigator = DateTimeModeNavigatorImpl()
 

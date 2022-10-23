@@ -17,7 +17,7 @@ import com.smparkworld.parkdatetimepicker.databinding.ViewStringPickerBinding
 typealias OnItemSelectedListener = (String) -> Unit
 
 @Deprecated("not yet fully developed.")
-class StringPicker @JvmOverloads constructor(
+internal class StringPicker @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
