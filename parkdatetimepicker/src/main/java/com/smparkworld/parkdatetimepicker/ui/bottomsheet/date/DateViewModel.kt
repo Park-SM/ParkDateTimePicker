@@ -14,7 +14,6 @@ import com.smparkworld.parkdatetimepicker.ui.bottomsheet.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DayUiModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.MonthUiModel
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
 import kotlinx.coroutines.launch
 
 internal typealias MonthsData = Pair<List<MonthUiModel>, Int>
