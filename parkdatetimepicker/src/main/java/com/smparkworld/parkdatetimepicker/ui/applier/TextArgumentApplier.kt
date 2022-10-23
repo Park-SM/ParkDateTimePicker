@@ -1,16 +1,24 @@
 package com.smparkworld.parkdatetimepicker.ui.applier
 
 import android.widget.NumberPicker
+import android.widget.TextView
 import com.smparkworld.parkdatetimepicker.databinding.ViewHeaderFragmentDateBinding
 import com.smparkworld.parkdatetimepicker.databinding.ViewHeaderFragmentTimeBinding
 
 internal object TextArgumentApplier {
+
+    private var title: String = "Calendar"
 
     private var dayOfWeekTexts: Array<String> = arrayOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
 
     private var timeDoneText: String = "Done"
 
     private var amPmTexts: Array<String> = arrayOf("AM", "PM")
+
+    @JvmStatic
+    fun setTitle(text: String) {
+        title = text
+    }
 
     @JvmStatic
     fun setDayOfWeekTexts(texts: Array<String>) {
@@ -29,6 +37,11 @@ internal object TextArgumentApplier {
         texts.takeIf { it.size == 2 }?.let {
             amPmTexts = it
         }
+    }
+
+    @JvmStatic
+    fun applyTitle(view: TextView) {
+        view.text = title
     }
 
     @JvmStatic
