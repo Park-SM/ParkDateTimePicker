@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
+import com.smparkworld.parkdatetimepicker.core.CharacterManager
 import com.smparkworld.parkdatetimepicker.core.ColorManager
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.extension.viewModels
@@ -62,6 +63,9 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
             binding.title.text = it
         }
+        arguments?.getStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_CHARS)?.let {
+            CharacterManager.setDayOfWeekChars(it)
+        }
         arguments?.getInt(ExtraKey.EXTRA_TITLE_RES_ID, -1)?.let {
             if (it > 0) binding.title.setText(it)
         }
@@ -96,6 +100,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         ColorManager.applyPrimaryColor(binding.layoutDateHeader.fri)
         ColorManager.applyPrimaryColor(binding.layoutDateHeader.sat)
         ColorManager.applyPrimaryColor(binding.layoutTimeHeader.done)
+        CharacterManager.applyDayOfWeekChars(binding.layoutDateHeader)
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {
