@@ -54,28 +54,31 @@ class ParkDateTimePicker private constructor() {
         private var primaryColorCode: String? = null
         private var primaryColorResId: Int? = null
 
+        private var highLightColorCode: String? = null
+        private var highLightColorResId: Int? = null
+
         override fun setDateListener(listener: DateListener): ParkDateTimePickerBuilder {
-            dateListener = listener
+            this.dateListener = listener
             return this
         }
 
         override fun setDateRangeListener(listener: DateRangeListener): ParkDateTimePickerBuilder {
-            dateRangeListener = listener
+            this.dateRangeListener = listener
             return this
         }
 
         override fun setTimeListener(listener: TimeListener): ParkDateTimePickerBuilder {
-            timeListener = listener
+            this.timeListener = listener
             return this
         }
 
         override fun setDateTimeListener(listener: DateTimeListener): ParkDateTimePickerBuilder {
-            dateTimeListener = listener
+            this.dateTimeListener = listener
             return this
         }
 
         override fun setDateTimeRangeListener(listener: DateTimeRangeListener): ParkDateTimePickerBuilder {
-            dateTimeRangeListener = listener
+            this.dateTimeRangeListener = listener
             return this
         }
 
@@ -105,12 +108,22 @@ class ParkDateTimePicker private constructor() {
         }
 
         override fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder {
-            primaryColorCode = colorCode
+            this.primaryColorCode = colorCode
             return this
         }
 
         override fun setPrimaryColor(@ColorInt colorResId: Int): ParkDateTimePickerBuilder {
-            primaryColorResId = colorResId
+            this.primaryColorResId = colorResId
+            return this
+        }
+
+        override fun setHighLightColor(colorCode: String): ParkDateTimePickerBuilder {
+            this.highLightColorCode = colorCode
+            return this
+        }
+
+        override fun setHighLightColor(colorResId: Int): ParkDateTimePickerBuilder {
+            this.highLightColorResId = colorResId
             return this
         }
 
@@ -138,6 +151,12 @@ class ParkDateTimePicker private constructor() {
             }
             primaryColorResId?.let {
                 arguments.putInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, it)
+            }
+            highLightColorCode?.let {
+                arguments.putString(ExtraKey.EXTRA_HIGHLIGHT_COLOR_CODE, it)
+            }
+            highLightColorResId?.let {
+                arguments.putInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, it)
             }
 
             when {

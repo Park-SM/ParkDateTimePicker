@@ -60,6 +60,12 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, -1)?.let {
             if (it > 0) ColorArgumentApplier.setPrimaryColor(ContextCompat.getColor(requireContext(), it))
         }
+        arguments?.getString(ExtraKey.EXTRA_HIGHLIGHT_COLOR_CODE)?.let {
+            ColorArgumentApplier.setHighLightColor(Color.parseColor(it))
+        }
+        arguments?.getInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, -1)?.let {
+            if (it > 0) ColorArgumentApplier.setHighLightColor(ContextCompat.getColor(requireContext(), it))
+        }
         arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
             binding.title.text = it
         }
@@ -105,6 +111,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.fri)
         ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.sat)
         ColorArgumentApplier.applyPrimaryColor(binding.layoutTimeHeader.done)
+        ColorArgumentApplier.applyHighLightColor(binding.layoutTimeHeader.title)
 
         TextArgumentApplier.applyDayOfWeekTexts(binding.layoutDateHeader)
         TextArgumentApplier.applyTimeDoneText(binding.layoutTimeHeader)
