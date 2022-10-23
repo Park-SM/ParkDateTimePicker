@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.smparkworld.parkdatetimepicker.extension.updateAssign
 import com.smparkworld.parkdatetimepicker.model.SelectedTime
+import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
+import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.base.BaseViewModel
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.model.TimeUiModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,11 +23,7 @@ internal class TimeViewModel(
     val selectedTimeUiModel: LiveData<TimeUiModel> get() = _selectedTimeUiModel
 
     val selectedTimeTitle: LiveData<String> get() = Transformations.map(_selectedTimeUiModel) {
-        timeTitleFormatter.onChangeTitle(it.amPm, it.hour, it.minute)
-    }
-
-    private var timeTitleFormatter = TimeTitleFormatter { amPm, hour, minute ->
-        "$amPm $hour : ${String.format("%02d", minute)}"
+        FormatArgumentApplier.formatTimeTitle(it.amPm, it.hour, it.minute)
     }
 
     init {
@@ -52,13 +49,13 @@ internal class TimeViewModel(
         val (hour, minute) = formatter.format(System.currentTimeMillis()).split(":").map { it.toInt() }
         val currentTime = if (hour > 12) {
             SelectedTime(
-                amPm = "AM",
+                amPm = TextArgumentApplier.getPmText(),
                 hour = hour - 12,
                 minute = minute
             )
         } else {
             SelectedTime(
-                amPm = "PM",
+                amPm = TextArgumentApplier.getAmText(),
                 hour = hour,
                 minute = minute
             )

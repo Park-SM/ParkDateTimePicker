@@ -8,6 +8,7 @@ import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import com.smparkworld.parkdatetimepicker.databinding.FragmentTimeBinding
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
+import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.model.TimeUiModel
 
 internal class TimeFragment : Fragment() {
@@ -23,14 +24,15 @@ internal class TimeFragment : Fragment() {
 
         initViews(binding)
         initObservers(binding)
-        initArguments(binding)
         return binding.root
     }
 
     private fun initViews(binding: FragmentTimeBinding) {
         binding.pickerAmPm.minValue = 0
         binding.pickerAmPm.maxValue = 1
-        binding.pickerAmPm.displayedValues = arrayOf("AM", "PM")
+        binding.pickerAmPm.let {
+            TextArgumentApplier.applyAmPmTexts(it)
+        }
         binding.pickerAmPm.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         binding.pickerAmPm.setOnValueChangedListener { picker, _, value ->
             vm.onChangeValue(amPm = picker.displayedValues.getOrNull(value))
@@ -59,16 +61,10 @@ internal class TimeFragment : Fragment() {
         }
     }
 
-    private fun initArguments(binding: FragmentTimeBinding) {
-
-    }
-
     private fun applyTimeValues(binding: FragmentTimeBinding, uiModel: TimeUiModel) {
-        uiModel.amPm?.let {
-            val newValueIndex = binding.pickerAmPm.displayedValues.indexOf(it)
-            if (binding.pickerAmPm.value != newValueIndex) {
-                binding.pickerAmPm.value = newValueIndex
-            }
+        val newValueIndex = binding.pickerAmPm.displayedValues.indexOf(uiModel.amPm)
+        if (binding.pickerAmPm.value != newValueIndex) {
+            binding.pickerAmPm.value = newValueIndex
         }
         if (binding.pickerHour.value != uiModel.hour) {
             binding.pickerHour.value = uiModel.hour

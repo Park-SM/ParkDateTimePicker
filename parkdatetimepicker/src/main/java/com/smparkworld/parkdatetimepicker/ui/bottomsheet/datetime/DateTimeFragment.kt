@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
-import com.smparkworld.parkdatetimepicker.core.ColorManager
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.extension.viewModels
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
+import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.DateViewModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
@@ -54,13 +55,28 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         vm.init(listener)
 
         arguments?.getString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE)?.let {
-            ColorManager.setPrimaryColor(Color.parseColor(it))
+            ColorArgumentApplier.setPrimaryColor(Color.parseColor(it))
         }
         arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, -1)?.let {
-            if (it > 0) ColorManager.setPrimaryColor(ContextCompat.getColor(requireContext(), it))
+            if (it > 0) ColorArgumentApplier.setPrimaryColor(ContextCompat.getColor(requireContext(), it))
+        }
+        arguments?.getString(ExtraKey.EXTRA_HIGHLIGHT_COLOR_CODE)?.let {
+            ColorArgumentApplier.setHighLightColor(Color.parseColor(it))
+        }
+        arguments?.getInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, -1)?.let {
+            if (it > 0) ColorArgumentApplier.setHighLightColor(ContextCompat.getColor(requireContext(), it))
         }
         arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
-            binding.title.text = it
+            TextArgumentApplier.setTitle(it)
+        }
+        arguments?.getStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_TEXTS)?.let {
+            TextArgumentApplier.setDayOfWeekTexts(it)
+        }
+        arguments?.getString(ExtraKey.EXTRA_TIME_DONE_TEXT)?.let {
+            TextArgumentApplier.setTimeDoneText(it)
+        }
+        arguments?.getStringArray(ExtraKey.EXTRA_AM_PM_TEXTS)?.let {
+            TextArgumentApplier.setAmPmTexts(it)
         }
         arguments?.getInt(ExtraKey.EXTRA_TITLE_RES_ID, -1)?.let {
             if (it > 0) binding.title.setText(it)
@@ -82,20 +98,24 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.layoutTimeHeader.done.setOnClickListener {
             timeVm.onClickDone()
         }
-        binding.layoutTimeHeader.done.text = "선택 완료"
 
-        ColorManager.applyPrimaryColor(binding.title)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.title)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.btnNext)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.sun)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.mon)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.tue)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.wed)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.thu)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.fri)
-        ColorManager.applyPrimaryColor(binding.layoutDateHeader.sat)
-        ColorManager.applyPrimaryColor(binding.layoutTimeHeader.done)
+        ColorArgumentApplier.applyPrimaryColor(binding.title)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.title)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.btnNext)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.sun)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.mon)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.tue)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.wed)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.thu)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.fri)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.sat)
+        ColorArgumentApplier.applyPrimaryColor(binding.layoutTimeHeader.done)
+        ColorArgumentApplier.applyHighLightColor(binding.layoutTimeHeader.title)
+
+        TextArgumentApplier.applyTitle(binding.title)
+        TextArgumentApplier.applyDayOfWeekTexts(binding.layoutDateHeader)
+        TextArgumentApplier.applyTimeDoneText(binding.layoutTimeHeader)
     }
 
     private fun initObservers(binding: FragmentDatetimeBinding) {

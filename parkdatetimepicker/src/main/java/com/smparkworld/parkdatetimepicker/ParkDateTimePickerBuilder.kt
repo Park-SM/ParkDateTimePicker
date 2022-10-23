@@ -6,6 +6,8 @@ import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DateListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
 
 interface ParkDateTimePickerBuilder {
@@ -24,9 +26,23 @@ interface ParkDateTimePickerBuilder {
 
     fun setTitle(@StringRes titleResId: Int): ParkDateTimePickerBuilder
 
+    fun setDayOfWeekTexts(texts: Array<String>): ParkDateTimePickerBuilder
+
+    fun setTimeDoneText(text: String): ParkDateTimePickerBuilder
+
+    fun setAmPmTexts(texts: Array<String>): ParkDateTimePickerBuilder
+
     fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder
 
     fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
+
+    fun setHighLightColor(colorCode: String): ParkDateTimePickerBuilder
+
+    fun setHighLightColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
+
+    fun setDateTitleFormatter(formatter: DateTitleFormatter): ParkDateTimePickerBuilder
+
+    fun setTimeTitleFormatter(formatter: TimeTitleFormatter): ParkDateTimePickerBuilder
 
     fun show()
 }

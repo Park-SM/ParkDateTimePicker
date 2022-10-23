@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.databinding.ViewCircleButtonBinding
 
-class CircleButton @JvmOverloads constructor(
+internal class CircleButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
