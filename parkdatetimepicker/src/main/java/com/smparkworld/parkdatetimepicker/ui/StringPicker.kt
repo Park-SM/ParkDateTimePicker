@@ -6,9 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DimenRes
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.parkdatetimepicker.databinding.ItemStringPickerBinding
