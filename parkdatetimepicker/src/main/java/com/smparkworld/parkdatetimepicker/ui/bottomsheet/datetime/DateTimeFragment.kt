@@ -92,9 +92,6 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.layoutDateHeader.btnNext.setOnClickListener {
             dateVm.onClickCalendarControl(CalendarControlEvent.NextPage)
         }
-        binding.layoutDateHeader.title.setOnClickListener {
-            dateVm.onClickCalendarControl(CalendarControlEvent.JumpPage(2022, 1))
-        }
         binding.layoutTimeHeader.done.setOnClickListener {
             timeVm.onClickDone()
         }
