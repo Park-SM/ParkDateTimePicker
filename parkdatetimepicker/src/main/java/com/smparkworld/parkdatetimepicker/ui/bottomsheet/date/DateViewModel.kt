@@ -71,7 +71,7 @@ internal class DateViewModel(
                 }
             }
             is CalendarControlEvent.JumpPage -> {
-
+                // To be added in version 1.1.0.
             }
         }
     }
