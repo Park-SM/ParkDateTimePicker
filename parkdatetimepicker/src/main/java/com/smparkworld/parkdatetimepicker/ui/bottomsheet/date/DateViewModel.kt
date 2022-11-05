@@ -71,7 +71,13 @@ internal class DateViewModel(
                 }
             }
             is CalendarControlEvent.JumpPage -> {
-
+                val position = getJumpPage(
+                    targetYear = event.year,
+                    targetMonth = event.month
+                )
+                if (position != null) {
+                    _monthPosition.value = position
+                }
             }
         }
     }
@@ -98,6 +104,17 @@ internal class DateViewModel(
 
     private fun getNextPage(currentPage: Int?, maxPage: Int?): Int? {
         return currentPage?.takeIf { it < (maxPage ?: -1) }?.plus(1)
+    }
+
+    private fun getJumpPage(targetYear: Int, targetMonth: Int): Int? {
+        var position: Int? = null
+
+        _dateData.value?.months?.forEachIndexed { index, monthData ->
+            if (monthData.year == targetYear && monthData.month == targetMonth) {
+                position = index
+            }
+        }
+        return position
     }
 
     private fun getDateTitle(dateData: DateData?, monthPosition: Int?): String? {

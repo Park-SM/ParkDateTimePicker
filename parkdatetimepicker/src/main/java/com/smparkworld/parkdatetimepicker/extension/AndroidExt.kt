@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.viewpager2.widget.ViewPager2
+import kotlin.math.abs
 
 internal fun Fragment.getExtra(key: String, default: Int): Int {
     return arguments?.getInt(key, default) ?: default
@@ -71,4 +73,9 @@ internal fun <T> MutableLiveData<T>.updateAssign(perform: (T) -> Unit) {
     if (oldValue != null) {
         this.value = oldValue.apply(perform)
     }
+}
+
+internal fun ViewPager2.setCurrentItemWithSmartSmooth(position: Int) {
+    val isSmoothScroll = abs(currentItem - position) < 4
+    setCurrentItem(position, isSmoothScroll)
 }

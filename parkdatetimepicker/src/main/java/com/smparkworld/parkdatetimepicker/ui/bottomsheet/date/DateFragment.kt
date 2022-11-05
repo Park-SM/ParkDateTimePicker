@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.smparkworld.parkdatetimepicker.databinding.FragmentDateBinding
 import com.smparkworld.parkdatetimepicker.extension.getExtra
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
+import com.smparkworld.parkdatetimepicker.extension.setCurrentItemWithSmartSmooth
 import com.smparkworld.parkdatetimepicker.model.DefaultOption
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
 
@@ -56,7 +57,7 @@ internal class DateFragment : Fragment() {
         }
         vm.monthPosition.observe(viewLifecycleOwner) { position ->
             if (binding.container.currentItem != position) {
-                binding.container.currentItem = position
+                binding.container.setCurrentItemWithSmartSmooth(position)
             }
         }
     }
