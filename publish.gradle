@@ -1,0 +1,14 @@
+ext {
+    PUBLISH_DESCRIPTION = 'Android library for selecting date and time from BottomSheet UI.'
+    PUBLISH_URL = 'https://github.com/Park-SM/ParkDateTimePicker'
+    PUBLISH_LICENSE_NAME = 'Apache License 2.0'
+    PUBLISH_LICENSE_URL = 'https://github.com/Park-SM/ParkDateTimePicker/blob/main/LICENSE'
+
+    PUBLISH_DEVELOPER_ID = 'ParkSM'
+    PUBLISH_DEVELOPER_NAME = 'SangMin Park'
+    PUBLISH_DEVELOPER_EMAIL = 'park97.sm@gmail.com'
+
+    PUBLISH_SCM_CONNECTION = 'scm:git:github.com/Park-SM/ParkDateTimePicker.git'
+    PUBLISH_SCM_DEVELOPER_CONNECTION = 'scm:git:ssh://github.com:Park-SM/ParkDateTimePicker.git'
+    PUBLISH_SCM_URL = 'https://github.com/Park-SM/ParkDateTimePicker/tree/main'
+}
