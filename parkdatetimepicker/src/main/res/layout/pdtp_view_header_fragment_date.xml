@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.smparkworld.parkdatetimepicker.ui.common.CircleImageButton
+            android:id="@+id/btn_prev"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/pdtp_ic_arrow_left"
+            android:tint="@color/pdtp_black"
+            style="@style/PDTP_CircleImageButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:textColor="@color/pdtp_black"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:foreground="?selectableItemBackground"
+            app:layout_constraintTop_toTopOf="@id/btn_prev"
+            app:layout_constraintStart_toEndOf="@id/btn_prev"
+            app:layout_constraintEnd_toStartOf="@id/btn_next"
+            app:layout_constraintBottom_toBottomOf="@id/btn_prev"
+            tools:text="1997년 12월" />
+
+        <com.smparkworld.parkdatetimepicker.ui.common.CircleImageButton
+            android:id="@+id/btn_next"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/pdtp_ic_arrow_right"
+            android:tint="@color/pdtp_black"
+            style="@style/PDTP_CircleImageButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:weightSum="7"
+            app:layout_constraintTop_toBottomOf="@id/btn_prev"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/sun"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/pdtp_black"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                tools:text="@string/pdtp_label_sun"/>
+
+            <TextView
+                android:id="@+id/mon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/pdtp_black"
+                android:textSize="13dp"
+                tools:text="@string/pdtp_label_mon"/>
+
+            <TextView
+                android:id="@+id/tue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/pdtp_black"
+                android:textSize="13dp"
+                tools:text="@string/pdtp_label_tue"/>
+
+            <TextView
+                android:id="@+id/wed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/pdtp_black"
+                android:textSize="13dp"
+                tools:text="@string/pdtp_label_wed"/>
+
+            <TextView
+                android:id="@+id/thu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/pdtp_black"
+                android:textSize="13dp"
+                tools:text="@string/pdtp_label_thu"/>
+
+            <TextView
+                android:id="@+id/fri"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/pdtp_black"
+                android:textSize="13dp"
+                tools:text="@string/pdtp_label_fri"/>
+
+            <TextView
+                android:id="@+id/sat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/pdtp_black"
+                android:textSize="13dp"
+                tools:text="@string/pdtp_label_sat"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CircleImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:padding">@dimen/view_circle_button_default_padding</item>
+    <style name="PDTP_CircleImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:padding">@dimen/pdtp_view_circle_button_default_padding</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:foreground">?selectableItemBackground</item>
     </style>
 
-    <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    <style name="PDTP_BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/PDTP_BottomSheetStyle</item>
     </style>
 
-    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+    <style name="PDTP_BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

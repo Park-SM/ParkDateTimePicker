@@ -2,8 +2,8 @@ package com.smparkworld.parkdatetimepicker.ui.applier
 
 import android.widget.NumberPicker
 import android.widget.TextView
-import com.smparkworld.parkdatetimepicker.databinding.ViewHeaderFragmentDateBinding
-import com.smparkworld.parkdatetimepicker.databinding.ViewHeaderFragmentTimeBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpViewHeaderFragmentDateBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpViewHeaderFragmentTimeBinding
 
 internal object TextArgumentApplier {
 
@@ -45,7 +45,7 @@ internal object TextArgumentApplier {
     }
 
     @JvmStatic
-    fun applyDayOfWeekTexts(headerView: ViewHeaderFragmentDateBinding) {
+    fun applyDayOfWeekTexts(headerView: PdtpViewHeaderFragmentDateBinding) {
         headerView.sun.text = dayOfWeekTexts[0]
         headerView.mon.text = dayOfWeekTexts[1]
         headerView.tue.text = dayOfWeekTexts[2]
@@ -56,7 +56,7 @@ internal object TextArgumentApplier {
     }
 
     @JvmStatic
-    fun applyTimeDoneText(headerView: ViewHeaderFragmentTimeBinding) {
+    fun applyTimeDoneText(headerView: PdtpViewHeaderFragmentTimeBinding) {
         headerView.done.text = timeDoneText
     }
 
