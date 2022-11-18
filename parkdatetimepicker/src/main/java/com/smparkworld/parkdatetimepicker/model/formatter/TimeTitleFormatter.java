@@ -1,4 +1,4 @@
-package com.smparkworld.parkdatetimepicker.model.listener;
+package com.smparkworld.parkdatetimepicker.model.formatter;
 
 public interface TimeTitleFormatter {
 
