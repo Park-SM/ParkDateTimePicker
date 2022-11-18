@@ -1,6 +1,5 @@
-package com.smparkworld.parkdatetimepicker.ui.time;
+package com.smparkworld.parkdatetimepicker.model.listener;
 
-import com.smparkworld.parkdatetimepicker.model.listener.BaseListener;
 import com.smparkworld.parkdatetimepicker.model.TimeResult;
 
 public interface TimeListener extends BaseListener {

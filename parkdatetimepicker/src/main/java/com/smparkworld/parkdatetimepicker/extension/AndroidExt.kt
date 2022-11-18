@@ -6,14 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 
-internal fun Fragment.getExtra(key: String, default: Int): Int {
-    return arguments?.getInt(key, default) ?: default
-}
-
-internal fun Fragment.getExtra(key: String, default: String): String {
-    return arguments?.getString(key, default) ?: default
-}
-
 internal fun <T> MutableCollection<T>.addRequiredNonNullItem(element: T?, message: String? = null) {
     if (element != null) {
         add(element)
