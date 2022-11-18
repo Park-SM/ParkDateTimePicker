@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
-        <com.smparkworld.parkdatetimepicker.ui.CircleImageButton
+        <com.smparkworld.parkdatetimepicker.ui.common.CircleImageButton
             android:id="@+id/container"
             android:layout_width="0dp"
             android:layout_height="0dp"

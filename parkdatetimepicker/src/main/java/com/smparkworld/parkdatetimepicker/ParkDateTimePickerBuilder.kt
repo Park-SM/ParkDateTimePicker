@@ -2,13 +2,13 @@ package com.smparkworld.parkdatetimepicker
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DateListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateRangeListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateTimeListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateTimeRangeListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.listener.TimeTitleFormatter
+import com.smparkworld.parkdatetimepicker.ui.time.TimeListener
 
 interface ParkDateTimePickerBuilder {
 

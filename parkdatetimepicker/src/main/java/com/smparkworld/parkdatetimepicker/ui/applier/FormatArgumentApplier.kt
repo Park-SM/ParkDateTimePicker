@@ -1,7 +1,7 @@
 package com.smparkworld.parkdatetimepicker.ui.applier
 
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.listener.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.listener.TimeTitleFormatter
 
 internal object FormatArgumentApplier {
 
