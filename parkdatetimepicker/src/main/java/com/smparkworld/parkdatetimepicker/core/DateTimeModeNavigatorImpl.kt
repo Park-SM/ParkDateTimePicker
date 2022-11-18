@@ -1,12 +1,12 @@
 package com.smparkworld.parkdatetimepicker.core
 
 import com.smparkworld.parkdatetimepicker.extension.addRequiredNonNullItem
-import com.smparkworld.parkdatetimepicker.model.BaseListener
+import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
 import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
-import com.smparkworld.parkdatetimepicker.model.SelectedDate
-import com.smparkworld.parkdatetimepicker.model.SelectedTime
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
+import com.smparkworld.parkdatetimepicker.model.DateResult
+import com.smparkworld.parkdatetimepicker.model.TimeResult
+import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeMode
+import com.smparkworld.parkdatetimepicker.ui.datetime.model.Phase
 
 internal class DateTimeModeNavigatorImpl(
     private val listenerManager: ListenerManager = ListenerManagerImpl()
@@ -16,8 +16,8 @@ internal class DateTimeModeNavigatorImpl(
 
     private var currentPhase: Phase = Phase.INIT
 
-    private val selectedDates = mutableListOf<SelectedDate>()
-    private val selectedTimes = mutableListOf<SelectedTime>()
+    private val selectedDates = mutableListOf<DateResult>()
+    private val selectedTimes = mutableListOf<TimeResult>()
 
     override fun init(mode: DateTimeMode, listener: BaseListener?): PhaseTransactionData {
         this.mode = mode
@@ -27,8 +27,8 @@ internal class DateTimeModeNavigatorImpl(
     }
 
     override fun getNextPhase(
-        selectedDate: SelectedDate?,
-        selectedTime: SelectedTime?
+        selectedDate: DateResult?,
+        selectedTime: TimeResult?
     ): PhaseTransactionData {
         assertInitialized()
         return when(mode) {

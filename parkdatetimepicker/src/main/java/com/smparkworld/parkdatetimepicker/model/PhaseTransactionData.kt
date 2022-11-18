@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.model
 
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.Phase
+import com.smparkworld.parkdatetimepicker.ui.datetime.model.Phase
 
 internal data class PhaseTransactionData(
 

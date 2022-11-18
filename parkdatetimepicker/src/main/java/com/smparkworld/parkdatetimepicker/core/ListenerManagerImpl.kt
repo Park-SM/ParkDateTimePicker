@@ -1,15 +1,15 @@
 package com.smparkworld.parkdatetimepicker.core
 
-import com.smparkworld.parkdatetimepicker.model.BaseListener
-import com.smparkworld.parkdatetimepicker.model.SelectedDate
-import com.smparkworld.parkdatetimepicker.model.SelectedDateTime
-import com.smparkworld.parkdatetimepicker.model.SelectedTime
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DateListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
+import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
+import com.smparkworld.parkdatetimepicker.model.DateResult
+import com.smparkworld.parkdatetimepicker.model.DateTimeResult
+import com.smparkworld.parkdatetimepicker.model.TimeResult
+import com.smparkworld.parkdatetimepicker.model.listener.DateListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateRangeListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateTimeListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateTimeRangeListener
+import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeMode
+import com.smparkworld.parkdatetimepicker.ui.time.TimeListener
 
 internal class ListenerManagerImpl : ListenerManager {
 
@@ -21,7 +21,7 @@ internal class ListenerManagerImpl : ListenerManager {
         this.listener = listener
     }
 
-    override fun onDone(selectedDates: List<SelectedDate>, selectedTimes: List<SelectedTime>) {
+    override fun onDone(selectedDates: List<DateResult>, selectedTimes: List<TimeResult>) {
         assertInitialized()
         when (mode) {
             DateTimeMode.DATE -> {
@@ -36,7 +36,7 @@ internal class ListenerManagerImpl : ListenerManager {
                 (listener as? DateTimeListener)?.let {
                     val resultDate = selectedDates.getOrNull(0) ?: return
                     val resultTime = selectedTimes.getOrNull(0) ?: return
-                    val result = SelectedDateTime(
+                    val result = DateTimeResult(
                         year = resultDate.year,
                         month = resultDate.month,
                         day = resultDate.day,
@@ -60,7 +60,7 @@ internal class ListenerManagerImpl : ListenerManager {
                 (listener as? DateTimeRangeListener)?.let {
                     val resultStartDate = selectedDates.getOrNull(0) ?: return
                     val resultStartTime = selectedTimes.getOrNull(0) ?: return
-                    val resultStartDateTime = SelectedDateTime(
+                    val resultStartDateTime = DateTimeResult(
                         year = resultStartDate.year,
                         month = resultStartDate.month,
                         day = resultStartDate.day,
@@ -71,7 +71,7 @@ internal class ListenerManagerImpl : ListenerManager {
                     )
                     val resultEndDate = selectedDates.getOrNull(1) ?: return
                     val resultEndTime = selectedTimes.getOrNull(1) ?: return
-                    val resultEndDateTime = SelectedDateTime(
+                    val resultEndDateTime = DateTimeResult(
                         year = resultEndDate.year,
                         month = resultEndDate.month,
                         day = resultEndDate.day,
