@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray_bright_white">#F1F3F5</color>
-    <color name="gray_bright">#DCDCDC</color>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#141719</color>
-    <color name="blue">#0A70C2</color>
+    <color name="pdtp_gray_bright_white">#F1F3F5</color>
+    <color name="pdtp_gray_bright">#DCDCDC</color>
+    <color name="pdtp_white">#FFFFFF</color>
+    <color name="pdtp_black">#141719</color>
+    <color name="pdtp_blue">#0A70C2</color>
 </resources>

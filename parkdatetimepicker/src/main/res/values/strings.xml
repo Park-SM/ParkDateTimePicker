@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="label_title">일정 선택</string>
-    <string name="label_mon">월</string>
-    <string name="label_tue">화</string>
-    <string name="label_wed">수</string>
-    <string name="label_thu">목</string>
-    <string name="label_fri">금</string>
-    <string name="label_sat">토</string>
-    <string name="label_sun">일</string>
+    <string name="pdtp_label_title">일정 선택</string>
+    <string name="pdtp_label_mon">월</string>
+    <string name="pdtp_label_tue">화</string>
+    <string name="pdtp_label_wed">수</string>
+    <string name="pdtp_label_thu">목</string>
+    <string name="pdtp_label_fri">금</string>
+    <string name="pdtp_label_sat">토</string>
+    <string name="pdtp_label_sun">일</string>
 
-    <string name="time_divider">:</string>
+    <string name="pdtp_time_divider">:</string>
 </resources>

@@ -6,17 +6,15 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.smparkworld.parkdatetimepicker.model.ExtraKey
+import com.smparkworld.parkdatetimepicker.core.ExtraKey
+import com.smparkworld.parkdatetimepicker.model.formatter.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.TimeTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.listener.DateListener
+import com.smparkworld.parkdatetimepicker.model.listener.DateTimeListener
+import com.smparkworld.parkdatetimepicker.model.listener.TimeListener
 import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DateListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.range.DateRangeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.DateTimeFragment
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTimeRangeListener
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.model.DateTimeMode
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.TimeListener
+import com.smparkworld.parkdatetimepicker.ui.datetime.DateTimeFragment
+import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeMode
 
 class ParkDateTimePicker private constructor() {
 
@@ -39,9 +37,6 @@ class ParkDateTimePicker private constructor() {
 
         private var dateListener: DateListener? = null
         private var dateTimeListener: DateTimeListener? = null
-
-        private var dateRangeListener: DateRangeListener? = null
-        private var dateTimeRangeListener: DateTimeRangeListener? = null
 
         private var timeListener: TimeListener? = null
 
@@ -68,11 +63,6 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
-        override fun setDateRangeListener(listener: DateRangeListener): ParkDateTimePickerBuilder {
-            this.dateRangeListener = listener
-            return this
-        }
-
         override fun setTimeListener(listener: TimeListener): ParkDateTimePickerBuilder {
             this.timeListener = listener
             return this
@@ -80,11 +70,6 @@ class ParkDateTimePicker private constructor() {
 
         override fun setDateTimeListener(listener: DateTimeListener): ParkDateTimePickerBuilder {
             this.dateTimeListener = listener
-            return this
-        }
-
-        override fun setDateTimeRangeListener(listener: DateTimeRangeListener): ParkDateTimePickerBuilder {
-            this.dateTimeRangeListener = listener
             return this
         }
 
@@ -189,14 +174,6 @@ class ParkDateTimePicker private constructor() {
                 (dateTimeListener != null) -> {
                     arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME)
                     fragment.setListener(dateTimeListener!!)
-                }
-                (dateRangeListener != null) -> {
-                    arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATE_RANGE)
-                    fragment.setListener(dateRangeListener!!)
-                }
-                (dateTimeRangeListener != null) -> {
-                    arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.DATETIME_RANGE)
-                    fragment.setListener(dateTimeRangeListener!!)
                 }
                 (timeListener != null) -> {
                     arguments.putSerializable(ExtraKey.EXTRA_MODE, DateTimeMode.TIME)

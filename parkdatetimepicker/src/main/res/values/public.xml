@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="park_image_picker" type="string"/>
+    <public name="pdtp_park_image_picker" type="string"/>
 </resources>

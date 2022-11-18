@@ -19,9 +19,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        binding.btnShow.setOnClickListener {
+        binding.btnShowDate.setOnClickListener {
+            showDatePicker()
+        }
+        binding.btnShowTime.setOnClickListener {
+            showTimePicker()
+        }
+        binding.btnShowDateTime.setOnClickListener {
             showDateTimePicker()
         }
+    }
+
+    private fun showDatePicker() {
+        ParkDateTimePicker.builder(this)
+            .setDateListener { date ->
+                Toast.makeText(this, date.toString(), Toast.LENGTH_SHORT).show()
+            }
+            .show()
+    }
+
+    private fun showTimePicker() {
+        ParkDateTimePicker.builder(this)
+            .setTimeListener { time ->
+                Toast.makeText(this, time.toString(), Toast.LENGTH_SHORT).show()
+            }
+            .show()
     }
 
     private fun showDateTimePicker() {

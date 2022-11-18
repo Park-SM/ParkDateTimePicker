@@ -1,17 +1,19 @@
 package com.smparkworld.parkdatetimepicker.ui.applier
 
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.ui.bottomsheet.datetime.listener.TimeTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.DateTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.TimeTitleFormatter
 
 internal object FormatArgumentApplier {
 
-    private var dateTitleFormatter: DateTitleFormatter = DateTitleFormatter { year, month ->
-        "${year}.${String.format("%02d", month)}"
-    }
+    private var dateTitleFormatter: DateTitleFormatter =
+        DateTitleFormatter { year, month ->
+            "${year}.${String.format("%02d", month)}"
+        }
 
-    private var timeTitleFormatter: TimeTitleFormatter = TimeTitleFormatter { amPm, hour, minute ->
-        "$amPm $hour : ${String.format("%02d", minute)}"
-    }
+    private var timeTitleFormatter: TimeTitleFormatter =
+        TimeTitleFormatter { amPm, hour, minute ->
+            "$amPm $hour : ${String.format("%02d", minute)}"
+        }
 
     @JvmStatic
     fun setDateTitleFormatter(formatter: DateTitleFormatter) {
