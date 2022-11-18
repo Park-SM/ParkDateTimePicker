@@ -17,16 +17,6 @@ internal class CircleButton @JvmOverloads constructor(
         LayoutInflater.from(context), this, true
     )
 
-//    private val checkedBackColor = ContextCompat.getColor(context, R.color.black)
-//    private val uncheckedBackColor = ContextCompat.getColor(context, R.color.gray_bright_white)
-//    private val checkedFontColor = ContextCompat.getColor(context, R.color.white)
-//    private val uncheckedFontColor = ContextCompat.getColor(context, R.color.black)
-
-//    private var isChecked = false
-//        set(value) {
-//            field = onChangeIsChecked(value)
-//        }
-
     var text: String = ""
         set(value) {
             field = onChangeText(value)
@@ -41,17 +31,8 @@ internal class CircleButton @JvmOverloads constructor(
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {
-        binding.container.setOnClickListener {
-            listener?.onClick(it)
-//            isChecked = !isChecked
-        }
+        binding.container.setOnClickListener(listener)
     }
-
-//    private fun onChangeIsChecked(value: Boolean): Boolean {
-//        binding.container.setCardBackgroundColor(if (value) checkedBackColor else uncheckedBackColor)
-//        binding.title.setTextColor(if (value) checkedFontColor else uncheckedFontColor)
-//        return value
-//    }
 
     private fun onChangeText(value: String): String {
         binding.title.text = value
