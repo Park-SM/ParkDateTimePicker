@@ -1,13 +1,15 @@
 package com.smparkworld.parkdatetimepicker.ui.bottomsheet.date
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import com.smparkworld.parkdatetimepicker.core.DateUtils
 import com.smparkworld.parkdatetimepicker.data.DateRepository
 import com.smparkworld.parkdatetimepicker.data.DateRepositoryImpl
 import com.smparkworld.parkdatetimepicker.model.DateData
+import com.smparkworld.parkdatetimepicker.model.DefaultOption
+import com.smparkworld.parkdatetimepicker.model.ExtraKey
 import com.smparkworld.parkdatetimepicker.model.SelectedDate
 import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.base.BaseViewModel
@@ -19,9 +21,11 @@ import kotlinx.coroutines.launch
 internal typealias MonthsData = Pair<List<MonthUiModel>, Int>
 
 internal class DateViewModel(
-    private val dateRepository: DateRepository = DateRepositoryImpl(),
-    private val dateUiModelConverter: DateUiModelConverter = DateUiModelConverter()
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+    private val dateRepository: DateRepository = DateRepositoryImpl()
+    private val dateUiModelConverter: DateUiModelConverter = DateUiModelConverter()
 
     private val _dateData = MutableLiveData<DateData>()
     val months: LiveData<MonthsData> get() = Transformations.map(_dateData, ::convertToMonthUiModels)
@@ -29,24 +33,13 @@ internal class DateViewModel(
     private val _selectedDate = MutableLiveData<SelectedDate>()
     val selectedDate: LiveData<SelectedDate> get() = _selectedDate
 
-    val selectedDateTitle: LiveData<String> get() = MediatorLiveData<String>().apply {
-        addSource(_dateData) {
-            value = getDateTitle(it, null)
-        }
-        addSource(_monthPosition) {
-            value = getDateTitle(null, it)
-        }
-    }
+    val selectedDateTitle: LiveData<String> get() = Transformations.map(_monthPosition, ::convertDateTitle)
 
     private val _monthPosition = MutableLiveData<Int>()
     val monthPosition: LiveData<Int> get() = _monthPosition
 
-    fun init(minYearDiff: Int, maxYearDiff: Int) {
-        if (_dateData.value != null) return
-
-        viewModelScope.launch {
-            _dateData.value = dateRepository.getDateData(minYearDiff, maxYearDiff)
-        }
+    init {
+        initDateData()
     }
 
     fun onScrollMonth(position: Int) {
@@ -88,6 +81,16 @@ internal class DateViewModel(
         )
     }
 
+    private fun initDateData() {
+        val minYearDiff = savedStateHandle.get<Int>(ExtraKey.EXTRA_MIN_YEAR_DIFF) ?: DefaultOption.DEFAULT_MIN_YEAR_DIFF
+        val maxYearDiff = savedStateHandle.get<Int>(ExtraKey.EXTRA_MAX_YEAR_DIFF) ?: DefaultOption.DEFAULT_MAX_YEAR_DIFF
+        if (_dateData.value != null) return
+
+        viewModelScope.launch {
+            _dateData.value = dateRepository.getDateData(minYearDiff, maxYearDiff)
+        }
+    }
+
     private fun convertToMonthUiModels(dateData: DateData): MonthsData {
         return (dateUiModelConverter.convertToMonthUiModel(dateData) to dateData.currentMonthPosition)
     }
@@ -100,16 +103,8 @@ internal class DateViewModel(
         return currentPage?.takeIf { it < (maxPage ?: -1) }?.plus(1)
     }
 
-    private fun getDateTitle(dateData: DateData?, monthPosition: Int?): String? {
-        val monthData = when {
-            (dateData != null) -> {
-                dateData.months.getOrNull(dateData.currentMonthPosition)
-            }
-            (monthPosition != null) -> {
-                _dateData.value?.months?.getOrNull(monthPosition)
-            }
-            else -> return null
-        }
+    private fun convertDateTitle(monthPosition: Int): String {
+        val monthData = _dateData.value?.months?.getOrNull(monthPosition)
         return FormatArgumentApplier.formatDateTitle(monthData?.year ?: 0, monthData?.month ?: 0)
     }
 }
