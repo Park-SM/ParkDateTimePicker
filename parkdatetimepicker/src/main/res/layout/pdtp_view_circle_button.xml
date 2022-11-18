@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="@color/pdtp_black"
         app:cardCornerRadius="999dp">
 
         <TextView
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="13dp"
             android:paddingHorizontal="18dp"
-            android:textColor="@color/white"
+            android:textColor="@color/pdtp_white"
             tools:text="선택 완료"/>
 
     </com.google.android.material.card.MaterialCardView>

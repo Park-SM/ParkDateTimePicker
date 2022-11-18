@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
-import com.smparkworld.parkdatetimepicker.databinding.FragmentDatetimeBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentDatetimeBinding
 import com.smparkworld.parkdatetimepicker.extension.viewModels
 import com.smparkworld.parkdatetimepicker.model.BaseListener
 import com.smparkworld.parkdatetimepicker.model.ExtraKey
@@ -35,7 +35,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentDatetimeBinding.inflate(inflater, container, false)
+        val binding = PdtpFragmentDatetimeBinding.inflate(inflater, container, false)
 
         initArguments(binding)
         initViews(binding)
@@ -44,14 +44,14 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
 
     override fun getTheme(): Int {
-        return R.style.BottomSheetDialogTheme
+        return R.style.PDTP_BottomSheetDialogTheme
     }
 
     fun setListener(listener: BaseListener) {
         this.listener = listener
     }
 
-    private fun initArguments(binding: FragmentDatetimeBinding) {
+    private fun initArguments(binding: PdtpFragmentDatetimeBinding) {
         vm.init(listener)
 
         arguments?.getString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE)?.let {
@@ -83,7 +83,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         }
     }
     
-    private fun initViews(binding: FragmentDatetimeBinding) {
+    private fun initViews(binding: PdtpFragmentDatetimeBinding) {
         navigator.clearFragments(childFragmentManager)
 
         binding.layoutDateHeader.btnPrev.setOnClickListener {
@@ -115,7 +115,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         TextArgumentApplier.applyTimeDoneText(binding.layoutTimeHeader)
     }
 
-    private fun initObservers(binding: FragmentDatetimeBinding) {
+    private fun initObservers(binding: PdtpFragmentDatetimeBinding) {
         vm.phase.observe(viewLifecycleOwner) { phaseData ->
             navigateFragment(binding, phaseData.oldPhase, phaseData.newPhase)
         }
@@ -133,7 +133,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun navigateFragment(binding: FragmentDatetimeBinding, oldPhase: Phase, newPhase: Phase) {
+    private fun navigateFragment(binding: PdtpFragmentDatetimeBinding, oldPhase: Phase, newPhase: Phase) {
         navigator.beginTransaction()
             .addOldPhase(oldPhase)
             .addNewPhase(newPhase)
@@ -143,7 +143,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             .commit(R.id.fragment_container, childFragmentManager)
     }
 
-    private fun getHeaderViewByPhase(binding: FragmentDatetimeBinding, phase: Phase): View? {
+    private fun getHeaderViewByPhase(binding: PdtpFragmentDatetimeBinding, phase: Phase): View? {
         return when (phase) {
             Phase.DATE -> binding.layoutDateHeader.root
             Phase.TIME -> binding.layoutTimeHeader.root

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
-import com.smparkworld.parkdatetimepicker.databinding.FragmentTimeBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentTimeBinding
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
 import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.time.model.TimeUiModel
@@ -20,14 +20,14 @@ internal class TimeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentTimeBinding.inflate(inflater, container, false)
+        val binding = PdtpFragmentTimeBinding.inflate(inflater, container, false)
 
         initViews(binding)
         initObservers(binding)
         return binding.root
     }
 
-    private fun initViews(binding: FragmentTimeBinding) {
+    private fun initViews(binding: PdtpFragmentTimeBinding) {
         binding.pickerAmPm.minValue = 0
         binding.pickerAmPm.maxValue = 1
         binding.pickerAmPm.let {
@@ -55,13 +55,13 @@ internal class TimeFragment : Fragment() {
         }
     }
 
-    private fun initObservers(binding: FragmentTimeBinding) {
+    private fun initObservers(binding: PdtpFragmentTimeBinding) {
         vm.selectedTimeUiModel.observe(viewLifecycleOwner) { uiModel ->
             applyTimeValues(binding, uiModel)
         }
     }
 
-    private fun applyTimeValues(binding: FragmentTimeBinding, uiModel: TimeUiModel) {
+    private fun applyTimeValues(binding: PdtpFragmentTimeBinding, uiModel: TimeUiModel) {
         val newValueIndex = binding.pickerAmPm.displayedValues.indexOf(uiModel.amPm)
         if (binding.pickerAmPm.value != newValueIndex) {
             binding.pickerAmPm.value = newValueIndex
