@@ -6,8 +6,8 @@ import com.smparkworld.parkdatetimepicker.model.TimeResult
 import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
 import com.smparkworld.parkdatetimepicker.model.listener.DateListener
 import com.smparkworld.parkdatetimepicker.model.listener.DateTimeListener
+import com.smparkworld.parkdatetimepicker.model.listener.TimeListener
 import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeMode
-import com.smparkworld.parkdatetimepicker.ui.time.TimeListener
 
 internal class ListenerManagerImpl : ListenerManager {
 

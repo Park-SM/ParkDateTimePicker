@@ -5,8 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
-import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.databinding.PdtpViewCircleButtonBinding
 
 internal class CircleButton @JvmOverloads constructor(
