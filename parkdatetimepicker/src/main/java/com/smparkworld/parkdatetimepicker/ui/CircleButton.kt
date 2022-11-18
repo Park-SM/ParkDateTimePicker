@@ -7,13 +7,13 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.smparkworld.parkdatetimepicker.R
-import com.smparkworld.parkdatetimepicker.databinding.ViewCircleButtonBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpViewCircleButtonBinding
 
 internal class CircleButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
-    private val binding = ViewCircleButtonBinding.inflate(
+    private val binding = PdtpViewCircleButtonBinding.inflate(
         LayoutInflater.from(context), this, true
     )
 

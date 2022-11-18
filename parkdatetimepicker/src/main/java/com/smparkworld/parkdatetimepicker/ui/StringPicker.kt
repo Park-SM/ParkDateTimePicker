@@ -8,8 +8,8 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.smparkworld.parkdatetimepicker.databinding.ItemStringPickerBinding
-import com.smparkworld.parkdatetimepicker.databinding.ViewStringPickerBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpItemStringPickerBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpViewStringPickerBinding
 
 typealias OnItemSelectedListener = (String) -> Unit
 
@@ -24,7 +24,7 @@ internal class StringPicker @JvmOverloads constructor(
     private var onItemSelectedListener: OnItemSelectedListener? = null
 
     private val snapHelper = LinearSnapHelper()
-    private val binding = ViewStringPickerBinding.inflate(
+    private val binding = PdtpViewStringPickerBinding.inflate(
         LayoutInflater.from(context), this, true
     )
     private var currentPosition = RecyclerView.NO_POSITION
@@ -98,7 +98,7 @@ internal class StringPicker @JvmOverloads constructor(
     }
 
     private class StringPickerViewHolder(
-        private val binding: ItemStringPickerBinding,
+        private val binding: PdtpItemStringPickerBinding,
         private val itemSize: Float?,
         @ColorInt private val itemColor: Int?
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -125,7 +125,7 @@ internal class StringPicker @JvmOverloads constructor(
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StringPickerViewHolder {
             return StringPickerViewHolder(
-                ItemStringPickerBinding.inflate(
+                PdtpItemStringPickerBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 ),
                 textSize, textColor

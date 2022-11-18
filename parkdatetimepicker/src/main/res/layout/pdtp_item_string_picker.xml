@@ -9,7 +9,7 @@
         android:gravity="center"
         android:paddingVertical="30dp"
         android:textSize="25dp"
-        android:textColor="@color/black"
+        android:textColor="@color/pdtp_black"
         tools:text="1"/>
 
 </layout>

@@ -12,7 +12,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:textColor="@color/blue"
+            android:textColor="@color/pdtp_blue"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@id/done"

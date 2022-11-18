@@ -10,6 +10,6 @@
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="7"
-        tools:listitem="@layout/item_date_day"/>
+        tools:listitem="@layout/pdtp_item_date_day"/>
 
 </layout>

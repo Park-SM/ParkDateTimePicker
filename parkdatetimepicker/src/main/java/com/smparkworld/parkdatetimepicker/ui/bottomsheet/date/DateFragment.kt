@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.smparkworld.parkdatetimepicker.databinding.FragmentDateBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentDateBinding
 import com.smparkworld.parkdatetimepicker.extension.getExtra
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
 import com.smparkworld.parkdatetimepicker.model.DefaultOption
@@ -29,7 +29,7 @@ internal class DateFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentDateBinding.inflate(inflater, container, false)
+        val binding = PdtpFragmentDateBinding.inflate(inflater, container, false)
 
         initViews(binding)
         initObservers(binding)
@@ -44,12 +44,12 @@ internal class DateFragment : Fragment() {
         )
     }
 
-    private fun initViews(binding: FragmentDateBinding) {
+    private fun initViews(binding: PdtpFragmentDateBinding) {
         binding.container.adapter = DateMonthAdapter(vm::onSelectDate)
         binding.container.registerOnPageChangeCallback(viewPagerCallback)
     }
 
-    private fun initObservers(binding: FragmentDateBinding) {
+    private fun initObservers(binding: PdtpFragmentDateBinding) {
         vm.months.observe(viewLifecycleOwner) { monthsData ->
             (binding.container.adapter as? DateMonthAdapter)?.submitList(monthsData.first)
             binding.container.setCurrentItem(monthsData.second, false)

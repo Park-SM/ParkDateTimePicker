@@ -3,7 +3,7 @@ package com.smparkworld.parkdatetimepicker.ui.bottomsheet.date
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.smparkworld.parkdatetimepicker.databinding.ItemDateMonthBinding
+import com.smparkworld.parkdatetimepicker.databinding.PdtpItemDateMonthBinding
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.DayUiModel
 import com.smparkworld.parkdatetimepicker.ui.bottomsheet.date.model.MonthUiModel
 
@@ -21,7 +21,7 @@ internal class DateMonthAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder =
         MonthViewHolder(
-            ItemDateMonthBinding.inflate(
+            PdtpItemDateMonthBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
             cachedDayAdapterMap, ::onClickDayItem
@@ -53,7 +53,7 @@ internal class DateMonthAdapter(
     }
 
     class MonthViewHolder(
-        private val binding: ItemDateMonthBinding,
+        private val binding: PdtpItemDateMonthBinding,
         private val cachedDayAdapterMap: MutableMap<Int, DateDayAdapter>,
         private val itemEventHandler: (MonthUiModel, DayUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
