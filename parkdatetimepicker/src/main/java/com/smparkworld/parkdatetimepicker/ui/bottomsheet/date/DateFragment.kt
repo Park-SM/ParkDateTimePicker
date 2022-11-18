@@ -33,15 +33,7 @@ internal class DateFragment : Fragment() {
 
         initViews(binding)
         initObservers(binding)
-        initArguments()
         return binding.root
-    }
-
-    private fun initArguments() {
-        vm.init(
-            minYearDiff = getExtra(ExtraKey.EXTRA_MIN_YEAR_DIFF, DefaultOption.DEFAULT_MIN_YEAR_DIFF),
-            maxYearDiff = getExtra(ExtraKey.EXTRA_MAX_YEAR_DIFF, DefaultOption.DEFAULT_MAX_YEAR_DIFF)
-        )
     }
 
     private fun initViews(binding: PdtpFragmentDateBinding) {
