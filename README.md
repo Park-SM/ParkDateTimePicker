@@ -5,12 +5,11 @@
 
 # ParkDateTimePicker
 Android library for selecting date and time from BottomSheet UI. **ParkDateTimePicker** is customizable so you can even specify your own language. If you think this library is useful, please press ⭐️ Star button at upside : )
-
-- [How to use](https://github.com/Park-SM/ParkDateTimePicker#-how-to-use)
 - [UI Design](https://github.com/Park-SM/ParkDateTimePicker#-ui-design)
     - [DatePicker clip](https://github.com/Park-SM/ParkDateTimePicker#datepicker-clip)
     - [TimePicker clip](https://github.com/Park-SM/ParkDateTimePicker#timepicker-clip)
     - [DateTimePicker clip](https://github.com/Park-SM/ParkDateTimePicker#datetimepicker-clip)
+- [How to use](https://github.com/Park-SM/ParkDateTimePicker#-how-to-use)
 - [About DatePicker](https://github.com/Park-SM/ParkDateTimePicker#-about-datepicker)
     - [Basic usage](https://github.com/Park-SM/ParkDateTimePicker#basic-usage)
     - [Options](https://github.com/Park-SM/ParkDateTimePicker#options)
@@ -23,6 +22,19 @@ Android library for selecting date and time from BottomSheet UI. **ParkDateTimeP
 - [More Sample](https://github.com/Park-SM/ParkDateTimePicker/blob/develop/app/src/main/java/com/smparkworld/sample/MainActivity.kt)
 - [License](https://github.com/Park-SM/ParkDateTimePicker#-license)
 <br>
+
+## # UI Design
+#### *DatePicker clip*
+https://user-images.githubusercontent.com/47319426/204150101-829a207e-6cf4-4cb1-a677-601ca03ca9b3.mp4
+
+#### *TimePicker clip*
+https://user-images.githubusercontent.com/47319426/204150124-9e7ae320-ebf3-41d2-9b2e-cd9526c8dfbf.mp4
+
+#### *DateTimePicker clip*
+https://user-images.githubusercontent.com/47319426/204150160-ec3deaa6-bc2b-4689-800a-707daa7b6f29.mp4
+
+<br>
+
 
 ## # How to use
 Add mavenCentral and implementation as below code.
@@ -40,19 +52,6 @@ dependencies {
 }
 ```
 <br>
-
-## # UI Design
-#### *DatePicker clip*
-https://user-images.githubusercontent.com/47319426/204150101-829a207e-6cf4-4cb1-a677-601ca03ca9b3.mp4
-
-#### *TimePicker clip*
-https://user-images.githubusercontent.com/47319426/204150124-9e7ae320-ebf3-41d2-9b2e-cd9526c8dfbf.mp4
-
-#### *DateTimePicker clip*
-https://user-images.githubusercontent.com/47319426/204150160-ec3deaa6-bc2b-4689-800a-707daa7b6f29.mp4
-
-<br>
-
 
 ## # About DatePicker
 To use the DatePicker, you have to set the `DateListener` using the `setDateListener(:DateListener)` function.
