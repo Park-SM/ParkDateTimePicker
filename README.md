@@ -50,6 +50,15 @@ dependencies {
 
     implementation "com.smparkworld.parkdatetimepicker:parkdatetimepicker:1.0.0"
 }
+
+// ParkDateTimePicker use DataBinding.
+// build.gradle(:app)
+android {
+    ....
+    dataBinding {
+        enabled = true
+    }
+}
 ```
 <br>
 
