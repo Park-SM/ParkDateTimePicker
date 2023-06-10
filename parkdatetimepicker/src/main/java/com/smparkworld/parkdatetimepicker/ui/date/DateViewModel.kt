@@ -12,6 +12,7 @@ import com.smparkworld.parkdatetimepicker.data.DateRepositoryImpl
 import com.smparkworld.parkdatetimepicker.model.DateData
 import com.smparkworld.parkdatetimepicker.model.DateResult
 import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
+import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.date.model.DayUiModel
@@ -38,8 +39,12 @@ internal class DateViewModel(
     private val _monthPosition = MutableLiveData<Int>()
     val monthPosition: LiveData<Int> get() = _monthPosition
 
+    private val _weeks = MutableLiveData<List<String>>()
+    val weeks: LiveData<List<String>> get() = _weeks
+
     init {
         initDateData()
+        initWeekParams()
     }
 
     fun onScrollMonth(position: Int) {
@@ -89,6 +94,10 @@ internal class DateViewModel(
         viewModelScope.launch {
             _dateData.value = dateRepository.getDateData(minYearDiff, maxYearDiff)
         }
+    }
+
+    private fun initWeekParams() {
+        _weeks.value = TextArgumentApplier.getDayOfWeekTexts()
     }
 
     private fun convertToMonthUiModels(dateData: DateData): MonthsData {

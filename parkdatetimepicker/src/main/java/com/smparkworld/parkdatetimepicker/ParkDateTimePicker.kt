@@ -1,14 +1,15 @@
 package com.smparkworld.parkdatetimepicker
 
 import android.os.Bundle
-import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.smparkworld.parkdatetimepicker.core.ExtraKey
-import com.smparkworld.parkdatetimepicker.model.formatter.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.model.formatter.TimeTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.DateResultFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.MonthTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.TimeResultFormatter
 import com.smparkworld.parkdatetimepicker.model.listener.DateListener
 import com.smparkworld.parkdatetimepicker.model.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.model.listener.TimeListener
@@ -55,8 +56,9 @@ class ParkDateTimePicker private constructor() {
         private var highLightColorCode: String? = null
         private var highLightColorResId: Int? = null
 
-        private var dateTitleFormatter: DateTitleFormatter? = null
-        private var timeTitleFormatter: TimeTitleFormatter? = null
+        private var monthTitleFormatter: MonthTitleFormatter? = null
+        private var dateResultFormatter: DateResultFormatter? = null
+        private var timeResultFormatter: TimeResultFormatter? = null
 
         override fun setDateListener(listener: DateListener): ParkDateTimePickerBuilder {
             this.dateListener = listener
@@ -103,7 +105,7 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
-        override fun setPrimaryColor(@ColorInt colorResId: Int): ParkDateTimePickerBuilder {
+        override fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder {
             this.primaryColorResId = colorResId
             return this
         }
@@ -118,13 +120,18 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
-        override fun setDateTitleFormatter(formatter: DateTitleFormatter): ParkDateTimePickerBuilder {
-            this.dateTitleFormatter = formatter
+        override fun setMonthTitleFormatter(formatter: MonthTitleFormatter): ParkDateTimePickerBuilder {
+            this.monthTitleFormatter = formatter
             return this
         }
 
-        override fun setTimeTitleFormatter(formatter: TimeTitleFormatter): ParkDateTimePickerBuilder {
-            this.timeTitleFormatter = formatter
+        override fun setDateResultFormatter(formatter: DateResultFormatter): ParkDateTimePickerBuilder {
+            this.dateResultFormatter = formatter
+            return this
+        }
+
+        override fun setTimeResultFormatter(formatter: TimeResultFormatter): ParkDateTimePickerBuilder {
+            this.timeResultFormatter = formatter
             return this
         }
 
@@ -159,11 +166,14 @@ class ParkDateTimePicker private constructor() {
             highLightColorResId?.let {
                 arguments.putInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, it)
             }
-            dateTitleFormatter?.let {
-                FormatArgumentApplier.setDateTitleFormatter(it)
+            monthTitleFormatter?.let {
+                FormatArgumentApplier.setMonthTitleFormatter(it)
             }
-            timeTitleFormatter?.let {
-                FormatArgumentApplier.setTimeTitleFormatter(it)
+            dateResultFormatter?.let {
+                FormatArgumentApplier.setDateResultFormatter(it)
+            }
+            timeResultFormatter?.let {
+                FormatArgumentApplier.setTimeResultFormatter(it)
             }
 
             when {

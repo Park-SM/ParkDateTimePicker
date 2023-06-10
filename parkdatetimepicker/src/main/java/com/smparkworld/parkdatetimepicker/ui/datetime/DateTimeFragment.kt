@@ -15,7 +15,6 @@ import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
 import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.date.DateViewModel
-import com.smparkworld.parkdatetimepicker.ui.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.datetime.model.Phase
 import com.smparkworld.parkdatetimepicker.ui.time.TimeViewModel
 
@@ -92,51 +91,26 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             vm.onDoneClicked()
         }
 
-//        binding.layoutDateHeader.btnPrev.setOnClickListener {
-//            dateVm.onClickCalendarControl(CalendarControlEvent.PrevPage)
-//        }
-//        binding.layoutDateHeader.btnNext.setOnClickListener {
-//            dateVm.onClickCalendarControl(CalendarControlEvent.NextPage)
-//        }
-//        binding.layoutTimeHeader.done.setOnClickListener {
-//            timeVm.onClickDone()
-//        }
-
         ColorArgumentApplier.applyPrimaryColor(binding.title)
         ColorArgumentApplier.applyPrimaryColor(binding.reset)
         ColorArgumentApplier.applyPrimaryColor(binding.done)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.title)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.btnNext)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.sun)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.mon)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.tue)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.wed)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.thu)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.fri)
-//        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.sat)
-//        ColorArgumentApplier.applyHighLightColor(binding.layoutTimeHeader.title)
+        ColorArgumentApplier.applyHighLightColor(binding.result)
 
         TextArgumentApplier.applyTitle(binding.title)
-//        TextArgumentApplier.applyDayOfWeekTexts(binding.layoutDateHeader)
-//        TextArgumentApplier.applyTimeDoneText(binding.layoutTimeHeader)
     }
 
     private fun initObservers(binding: PdtpFragmentDatetimeBinding) {
         vm.phase.observe(viewLifecycleOwner) { phaseData ->
             navigateFragment(binding, phaseData.oldPhase, phaseData.newPhase)
         }
+        vm.result.observe(viewLifecycleOwner) { result ->
+            binding.result.text = result
+        }
         dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
             vm.onSelectDate(selectedDate)
         }
-        dateVm.selectedDateTitle.observe(viewLifecycleOwner) { title ->
-//            binding.layoutDateHeader.title.text = title
-        }
         timeVm.selectedTime.observe(viewLifecycleOwner) { selectedTime ->
             vm.onSelectTime(selectedTime)
-        }
-        timeVm.selectedTimeTitle.observe(viewLifecycleOwner) { title ->
-//            binding.layoutTimeHeader.title.text = title
         }
     }
 

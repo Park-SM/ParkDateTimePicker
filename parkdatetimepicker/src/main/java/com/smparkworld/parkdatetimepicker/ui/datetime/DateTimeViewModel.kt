@@ -10,6 +10,7 @@ import com.smparkworld.parkdatetimepicker.model.DateResult
 import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
 import com.smparkworld.parkdatetimepicker.model.TimeResult
 import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
+import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeMode
 
@@ -21,6 +22,9 @@ internal class DateTimeViewModel(
 
     private val _phase = MutableLiveData<PhaseTransactionData>()
     val phase: LiveData<PhaseTransactionData> get() = _phase
+
+    private val _result = MutableLiveData<String>()
+    val result: LiveData<String> get() = _result
 
     private var selectedDate: DateResult? = null
     private var selectedTime: TimeResult? = null
@@ -44,11 +48,37 @@ internal class DateTimeViewModel(
 
     fun onSelectDate(selectedDate: DateResult) {
         this.selectedDate = selectedDate
-
+        _result.value = getDateTimeResult()
     }
 
     fun onSelectTime(selectedTime: TimeResult) {
         this.selectedTime = selectedTime
+        _result.value = getDateTimeResult()
+    }
+
+    private fun getDateTimeResult(): String {
+        val stringBuilder = StringBuilder()
+
+        selectedDate?.let { date ->
+            val result = FormatArgumentApplier.formatDateResult(
+                year = date.year,
+                month = date.month,
+                day = date.day
+            )
+            stringBuilder.append(result)
+        }
+
+        selectedTime?.let { time ->
+            stringBuilder.append(" ")
+            val result = FormatArgumentApplier.formatTimeResult(
+                amPm = time.amPm,
+                hour = time.hour,
+                minute = time.minute
+            )
+            stringBuilder.append(result)
+        }
+
+        return stringBuilder.toString()
     }
 
     companion object {

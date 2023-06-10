@@ -28,6 +28,8 @@ internal class TimeFragment : Fragment() {
     }
 
     private fun initViews(binding: PdtpFragmentTimeBinding) {
+        vm.onViewInitialized()
+
         binding.pickerAmPm.minValue = 0
         binding.pickerAmPm.maxValue = 1
         binding.pickerAmPm.let {

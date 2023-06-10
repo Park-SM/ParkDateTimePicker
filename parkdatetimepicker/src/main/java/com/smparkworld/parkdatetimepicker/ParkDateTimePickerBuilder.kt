@@ -2,8 +2,9 @@ package com.smparkworld.parkdatetimepicker
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import com.smparkworld.parkdatetimepicker.model.formatter.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.model.formatter.TimeTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.DateResultFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.MonthTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.TimeResultFormatter
 import com.smparkworld.parkdatetimepicker.model.listener.DateListener
 import com.smparkworld.parkdatetimepicker.model.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.model.listener.TimeListener
@@ -34,9 +35,11 @@ interface ParkDateTimePickerBuilder {
 
     fun setHighLightColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
 
-    fun setDateTitleFormatter(formatter: DateTitleFormatter): ParkDateTimePickerBuilder
+    fun setMonthTitleFormatter(formatter: MonthTitleFormatter): ParkDateTimePickerBuilder
 
-    fun setTimeTitleFormatter(formatter: TimeTitleFormatter): ParkDateTimePickerBuilder
+    fun setDateResultFormatter(formatter: DateResultFormatter): ParkDateTimePickerBuilder
+
+    fun setTimeResultFormatter(formatter: TimeResultFormatter): ParkDateTimePickerBuilder
 
     fun show()
 }
