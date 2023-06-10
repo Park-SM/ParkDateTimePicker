@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 
-internal fun <T> MutableCollection<T>.addRequiredNonNullItem(element: T?, message: String? = null) {
-    if (element != null) {
+internal fun <T> MutableCollection<T>.addIfNonNull(element: T?): Boolean {
+    return if (element != null) {
         add(element)
+        true
     } else {
-        throw IllegalArgumentException(message ?: "Added item must be non-null.")
+        false
     }
 }
 
