@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 
-internal fun <T> MutableCollection<T>.addIfNotNull(element: T?) {
-    if (element != null) {
+internal fun <T> MutableCollection<T>.addIfNonNull(element: T?): Boolean {
+    return if (element != null) {
         add(element)
+        true
+    } else {
+        false
     }
 }
 

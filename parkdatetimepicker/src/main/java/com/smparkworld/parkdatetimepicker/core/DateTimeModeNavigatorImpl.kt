@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.core
 
-import com.smparkworld.parkdatetimepicker.extension.addIfNotNull
+import com.smparkworld.parkdatetimepicker.extension.addIfNonNull
 import com.smparkworld.parkdatetimepicker.model.DateResult
 import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
 import com.smparkworld.parkdatetimepicker.model.TimeResult
@@ -31,17 +31,18 @@ internal class DateTimeModeNavigatorImpl(
         selectedTime: TimeResult?
     ): PhaseTransactionData {
         assertInitialized()
-        return when(mode) {
+
+        val newPhase = when(mode) {
             DateTimeMode.DATETIME -> {
                 when(currentPhase) {
                     Phase.INIT -> Phase.DATE
                     Phase.DATE -> {
-                        selectedDates.addIfNotNull(selectedDate)
-                        Phase.TIME
+                        val isAdded = selectedDates.addIfNonNull(selectedDate)
+                        if (isAdded) Phase.TIME else Phase.DATE
                     }
                     Phase.TIME -> {
-                        selectedTimes.addIfNotNull(selectedTime)
-                        Phase.DONE
+                        val isAdded = selectedTimes.addIfNonNull(selectedTime)
+                        if (isAdded) Phase.DONE else Phase.TIME
                     }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
                 }
@@ -50,8 +51,8 @@ internal class DateTimeModeNavigatorImpl(
                 when (currentPhase) {
                     Phase.INIT -> Phase.DATE
                     Phase.DATE -> {
-                        selectedDates.addIfNotNull(selectedDate)
-                        Phase.DONE
+                        val isAdded = selectedDates.addIfNonNull(selectedDate)
+                        if (isAdded) Phase.DONE else Phase.DATE
                     }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
                 }
@@ -60,18 +61,18 @@ internal class DateTimeModeNavigatorImpl(
                 when (currentPhase) {
                     Phase.INIT -> Phase.TIME
                     Phase.TIME -> {
-                        selectedTimes.addIfNotNull(selectedTime)
-                        Phase.DONE
+                        val isAdded = selectedTimes.addIfNonNull(selectedTime)
+                        if (isAdded) Phase.DONE else Phase.TIME
                     }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
                 }
             }
-        }.let { newPhase ->
-            if (newPhase == Phase.DONE) onDone()
+        }
 
-            PhaseTransactionData(currentPhase, newPhase).also {
-                currentPhase = newPhase
-            }
+        if (newPhase == Phase.DONE) onDone()
+
+        return PhaseTransactionData(currentPhase, newPhase).also {
+            currentPhase = newPhase
         }
     }
 

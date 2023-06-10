@@ -1,6 +1,6 @@
 ![Generic badge](https://img.shields.io/badge/Platform-Android-green.svg)&nbsp;
 ![Generic badge](https://img.shields.io/badge/Repository-MavenCentral-blue.svg)&nbsp;
-![Generic badge](https://img.shields.io/badge/Version-v1.0.0-red.svg)&nbsp;
+![Generic badge](https://img.shields.io/badge/Version-v1.0.1-red.svg)&nbsp;
 ![Generic badge](https://img.shields.io/badge/License-Apache2.0-3DB7CC.svg)&nbsp;
 
 # ParkDateTimePicker
@@ -41,14 +41,14 @@ Add mavenCentral and implementation as below code.
 ```groovy
 // build.gradle(:project)
 repositories {
-    google()
+    ....
     mavenCentral()
 }
 
 // build.gradle(:app)
 dependencies {
 
-    implementation "com.smparkworld.parkdatetimepicker:parkdatetimepicker:1.0.0"
+    implementation "com.smparkworld.parkdatetimepicker:parkdatetimepicker:1.0.1"
 }
 
 // ParkDateTimePicker use DataBinding.
