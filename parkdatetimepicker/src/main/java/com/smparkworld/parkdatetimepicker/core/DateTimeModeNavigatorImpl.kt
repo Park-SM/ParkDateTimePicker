@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.core
 
-import com.smparkworld.parkdatetimepicker.extension.addRequiredNonNullItem
+import com.smparkworld.parkdatetimepicker.extension.addIfNotNull
 import com.smparkworld.parkdatetimepicker.model.DateResult
 import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
 import com.smparkworld.parkdatetimepicker.model.TimeResult
@@ -36,11 +36,11 @@ internal class DateTimeModeNavigatorImpl(
                 when(currentPhase) {
                     Phase.INIT -> Phase.DATE
                     Phase.DATE -> {
-                        selectedDates.addRequiredNonNullItem(selectedDate)
+                        selectedDates.addIfNotNull(selectedDate)
                         Phase.TIME
                     }
                     Phase.TIME -> {
-                        selectedTimes.addRequiredNonNullItem(selectedTime)
+                        selectedTimes.addIfNotNull(selectedTime)
                         Phase.DONE
                     }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
@@ -50,7 +50,7 @@ internal class DateTimeModeNavigatorImpl(
                 when (currentPhase) {
                     Phase.INIT -> Phase.DATE
                     Phase.DATE -> {
-                        selectedDates.addRequiredNonNullItem(selectedDate)
+                        selectedDates.addIfNotNull(selectedDate)
                         Phase.DONE
                     }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
@@ -60,7 +60,7 @@ internal class DateTimeModeNavigatorImpl(
                 when (currentPhase) {
                     Phase.INIT -> Phase.TIME
                     Phase.TIME -> {
-                        selectedTimes.addRequiredNonNullItem(selectedTime)
+                        selectedTimes.addIfNotNull(selectedTime)
                         Phase.DONE
                     }
                     else -> throw IllegalStateException(ERROR_INVALID_PHASE)
