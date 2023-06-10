@@ -1,10 +1,12 @@
 package com.smparkworld.parkdatetimepicker.extension
 
+import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+
 
 internal fun <T> MutableCollection<T>.addIfNonNull(element: T?): Boolean {
     return if (element != null) {
@@ -14,6 +16,9 @@ internal fun <T> MutableCollection<T>.addIfNonNull(element: T?): Boolean {
         false
     }
 }
+
+internal val Float.toDp: Float
+    get() = (this * Resources.getSystem().displayMetrics.density)
 
 internal inline fun <reified VM : ViewModel> Fragment.viewModels(
     noinline getFactory: (() -> ViewModelProvider.Factory)? = null

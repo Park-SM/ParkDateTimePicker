@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import com.smparkworld.parkdatetimepicker.ui.common.CircleButton
+import com.smparkworld.parkdatetimepicker.ui.common.RoundedButton
 
 internal object ColorArgumentApplier {
 
@@ -46,9 +46,10 @@ internal object ColorArgumentApplier {
     }
 
     @JvmStatic
-    fun applyPrimaryColor(view: CircleButton) {
+    fun applyPrimaryColor(view: RoundedButton) {
         primaryColorInt?.let {
             view.setBackgroundColor(it)
+            view.compoundDrawables.getOrNull(0)?.setTint(it)
         }
     }
 

@@ -6,75 +6,108 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:background="@drawable/pdtp_shape_round_30_white_tl_tr">
 
-        <LinearLayout
-            android:id="@+id/layout_header"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:background="@drawable/pdtp_shape_round_30_white_tl_tr"
-            android:elevation="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
+        <View
+            android:id="@+id/handle"
+            android:layout_width="50dp"
+            android:layout_height="3dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/pdtp_shape_round_inf"
+            android:backgroundTint="@color/pdtp_gray_bright"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <View
-                android:layout_width="50dp"
-                android:layout_height="3dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/pdtp_shape_round_inf"
-                android:backgroundTint="@color/pdtp_gray_bright" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/pdtp_black"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/pdtp_label_title"/>
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/pdtp_black"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/pdtp_label_title"/>
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/pdtp_blue"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="12월 5일"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-                <include
-                    android:id="@+id/layout_date_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:visibility="invisible"
-                    layout="@layout/pdtp_view_header_fragment_date"
-                    tools:visibility="visible"/>
-
-                <include
-                    android:id="@+id/layout_time_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:visibility="gone"
-                    layout="@layout/pdtp_view_header_fragment_time" />
-
-            </FrameLayout>
-
-        </LinearLayout>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="280dp"
+            android:layout_marginTop="14dp"
             android:background="@color/pdtp_white"
-            app:layout_constraintTop_toBottomOf="@id/layout_header"
+            app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_footer"
+            android:layout_width="0dp"
+            android:layout_height="68dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/pdtp_white"
+            android:elevation="5dp"
+            app:layout_constraintTop_toBottomOf="@id/fragment_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.smparkworld.parkdatetimepicker.ui.common.RoundedButton
+                android:id="@+id/reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:paddingVertical="8dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="10dp"
+                android:drawableTint="@color/pdtp_black"
+                android:text="@string/pdtp_label_reset"
+                android:textColor="@color/pdtp_black"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:foreground="?selectableItemBackground"
+                app:drawableRotate="@{-45f}"
+                app:drawableStartCompat="@drawable/pdtp_ic_reset"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.smparkworld.parkdatetimepicker.ui.common.RoundedButton
+                android:id="@+id/done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="17dp"
+                android:foreground="?selectableItemBackground"
+                android:text="@string/pdtp_label_done"
+                android:textColor="@color/pdtp_white"
+                android:textSize="12dp"
+                app:fillColor="@color/pdtp_black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

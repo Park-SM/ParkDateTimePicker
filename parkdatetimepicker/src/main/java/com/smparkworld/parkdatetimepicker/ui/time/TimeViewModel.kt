@@ -30,18 +30,16 @@ internal class TimeViewModel(
         initCurrentTime()
     }
 
-    fun onClickDone() {
-        _selectedTimeUiModel.value?.let { uiModel ->
-            _selectedTime.value = timeUiModelConverter.convertToSelectedTime(uiModel)
-        }
-    }
-
     fun onChangeValue(amPm: String? = null, hour: Int? = null, minute: Int? = null) {
-        _selectedTimeUiModel.updateAssign {
-            if (amPm != null) it.amPm = amPm
-            if (hour != null) it.hour = hour
-            if (minute != null) it.minute = minute
-        }
+        val newSelectedTime = _selectedTimeUiModel.value?.let { oldModel ->
+            oldModel.copy(
+                amPm = amPm ?: oldModel.amPm,
+                hour = hour ?: oldModel.hour,
+                minute = minute ?: oldModel.minute
+            )
+        } ?: return
+        _selectedTime.value = timeUiModelConverter.convertToSelectedTime(newSelectedTime)
+        _selectedTimeUiModel.value = newSelectedTime
     }
 
     private fun initCurrentTime() {

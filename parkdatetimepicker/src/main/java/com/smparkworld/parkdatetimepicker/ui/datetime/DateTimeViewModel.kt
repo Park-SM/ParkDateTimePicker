@@ -22,18 +22,33 @@ internal class DateTimeViewModel(
     private val _phase = MutableLiveData<PhaseTransactionData>()
     val phase: LiveData<PhaseTransactionData> get() = _phase
 
+    private var selectedDate: DateResult? = null
+    private var selectedTime: TimeResult? = null
+
     fun init(listener: BaseListener?) {
         val mode = savedStateHandle.get<DateTimeMode>(ExtraKey.EXTRA_MODE) ?: DEFAULT_MODE
 
         _phase.value = navigator.init(mode, listener)
     }
 
+    fun onResetClicked() {
+
+    }
+
+    fun onDoneClicked() {
+        _phase.value = navigator.getNextPhase(
+            selectedDate = selectedDate,
+            selectedTime = selectedTime
+        )
+    }
+
     fun onSelectDate(selectedDate: DateResult) {
-        _phase.value = navigator.getNextPhase(selectedDate = selectedDate)
+        this.selectedDate = selectedDate
+
     }
 
     fun onSelectTime(selectedTime: TimeResult) {
-        _phase.value = navigator.getNextPhase(selectedTime = selectedTime)
+        this.selectedTime = selectedTime
     }
 
     companion object {

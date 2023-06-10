@@ -6,9 +6,10 @@ internal data class TimeUiModel(
 
     override val id: Int,
 
-    var amPm: String,
+    val amPm: String,
 
-    var hour: Int,
+    val hour: Int,
 
-    var minute: Int
+    val minute: Int
+
 ): UiModel
