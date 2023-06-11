@@ -5,34 +5,40 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.smparkworld.parkdatetimepicker.core.DateTimeModeNavigator
 import com.smparkworld.parkdatetimepicker.core.DateTimeModeNavigatorImpl
-import com.smparkworld.parkdatetimepicker.core.ExtraKey
 import com.smparkworld.parkdatetimepicker.model.DateResult
 import com.smparkworld.parkdatetimepicker.model.PhaseTransactionData
 import com.smparkworld.parkdatetimepicker.model.TimeResult
 import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
 import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
+import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.extras
+import com.smparkworld.parkdatetimepicker.ui.datetime.mapper.DateTimeViewStateMapper
+import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeExtras
 import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeMode
+import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeViewState
 
 internal class DateTimeViewModel(
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+    private val extras: DateTimeExtras by extras(savedStateHandle)
 
     private val navigator: DateTimeModeNavigator = DateTimeModeNavigatorImpl()
 
     private val _phase = MutableLiveData<PhaseTransactionData>()
     val phase: LiveData<PhaseTransactionData> get() = _phase
 
-    private val _result = MutableLiveData<String>()
-    val result: LiveData<String> get() = _result
+    private val _viewState = MutableLiveData<DateTimeViewState>(DateTimeViewStateMapper.map(extras))
+    val viewState: LiveData<DateTimeViewState> get() = _viewState
 
     private var selectedDate: DateResult? = null
     private var selectedTime: TimeResult? = null
 
     fun init(listener: BaseListener?) {
-        val mode = savedStateHandle.get<DateTimeMode>(ExtraKey.EXTRA_MODE) ?: DEFAULT_MODE
-
-        _phase.value = navigator.init(mode, listener)
+        _phase.value = navigator.init(
+            mode = extras.mode ?: DateTimeMode.DEFAULT_MODE,
+            doneListener = listener
+        )
     }
 
     fun onResetClicked() {
@@ -48,15 +54,15 @@ internal class DateTimeViewModel(
 
     fun onSelectDate(selectedDate: DateResult) {
         this.selectedDate = selectedDate
-        _result.value = getDateTimeResult()
+        updateDateTimeResult()
     }
 
     fun onSelectTime(selectedTime: TimeResult) {
         this.selectedTime = selectedTime
-        _result.value = getDateTimeResult()
+        updateDateTimeResult()
     }
 
-    private fun getDateTimeResult(): String {
+    private fun formatDateTimeResult(): String {
         val stringBuilder = StringBuilder()
 
         selectedDate?.let { date ->
@@ -81,7 +87,11 @@ internal class DateTimeViewModel(
         return stringBuilder.toString()
     }
 
-    companion object {
-        private val DEFAULT_MODE = DateTimeMode.DATETIME
+    private fun updateDateTimeResult() {
+        _viewState.value?.let { state ->
+            _viewState.value = state.copy(
+                result = formatDateTimeResult()
+            )
+        }
     }
 }

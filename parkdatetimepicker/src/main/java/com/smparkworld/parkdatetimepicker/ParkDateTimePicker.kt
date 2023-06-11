@@ -1,8 +1,6 @@
 package com.smparkworld.parkdatetimepicker
 
 import android.os.Bundle
-import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -42,19 +40,17 @@ class ParkDateTimePicker private constructor() {
         private var timeListener: TimeListener? = null
 
         private var title: String? = null
-        private var titleResId: Int? = null
 
         private var dayOfWeekTexts: Array<String>? = null
 
-        private var timeDoneText: String? = null
+        private var resetText: String? = null
+
+        private var doneText: String? = null
 
         private var amPmTexts: Array<String>? = null
 
-        private var primaryColorCode: String? = null
-        private var primaryColorResId: Int? = null
-
-        private var highLightColorCode: String? = null
-        private var highLightColorResId: Int? = null
+        private var primaryColorInt: Int? = null
+        private var highLightColorInt: Int? = null
 
         private var monthTitleFormatter: MonthTitleFormatter? = null
         private var dateResultFormatter: DateResultFormatter? = null
@@ -80,18 +76,18 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
-        override fun setTitle(@StringRes titleResId: Int): ParkDateTimePickerBuilder {
-            this.titleResId = titleResId
-            return this
-        }
-
         override fun setDayOfWeekTexts(texts: Array<String>): ParkDateTimePickerBuilder {
             this.dayOfWeekTexts = texts
             return this
         }
 
-        override fun setTimeDoneText(text: String): ParkDateTimePickerBuilder {
-            this.timeDoneText = text
+        override fun setResetText(text: String): ParkDateTimePickerBuilder {
+            this.resetText = text
+            return this
+        }
+
+        override fun setDoneText(text: String): ParkDateTimePickerBuilder {
+            this.doneText = text
             return this
         }
 
@@ -100,23 +96,13 @@ class ParkDateTimePicker private constructor() {
             return this
         }
 
-        override fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder {
-            this.primaryColorCode = colorCode
+        override fun setPrimaryColorInt(colorInt: Int): ParkDateTimePickerBuilder {
+            this.primaryColorInt = colorInt
             return this
         }
 
-        override fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder {
-            this.primaryColorResId = colorResId
-            return this
-        }
-
-        override fun setHighLightColor(colorCode: String): ParkDateTimePickerBuilder {
-            this.highLightColorCode = colorCode
-            return this
-        }
-
-        override fun setHighLightColor(colorResId: Int): ParkDateTimePickerBuilder {
-            this.highLightColorResId = colorResId
+        override fun setHighLightColorInt(colorInt: Int): ParkDateTimePickerBuilder {
+            this.highLightColorInt = colorInt
             return this
         }
 
@@ -142,29 +128,23 @@ class ParkDateTimePicker private constructor() {
             title?.let {
                 arguments.putString(ExtraKey.EXTRA_TITLE, it)
             }
-            titleResId?.let {
-                arguments.putInt(ExtraKey.EXTRA_TITLE_RES_ID, it)
-            }
             dayOfWeekTexts?.let {
                 arguments.putStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_TEXTS, it)
             }
-            timeDoneText?.let {
-                arguments.putString(ExtraKey.EXTRA_TIME_DONE_TEXT, it)
+            resetText?.let {
+                arguments.putString(ExtraKey.EXTRA_RESET_TEXT, it)
+            }
+            doneText?.let {
+                arguments.putString(ExtraKey.EXTRA_DONE_TEXT, it)
             }
             amPmTexts?.let {
                 arguments.putStringArray(ExtraKey.EXTRA_AM_PM_TEXTS, it)
             }
-            primaryColorCode?.let {
-                arguments.putString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE, it)
+            primaryColorInt?.let {
+                arguments.putInt(ExtraKey.EXTRA_PRIMARY_COLOR_INT, it)
             }
-            primaryColorResId?.let {
-                arguments.putInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, it)
-            }
-            highLightColorCode?.let {
-                arguments.putString(ExtraKey.EXTRA_HIGHLIGHT_COLOR_CODE, it)
-            }
-            highLightColorResId?.let {
-                arguments.putInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, it)
+            highLightColorInt?.let {
+                arguments.putInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_INT, it)
             }
             monthTitleFormatter?.let {
                 FormatArgumentApplier.setMonthTitleFormatter(it)

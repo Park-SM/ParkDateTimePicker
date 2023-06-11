@@ -1,7 +1,6 @@
 package com.smparkworld.parkdatetimepicker
 
-import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
+import androidx.annotation.ColorInt
 import com.smparkworld.parkdatetimepicker.model.formatter.DateResultFormatter
 import com.smparkworld.parkdatetimepicker.model.formatter.MonthTitleFormatter
 import com.smparkworld.parkdatetimepicker.model.formatter.TimeResultFormatter
@@ -19,21 +18,17 @@ interface ParkDateTimePickerBuilder {
 
     fun setTitle(title: String): ParkDateTimePickerBuilder
 
-    fun setTitle(@StringRes titleResId: Int): ParkDateTimePickerBuilder
-
     fun setDayOfWeekTexts(texts: Array<String>): ParkDateTimePickerBuilder
 
-    fun setTimeDoneText(text: String): ParkDateTimePickerBuilder
+    fun setResetText(text: String): ParkDateTimePickerBuilder
+
+    fun setDoneText(text: String): ParkDateTimePickerBuilder
 
     fun setAmPmTexts(texts: Array<String>): ParkDateTimePickerBuilder
 
-    fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder
+    fun setPrimaryColorInt(@ColorInt colorInt: Int): ParkDateTimePickerBuilder
 
-    fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
-
-    fun setHighLightColor(colorCode: String): ParkDateTimePickerBuilder
-
-    fun setHighLightColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
+    fun setHighLightColorInt(@ColorInt colorInt: Int): ParkDateTimePickerBuilder
 
     fun setMonthTitleFormatter(formatter: MonthTitleFormatter): ParkDateTimePickerBuilder
 

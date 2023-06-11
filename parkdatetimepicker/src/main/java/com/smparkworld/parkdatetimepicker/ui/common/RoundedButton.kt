@@ -1,6 +1,5 @@
 package com.smparkworld.parkdatetimepicker.ui.common
 
-import android.R.attr.bitmap
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -75,7 +74,7 @@ internal class RoundedButton @JvmOverloads constructor(
     }
 
     fun setDrawableRotate(degree: Float) {
-        val iconDrawable = compoundDrawables[0] ?: return
+        val iconDrawable = compoundDrawables.getOrNull(0) ?: return
         val iconBitmap = Bitmap.createBitmap(iconDrawable.intrinsicWidth, iconDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
 
         Canvas(iconBitmap).also { canvas ->

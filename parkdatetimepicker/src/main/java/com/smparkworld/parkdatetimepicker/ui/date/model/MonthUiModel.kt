@@ -11,4 +11,5 @@ internal data class MonthUiModel(
     val month: Int,
 
     var dayUiModels: List<DayUiModel>,
+
 ) : UiModel

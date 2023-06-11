@@ -63,10 +63,3 @@ internal class ViewModelLazy<VM : ViewModel>(
 
     override fun isInitialized(): Boolean = (cached != null)
 }
-
-internal fun <T> MutableLiveData<T>.updateAssign(perform: (T) -> Unit) {
-    val oldValue = this.value
-    if (oldValue != null) {
-        this.value = oldValue.apply(perform)
-    }
-}

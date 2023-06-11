@@ -9,7 +9,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentDateBinding
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
 import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
-import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.date.model.CalendarControlEvent
 
 internal class DateFragment : Fragment() {

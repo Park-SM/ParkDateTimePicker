@@ -2,16 +2,23 @@ package com.smparkworld.parkdatetimepicker.ui.time
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import com.smparkworld.parkdatetimepicker.core.DefaultOption
 import com.smparkworld.parkdatetimepicker.model.TimeResult
-import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
+import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.extras
+import com.smparkworld.parkdatetimepicker.ui.time.model.TimeExtras
 import com.smparkworld.parkdatetimepicker.ui.time.model.TimeUiModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 internal class TimeViewModel(
-    private val timeUiModelConverter: TimeUiModelConverter = TimeUiModelConverter()
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+    private val extras: TimeExtras by extras(savedStateHandle)
+
+    private val timeUiModelConverter: TimeUiModelConverter = TimeUiModelConverter()
 
     private val _selectedTime = MutableLiveData<TimeResult>()
     val selectedTime: LiveData<TimeResult> get() = _selectedTime
@@ -19,7 +26,11 @@ internal class TimeViewModel(
     private val _selectedTimeUiModel = MutableLiveData<TimeUiModel>()
     val selectedTimeUiModel: LiveData<TimeUiModel> get() = _selectedTimeUiModel
 
+    private val _amPmTexts = MutableLiveData<List<String>>()
+    val amPmTexts: LiveData<List<String>> get() = _amPmTexts
+
     init {
+        initArguments()
         initCurrentTime()
     }
 
@@ -41,18 +52,22 @@ internal class TimeViewModel(
         _selectedTimeUiModel.value = newSelectedTime
     }
 
+    private fun initArguments() {
+        _amPmTexts.value = extras.amPmTexts.takeIf { it.size == 2 } ?: DefaultOption.AM_PM
+    }
+
     private fun initCurrentTime() {
         val formatter = SimpleDateFormat("a:hh:mm", Locale.ENGLISH)
         val (amPm, hour, minute) = formatter.format(System.currentTimeMillis()).split(":")
         val currentTime = if (amPm.uppercase() == "AM") {
             TimeResult(
-                amPm = TextArgumentApplier.getAmText(),
+                amPm = extras.am ?: DefaultOption.AM,
                 hour = hour.toInt(),
                 minute = minute.toInt()
             )
         } else {
             TimeResult(
-                amPm = TextArgumentApplier.getPmText(),
+                amPm = extras.pm ?: DefaultOption.PM,
                 hour = hour.toInt(),
                 minute = minute.toInt()
             )

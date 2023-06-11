@@ -1,5 +1,6 @@
-package com.smparkworld.parkdatetimepicker.ui.datetime
+package com.smparkworld.parkdatetimepicker.ui.datetime.navigator
 
+import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
@@ -24,7 +25,12 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
         transaction.commitAllowingStateLoss()
     }
 
-    private fun navigateTransaction(transaction: PhaseTransactionInternal, manager: FragmentManager, @IdRes containerId: Int) {
+    private fun navigateTransaction(
+        transaction: PhaseTransactionInternal,
+        manager: FragmentManager,
+        @IdRes containerId: Int,
+        arguments: Bundle?
+    ) {
         if (checkDonePhase(transaction, manager)) return
 
         val oldFragment = manager.findFragmentByTag(transaction.oldPhase.getFragmentTag())
@@ -48,7 +54,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
                         .show(newFragment)
                 }
                 (oldFragment != null && newFragment == null) -> {
-                    transaction.newPhase.createFragment()?.let { fragment ->
+                    transaction.newPhase.createFragment(arguments)?.let { fragment ->
                         fragmentTransaction
                             .hide(oldFragment)
                             .add(containerId, fragment, transaction.newPhase.getFragmentTag())
@@ -56,7 +62,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
                     }
                 }
                 (oldFragment == null && newFragment == null) -> {
-                    transaction.newPhase.createFragment()?.let { fragment ->
+                    transaction.newPhase.createFragment(arguments)?.let { fragment ->
                         fragmentTransaction
                             .add(containerId, fragment, transaction.newPhase.getFragmentTag())
                             .show(fragment)
@@ -144,13 +150,16 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
     }
 
     private class PhaseTransactionInternal(
-        private val onCommit: (transaction: PhaseTransactionInternal, manager: FragmentManager, containerId: Int) -> Unit
+        private val onCommit: (transaction: PhaseTransactionInternal, manager: FragmentManager, containerId: Int, arguments: Bundle?) -> Unit
     ) : PhaseTransaction {
 
         lateinit var oldPhase: Phase
             private set
 
         lateinit var newPhase: Phase
+            private set
+
+        var arguments: Bundle? = null
             private set
 
         var oldHeaderView: View? = null
@@ -161,6 +170,11 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
 
         var onDone: (() -> Unit)? = null
             private set
+
+        override fun setArguments(args: Bundle?): PhaseTransaction {
+            this.arguments = args
+            return this
+        }
 
         override fun addOldPhase(oldPhase: Phase): PhaseTransaction {
             this.oldPhase = oldPhase
@@ -189,7 +203,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
 
         override fun commit(@IdRes containerId: Int, manager: FragmentManager) {
             checkValidation()
-            onCommit.invoke(this, manager, containerId)
+            onCommit.invoke(this, manager, containerId, arguments)
         }
 
         private fun checkValidation() {

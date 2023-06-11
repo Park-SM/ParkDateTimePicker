@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="state"
+            type="com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeViewState" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,12 +32,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
             android:layout_marginStart="20dp"
-            android:textColor="@color/pdtp_black"
+            android:text="@{state.title}"
             android:textSize="17dp"
             android:textStyle="bold"
+            android:textColor="@color/pdtp_black"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="@string/pdtp_label_title"/>
+            tools:text="Calendar"/>
 
         <TextView
             android:id="@+id/result"
@@ -40,12 +47,12 @@
             android:layout_marginTop="18dp"
             android:layout_marginEnd="25dp"
             android:textColor="@color/pdtp_blue"
+            android:text="@{state.result}"
             android:textSize="13dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="12월 5일"/>
-
+            tools:text="12.05"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
@@ -78,16 +85,17 @@
                 android:paddingStart="5dp"
                 android:paddingEnd="10dp"
                 android:drawableTint="@color/pdtp_black"
-                android:text="@string/pdtp_label_reset"
+                android:text="@{state.resetText}"
                 android:textColor="@color/pdtp_black"
                 android:textSize="12dp"
                 android:gravity="center"
                 android:foreground="?selectableItemBackground"
-                app:drawableRotate="@{-45f}"
                 app:drawableStartCompat="@drawable/pdtp_ic_reset"
+                app:drawableRotate="@{-45f}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="Reset"/>
 
             <com.smparkworld.parkdatetimepicker.ui.common.RoundedButton
                 android:id="@+id/done"
@@ -97,13 +105,14 @@
                 android:paddingVertical="13dp"
                 android:paddingHorizontal="17dp"
                 android:foreground="?selectableItemBackground"
-                android:text="@string/pdtp_label_done"
+                android:text="@{state.doneText}"
                 android:textColor="@color/pdtp_white"
                 android:textSize="12dp"
                 app:fillColor="@color/pdtp_black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="Done"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

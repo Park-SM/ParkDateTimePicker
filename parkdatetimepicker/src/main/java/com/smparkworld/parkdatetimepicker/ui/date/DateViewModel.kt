@@ -6,15 +6,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import com.smparkworld.parkdatetimepicker.core.DateUtils
 import com.smparkworld.parkdatetimepicker.core.DefaultOption
-import com.smparkworld.parkdatetimepicker.core.ExtraKey
 import com.smparkworld.parkdatetimepicker.data.DateRepository
 import com.smparkworld.parkdatetimepicker.data.DateRepositoryImpl
 import com.smparkworld.parkdatetimepicker.model.DateData
 import com.smparkworld.parkdatetimepicker.model.DateResult
 import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
-import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
+import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.extras
 import com.smparkworld.parkdatetimepicker.ui.date.model.CalendarControlEvent
+import com.smparkworld.parkdatetimepicker.ui.date.model.DateExtras
 import com.smparkworld.parkdatetimepicker.ui.date.model.DayUiModel
 import com.smparkworld.parkdatetimepicker.ui.date.model.MonthUiModel
 import kotlinx.coroutines.launch
@@ -22,8 +22,10 @@ import kotlinx.coroutines.launch
 internal typealias MonthsData = Pair<List<MonthUiModel>, Int>
 
 internal class DateViewModel(
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+    private val extras: DateExtras by extras(savedStateHandle)
 
     private val dateRepository: DateRepository = DateRepositoryImpl()
     private val dateUiModelConverter: DateUiModelConverter = DateUiModelConverter()
@@ -87,8 +89,8 @@ internal class DateViewModel(
     }
 
     private fun initDateData() {
-        val minYearDiff = savedStateHandle.get<Int>(ExtraKey.EXTRA_MIN_YEAR_DIFF) ?: DefaultOption.DEFAULT_MIN_YEAR_DIFF
-        val maxYearDiff = savedStateHandle.get<Int>(ExtraKey.EXTRA_MAX_YEAR_DIFF) ?: DefaultOption.DEFAULT_MAX_YEAR_DIFF
+        val minYearDiff = extras.minYearDiff ?: DefaultOption.MIN_YEAR_DIFF
+        val maxYearDiff = extras.maxYearDiff ?: DefaultOption.MAX_YEAR_DIFF
         if (_dateData.value != null) return
 
         viewModelScope.launch {
@@ -97,7 +99,8 @@ internal class DateViewModel(
     }
 
     private fun initWeekParams() {
-        _weeks.value = TextArgumentApplier.getDayOfWeekTexts()
+        _weeks.value = extras.dayOfWeekTexts.takeIf(List<String>::isNotEmpty)
+            ?: DefaultOption.DAY_OF_WEEK
     }
 
     private fun convertToMonthUiModels(dateData: DateData): MonthsData {

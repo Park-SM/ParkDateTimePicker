@@ -15,12 +15,12 @@ internal object ColorArgumentApplier {
     private var highLightColorInt: Int? = null
 
     @JvmStatic
-    fun setPrimaryColor(@ColorInt colorInt: Int) {
+    fun setPrimaryColorInt(@ColorInt colorInt: Int) {
         primaryColorInt = colorInt
     }
 
     @JvmStatic
-    fun setHighLightColor(@ColorInt colorInt: Int) {
+    fun setHighLightColorInt(@ColorInt colorInt: Int) {
         highLightColorInt = colorInt
     }
 
