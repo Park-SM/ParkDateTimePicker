@@ -1,7 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.datetime.navigator
 
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -35,12 +34,6 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
 
         val oldFragment = manager.findFragmentByTag(transaction.oldPhase.getFragmentTag())
         val newFragment = manager.findFragmentByTag(transaction.newPhase.getFragmentTag())
-
-        navigateHeaderTransaction(
-            oldHeaderView = transaction.oldHeaderView,
-            newHeaderView = transaction.newHeaderView,
-            withAnimation = (oldFragment == null || newFragment == null)
-        )
 
         commitFragmentTransaction(manager) { fragmentTransaction ->
             when {
@@ -83,63 +76,6 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
             .commitAllowingStateLoss()
     }
 
-    private fun navigateHeaderTransaction(oldHeaderView: View?, newHeaderView: View?, withAnimation: Boolean) {
-        when {
-            (oldHeaderView != null && newHeaderView != null) -> {
-                if (withAnimation) {
-                    hideHeaderView(oldHeaderView)
-                    showHeaderView(newHeaderView)
-                } else {
-                    setHeaderViewVisibility(oldHeaderView, false)
-                    setHeaderViewVisibility(newHeaderView, true)
-                }
-            }
-            (oldHeaderView == null && newHeaderView != null) -> {
-                setHeaderViewVisibility(newHeaderView, true)
-            }
-            (oldHeaderView != null && newHeaderView == null) -> {
-                if (withAnimation) {
-                    hideHeaderView(oldHeaderView)
-                } else {
-                    setHeaderViewVisibility(oldHeaderView, false)
-                }
-            }
-        }
-    }
-
-    private fun hideHeaderView(headerView: View, callback: (() -> Unit)? = null) {
-        headerView.alpha = 1f
-        headerView.animate()
-            .alphaBy(1f)
-            .alpha(0f)
-            .withEndAction {
-                headerView.visibility = View.GONE
-                callback?.invoke()
-            }
-            .duration = DURATION
-    }
-
-    private fun showHeaderView(headerView: View) {
-        headerView.alpha = 0f
-        headerView.animate()
-            .alphaBy(0f)
-            .alpha(1f)
-            .withStartAction {
-                headerView.visibility = View.VISIBLE
-            }
-            .duration = DURATION
-    }
-
-    private fun setHeaderViewVisibility(view: View, isVisible: Boolean) {
-        if (isVisible) {
-            view.alpha = 1f
-            view.visibility = View.VISIBLE
-        } else {
-            view.alpha = 0f
-            view.visibility = View.GONE
-        }
-    }
-
     private fun checkDonePhase(transaction: PhaseTransactionInternal, manager: FragmentManager): Boolean {
         if (transaction.newPhase == Phase.DONE) {
             clearFragments(manager)
@@ -162,12 +98,6 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
         var arguments: Bundle? = null
             private set
 
-        var oldHeaderView: View? = null
-            private set
-
-        var newHeaderView: View? = null
-            private set
-
         var onDone: (() -> Unit)? = null
             private set
 
@@ -183,16 +113,6 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
 
         override fun addNewPhase(newPhase: Phase): PhaseTransaction {
             this.newPhase = newPhase
-            return this
-        }
-
-        override fun addOldPhaseHeaderView(oldHeaderView: View?): PhaseTransaction {
-            this.oldHeaderView = oldHeaderView
-            return this
-        }
-
-        override fun addNewPhaseHeaderView(newHeaderView: View?): PhaseTransaction {
-            this.newHeaderView = newHeaderView
             return this
         }
 

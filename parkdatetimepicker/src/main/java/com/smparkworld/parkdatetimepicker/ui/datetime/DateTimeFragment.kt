@@ -96,17 +96,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             .setArguments(arguments)
             .addOldPhase(oldPhase)
             .addNewPhase(newPhase)
-            .addOldPhaseHeaderView(getHeaderViewByPhase(binding, oldPhase))
-            .addNewPhaseHeaderView(getHeaderViewByPhase(binding, newPhase))
             .addOnDone(::dismiss)
             .commit(R.id.fragment_container, childFragmentManager)
-    }
-
-    private fun getHeaderViewByPhase(binding: PdtpFragmentDatetimeBinding, phase: Phase): View? {
-        return when (phase) {
-//            Phase.DATE -> binding.layoutDateHeader.root
-//            Phase.TIME -> binding.layoutTimeHeader.root
-            else -> null
-        }
     }
 }
