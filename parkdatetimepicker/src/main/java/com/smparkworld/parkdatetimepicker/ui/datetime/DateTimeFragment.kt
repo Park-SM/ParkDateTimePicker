@@ -81,7 +81,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             binding.state = state
         }
         vm.phase.observe(viewLifecycleOwner) { phaseData ->
-            navigateFragment(binding, phaseData.oldPhase, phaseData.newPhase)
+            navigateFragment(phaseData.oldPhase, phaseData.newPhase)
         }
         dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
             vm.onSelectDate(selectedDate)
@@ -91,7 +91,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun navigateFragment(binding: PdtpFragmentDatetimeBinding, oldPhase: Phase, newPhase: Phase) {
+    private fun navigateFragment(oldPhase: Phase, newPhase: Phase) {
         navigator.beginTransaction()
             .setArguments(arguments)
             .addOldPhase(oldPhase)
