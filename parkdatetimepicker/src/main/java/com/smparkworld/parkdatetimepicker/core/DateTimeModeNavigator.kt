@@ -11,4 +11,6 @@ internal interface DateTimeModeNavigator {
     fun init(mode: DateTimeMode, doneListener: BaseListener?): PhaseTransactionData
 
     fun getNextPhase(selectedDate: DateResult? = null, selectedTime: TimeResult? = null): PhaseTransactionData
+
+    fun resetPhase(): PhaseTransactionData
 }

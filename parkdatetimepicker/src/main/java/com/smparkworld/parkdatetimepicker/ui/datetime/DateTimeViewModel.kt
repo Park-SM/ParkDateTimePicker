@@ -42,7 +42,11 @@ internal class DateTimeViewModel(
     }
 
     fun onResetClicked() {
-
+        _phase.value = navigator.resetPhase()
+        
+        selectedDate = null
+        selectedTime = null
+        updateDateTimeResult()
     }
 
     fun onDoneClicked() {

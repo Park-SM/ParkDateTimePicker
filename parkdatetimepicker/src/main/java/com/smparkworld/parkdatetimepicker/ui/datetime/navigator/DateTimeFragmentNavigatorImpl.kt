@@ -21,7 +21,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
                 transaction.remove(fragment)
             }
         }
-        transaction.commitAllowingStateLoss()
+        transaction.commitNowAllowingStateLoss()
     }
 
     private fun navigateTransaction(

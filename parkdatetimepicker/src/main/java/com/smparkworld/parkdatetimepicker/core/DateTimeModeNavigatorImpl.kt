@@ -76,6 +76,13 @@ internal class DateTimeModeNavigatorImpl(
         }
     }
 
+    override fun resetPhase(): PhaseTransactionData {
+        selectedDates.clear()
+        selectedTimes.clear()
+        currentPhase = Phase.INIT
+        return getNextPhase()
+    }
+
     private fun assertInitialized() {
         if (!::mode.isInitialized) {
             throw IllegalStateException(ERROR_NOT_INITIALIZED)

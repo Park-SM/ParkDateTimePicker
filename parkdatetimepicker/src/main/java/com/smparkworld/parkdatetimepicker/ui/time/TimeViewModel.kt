@@ -52,6 +52,10 @@ internal class TimeViewModel(
         _selectedTimeUiModel.value = newSelectedTime
     }
 
+    fun onResetClicked() {
+        initCurrentTime()
+    }
+
     private fun initArguments() {
         _amPmTexts.value = extras.amPmTexts.takeIf { it.size == 2 } ?: DefaultOption.AM_PM
     }
