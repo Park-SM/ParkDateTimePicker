@@ -62,10 +62,10 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     private fun initArguments(binding: PdtpFragmentDatetimeBinding) {
         vm.init(listener)
 
-        arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_INT, -1)?.takeIf { it > -1 }?.let {
+        arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_INT, DEFAULT_INT)?.takeIf { it != DEFAULT_INT }?.let {
             ColorArgumentApplier.setPrimaryColorInt(it)
         }
-        arguments?.getInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_INT, -1)?.takeIf { it > -1 }?.let {
+        arguments?.getInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_INT, DEFAULT_INT)?.takeIf { it != DEFAULT_INT }?.let {
             ColorArgumentApplier.setHighLightColorInt(it)
         }
     }
@@ -110,5 +110,10 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             .addNewPhase(newPhase)
             .addOnDone(::dismiss)
             .commit(R.id.fragment_container, childFragmentManager)
+    }
+
+    companion object {
+
+        private const val DEFAULT_INT = -971205
     }
 }
