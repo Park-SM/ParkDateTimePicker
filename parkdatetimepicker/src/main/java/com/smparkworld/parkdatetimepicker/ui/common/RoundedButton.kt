@@ -9,9 +9,12 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.util.AttributeSet
+import android.util.TypedValue
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.extension.toDp
 
@@ -23,14 +26,20 @@ internal class RoundedButton @JvmOverloads constructor(
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     @ColorInt
-    private var fillColor = Color.TRANSPARENT
+    private var validFillColor = Color.TRANSPARENT
+
+    @ColorInt
+    private var invalidFillColor = Color.TRANSPARENT
+
     private var radius = RADIUS.toDp
+    private var isValid = true
 
     init {
         attrs?.let {
             context.obtainStyledAttributes(it, R.styleable.RoundedButton).apply {
                 radius = getDimension(R.styleable.RoundedButton_radius, RADIUS.toDp)
-                fillColor = getColor(R.styleable.RoundedButton_fillColor, Color.TRANSPARENT)
+                validFillColor = getColor(R.styleable.RoundedButton_fillColor, Color.TRANSPARENT)
+                invalidFillColor = getColor(R.styleable.RoundedButton_invalidFillColor, Color.TRANSPARENT)
             }.recycle()
         }
     }
@@ -46,31 +55,12 @@ internal class RoundedButton @JvmOverloads constructor(
             addRoundRect(rect, radius, radius, Path.Direction.CW)
         }
         val paint = Paint().apply {
-            color = fillColor
+            color = if (isValid) validFillColor else invalidFillColor
             style = Paint.Style.FILL
         }
         canvas?.drawPath(path, paint)
         canvas?.clipPath(path)
         super.onDraw(canvas)
-    }
-
-    fun setFillColor(@ColorInt color: Int) {
-        this.fillColor = color
-        invalidate()
-    }
-
-    fun setFillColorRGB(color: String) {
-        try {
-            this.fillColor = Color.parseColor(color)
-            invalidate()
-        } catch (e: Exception) {
-            // do nothing
-        }
-    }
-
-    fun setRadius(radius: Float) {
-        this.radius = radius
-        invalidate()
     }
 
     fun setDrawableRotate(degree: Float) {
@@ -89,6 +79,58 @@ internal class RoundedButton @JvmOverloads constructor(
 
         val drawable = BitmapDrawable(resources, targetBitmap)
         setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+    }
+
+    fun setRadius(radius: Float) {
+        this.radius = radius
+        invalidate()
+    }
+
+    fun setFillColor(@ColorInt color: Int) {
+        this.validFillColor = color
+        invalidate()
+    }
+
+    fun setFillColorRGB(color: String) {
+        try {
+            this.validFillColor = Color.parseColor(color)
+            invalidate()
+        } catch (e: Exception) {
+            // do nothing
+        }
+    }
+
+    fun setInvalidFillColor(@ColorInt color: Int) {
+        this.invalidFillColor = color
+        invalidate()
+    }
+
+    fun setInvalidFillColorRGB(color: String) {
+        try {
+            this.invalidFillColor = Color.parseColor(color)
+            invalidate()
+        } catch (e: Exception) {
+            // do nothing
+        }
+    }
+
+    fun setValidation(isValid: Boolean) {
+        this.isValid = isValid
+        setRippleByValidation(isValid)
+        invalidate()
+    }
+
+    private fun setRippleByValidation(isValid: Boolean) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
+
+        foreground = if (isValid) {
+            with(TypedValue()) {
+                context.theme.resolveAttribute(android.R.attr.selectableItemBackground, this, true)
+                ContextCompat.getDrawable(context, resourceId)
+            }
+        } else {
+            null
+        }
     }
 
     companion object {

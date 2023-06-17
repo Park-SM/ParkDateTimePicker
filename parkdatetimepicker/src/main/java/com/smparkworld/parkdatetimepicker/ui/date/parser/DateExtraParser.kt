@@ -5,7 +5,7 @@ import com.smparkworld.parkdatetimepicker.core.ExtraKey
 import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.ExtraParsable
 import com.smparkworld.parkdatetimepicker.ui.date.model.DateExtras
 
-class DateExtraParser : ExtraParsable<DateExtras> {
+internal class DateExtraParser : ExtraParsable<DateExtras> {
 
     override fun parse(handle: SavedStateHandle): DateExtras {
         return DateExtras(

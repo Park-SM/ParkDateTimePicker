@@ -6,7 +6,7 @@ import com.smparkworld.parkdatetimepicker.core.ExtraKey
 import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.ExtraParsable
 import com.smparkworld.parkdatetimepicker.ui.time.model.TimeExtras
 
-class TimeExtraParser : ExtraParsable<TimeExtras> {
+internal class TimeExtraParser : ExtraParsable<TimeExtras> {
 
     override fun parse(handle: SavedStateHandle): TimeExtras {
         val amPmTexts = handle.get<Array<String>>(ExtraKey.EXTRA_AM_PM_TEXTS).orEmpty()

@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.time.model
 
-data class TimeExtras(
+internal data class TimeExtras(
 
     val am: String?,
 

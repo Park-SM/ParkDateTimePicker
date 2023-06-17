@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.datetime.model
 
-data class DateTimeViewState(
+internal data class DateTimeViewState(
 
     val title: String,
 
@@ -8,5 +8,7 @@ data class DateTimeViewState(
 
     val resetText: String,
 
-    val doneText: String
+    val doneText: String,
+
+    val validation: Boolean
 )

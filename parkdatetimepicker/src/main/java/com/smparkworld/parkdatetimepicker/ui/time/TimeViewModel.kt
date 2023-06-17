@@ -10,7 +10,7 @@ import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.extras
 import com.smparkworld.parkdatetimepicker.ui.time.model.TimeExtras
 import com.smparkworld.parkdatetimepicker.ui.time.model.TimeUiModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 internal class TimeViewModel(
     savedStateHandle: SavedStateHandle

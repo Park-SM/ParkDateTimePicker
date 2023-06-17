@@ -1,6 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.date.model
 
-data class DateExtras(
+internal data class DateExtras(
 
     val minYearDiff: Int?,
 

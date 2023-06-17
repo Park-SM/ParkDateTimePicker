@@ -46,6 +46,7 @@ internal class DateTimeViewModel(
         
         selectedDate = null
         selectedTime = null
+        updateValidation()
         updateDateTimeResult()
     }
 
@@ -54,16 +55,39 @@ internal class DateTimeViewModel(
             selectedDate = selectedDate,
             selectedTime = selectedTime
         )
+        updateValidation()
     }
 
     fun onSelectDate(selectedDate: DateResult) {
         this.selectedDate = selectedDate
+        updateValidation()
         updateDateTimeResult()
     }
 
     fun onSelectTime(selectedTime: TimeResult) {
         this.selectedTime = selectedTime
+        updateValidation()
         updateDateTimeResult()
+    }
+
+    private fun updateValidation() {
+        val validation = navigator.isValidPhase(
+            selectedDate = selectedDate,
+            selectedTime = selectedTime
+        )
+        _viewState.value?.let { state ->
+            _viewState.value = state.copy(
+                validation = validation
+            )
+        }
+    }
+
+    private fun updateDateTimeResult() {
+        _viewState.value?.let { state ->
+            _viewState.value = state.copy(
+                result = formatDateTimeResult()
+            )
+        }
     }
 
     private fun formatDateTimeResult(): String {
@@ -89,13 +113,5 @@ internal class DateTimeViewModel(
         }
 
         return stringBuilder.toString()
-    }
-
-    private fun updateDateTimeResult() {
-        _viewState.value?.let { state ->
-            _viewState.value = state.copy(
-                result = formatDateTimeResult()
-            )
-        }
     }
 }

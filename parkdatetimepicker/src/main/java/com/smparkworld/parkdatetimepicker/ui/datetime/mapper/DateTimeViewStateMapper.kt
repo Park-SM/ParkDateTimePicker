@@ -13,7 +13,8 @@ internal object DateTimeViewStateMapper {
             title = extras.title ?: DefaultOption.TITLE,
             result = "",
             resetText = extras.resetText ?: DefaultOption.RESET,
-            doneText = extras.doneText ?: DefaultOption.DONE
+            doneText = extras.doneText ?: DefaultOption.DONE,
+            validation = false
         )
     }
 }
