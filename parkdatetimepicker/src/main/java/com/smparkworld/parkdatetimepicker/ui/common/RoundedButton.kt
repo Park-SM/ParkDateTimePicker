@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.extension.toDp
+import com.smparkworld.parkdatetimepicker.extension.toPx
 
 
 internal class RoundedButton @JvmOverloads constructor(
@@ -31,13 +32,13 @@ internal class RoundedButton @JvmOverloads constructor(
     @ColorInt
     private var invalidFillColor = Color.TRANSPARENT
 
-    private var radius = RADIUS.toDp
+    private var radius: Float = RADIUS.toPx.toFloat()
     private var isValid = true
 
     init {
         attrs?.let {
             context.obtainStyledAttributes(it, R.styleable.RoundedButton).apply {
-                radius = getDimension(R.styleable.RoundedButton_radius, RADIUS.toDp)
+                radius = getDimension(R.styleable.RoundedButton_radius, RADIUS.toPx.toFloat())
                 validFillColor = getColor(R.styleable.RoundedButton_fillColor, Color.TRANSPARENT)
                 invalidFillColor = getColor(R.styleable.RoundedButton_invalidFillColor, Color.TRANSPARENT)
             }.recycle()
@@ -135,6 +136,6 @@ internal class RoundedButton @JvmOverloads constructor(
 
     companion object {
 
-        private const val RADIUS = 999f
+        private const val RADIUS = 999
     }
 }

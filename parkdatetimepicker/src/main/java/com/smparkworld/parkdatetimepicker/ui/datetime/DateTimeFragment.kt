@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.core.ExtraKey
 import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentDatetimeBinding
+import com.smparkworld.parkdatetimepicker.extension.toDp
+import com.smparkworld.parkdatetimepicker.extension.toPx
 import com.smparkworld.parkdatetimepicker.extension.viewModels
 import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
 import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
@@ -19,6 +22,7 @@ import com.smparkworld.parkdatetimepicker.ui.datetime.model.Phase
 import com.smparkworld.parkdatetimepicker.ui.datetime.navigator.DateTimeFragmentNavigator
 import com.smparkworld.parkdatetimepicker.ui.datetime.navigator.DateTimeFragmentNavigatorImpl
 import com.smparkworld.parkdatetimepicker.ui.time.TimeViewModel
+
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
 
@@ -82,6 +86,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             vm.onDoneClicked()
         }
 
+        handleMaxHeight(binding)
         ColorArgumentApplier.applyPrimaryColor(binding.title)
         ColorArgumentApplier.applyPrimaryColor(binding.reset)
         ColorArgumentApplier.applyPrimaryColor(binding.done)
@@ -110,6 +115,23 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             .addNewPhase(newPhase)
             .addOnDone(::dismiss)
             .commit(R.id.fragment_container, childFragmentManager)
+    }
+
+    private fun handleMaxHeight(binding: PdtpFragmentDatetimeBinding) {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.fragmentContainer.layoutParams = binding.fragmentContainer.layoutParams.apply {
+                    val contentHeightMaxDP = 355
+                    val dialogHeightMaxDP = 480
+                    val dialogHeightCurrentDP = binding.root.height.toDp
+
+                    if (dialogHeightCurrentDP < dialogHeightMaxDP) {
+                        height = (contentHeightMaxDP - (dialogHeightMaxDP - dialogHeightCurrentDP)).toPx
+                    }
+                }
+                binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
     }
 
     companion object {

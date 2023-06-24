@@ -15,8 +15,11 @@ internal fun <T> MutableCollection<T>.addIfNonNull(element: T?): Boolean {
     }
 }
 
-internal val Float.toDp: Float
-    get() = (this * Resources.getSystem().displayMetrics.density)
+internal val Int.toDp: Int
+    get() = (this / Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
+internal val Int.toPx: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
 internal inline fun <reified VM : ViewModel> Fragment.viewModels(
     noinline getFactory: (() -> ViewModelProvider.Factory)? = null

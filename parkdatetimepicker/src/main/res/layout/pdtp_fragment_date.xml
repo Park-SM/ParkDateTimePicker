@@ -154,7 +154,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/container"
             android:layout_width="0dp"
