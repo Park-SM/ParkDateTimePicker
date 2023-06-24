@@ -8,7 +8,9 @@ import com.smparkworld.parkdatetimepicker.ui.datetime.model.DateTimeMode
 
 internal interface DateTimeModeNavigator {
 
-    fun init(mode: DateTimeMode, listener: BaseListener?): PhaseTransactionData
+    fun init(mode: DateTimeMode): PhaseTransactionData
+
+    fun setDoneListener(listener: BaseListener)
 
     fun getNextPhase(selectedDate: DateResult? = null, selectedTime: TimeResult? = null): PhaseTransactionData
 }

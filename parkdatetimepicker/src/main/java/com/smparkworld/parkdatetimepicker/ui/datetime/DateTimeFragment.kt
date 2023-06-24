@@ -52,7 +52,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
 
     private fun initArguments(binding: PdtpFragmentDatetimeBinding) {
-        vm.init(listener)
+        vm.setDoneListener(listener)
 
         arguments?.getString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE)?.let {
             ColorArgumentApplier.setPrimaryColor(Color.parseColor(it))
