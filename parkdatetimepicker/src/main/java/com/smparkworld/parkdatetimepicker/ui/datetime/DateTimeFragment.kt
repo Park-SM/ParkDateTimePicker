@@ -127,6 +127,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
 
                     if (dialogHeightCurrentDP < dialogHeightMaxDP) {
                         height = (contentHeightMaxDP - (dialogHeightMaxDP - dialogHeightCurrentDP)).toPx
+                        dateVm.onScrollMode(true)
                     }
                 }
                 binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)

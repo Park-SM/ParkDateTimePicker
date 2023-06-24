@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.smparkworld.parkdatetimepicker.core.ExtraKey
 import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentDateBinding
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
 import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
@@ -79,6 +80,9 @@ internal class DateFragment : Fragment() {
             if (binding.container.currentItem != position) {
                 binding.container.currentItem = position
             }
+        }
+        vm.isScrollMode.observe(viewLifecycleOwner) { isScrollMode ->
+            (binding.container.adapter as? DateMonthAdapter)?.setScrollMode(isScrollMode)
         }
     }
 }

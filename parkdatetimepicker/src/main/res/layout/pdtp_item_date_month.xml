@@ -7,7 +7,9 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
+        android:paddingHorizontal="10dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="7"
         tools:listitem="@layout/pdtp_item_date_day"/>

@@ -44,9 +44,16 @@ internal class DateViewModel(
     private val _weeks = MutableLiveData<List<String>>()
     val weeks: LiveData<List<String>> get() = _weeks
 
+    private val _isScrollMode = MutableLiveData<Boolean>()
+    val isScrollMode: LiveData<Boolean> get() =_isScrollMode
+
     init {
         initDateData()
         initWeekParams()
+    }
+
+    fun onScrollMode(isScrollMode: Boolean) {
+        _isScrollMode.value = isScrollMode
     }
 
     fun onScrollMonth(position: Int) {

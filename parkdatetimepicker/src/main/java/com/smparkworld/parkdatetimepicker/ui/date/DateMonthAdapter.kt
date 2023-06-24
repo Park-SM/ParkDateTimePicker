@@ -1,6 +1,7 @@
 package com.smparkworld.parkdatetimepicker.ui.date
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.parkdatetimepicker.databinding.PdtpItemDateMonthBinding
@@ -16,6 +17,7 @@ internal class DateMonthAdapter(
     private val items = mutableListOf<MonthUiModel>()
     private val cachedDayAdapterMap = mutableMapOf<Int, DateDayAdapter>()
     private var selectedDayUiModel: DayUiModel? = null
+    private var isScrollMode: Boolean = false
 
     override fun getItemCount(): Int = items.size
 
@@ -24,7 +26,7 @@ internal class DateMonthAdapter(
             PdtpItemDateMonthBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
-            cachedDayAdapterMap, ::onClickDayItem
+            cachedDayAdapterMap, { isScrollMode }, ::onClickDayItem
         )
 
     override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
@@ -36,6 +38,11 @@ internal class DateMonthAdapter(
     fun submitList(items: List<MonthUiModel>) {
         this.items.clear()
         this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun setScrollMode(isScrollMode: Boolean) {
+        this.isScrollMode = isScrollMode
         notifyDataSetChanged()
     }
 
@@ -57,11 +64,13 @@ internal class DateMonthAdapter(
     class MonthViewHolder(
         private val binding: PdtpItemDateMonthBinding,
         private val cachedDayAdapterMap: MutableMap<Int, DateDayAdapter>,
+        private val isScrollMode: () -> Boolean,
         private val itemEventHandler: (DayUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(uiModel: MonthUiModel) {
             binding.container.itemAnimator = null
+            setScrollMode(isScrollMode())
             getAdapter(uiModel.id).submitList(uiModel.dayUiModels)
         }
 
@@ -74,6 +83,16 @@ internal class DateMonthAdapter(
 
             cachedDayAdapterMap[monthId] = adapter
             return adapter
+        }
+
+        private fun setScrollMode(enableScrollMode: Boolean) {
+            if (enableScrollMode) {
+                binding.container.overScrollMode = View.OVER_SCROLL_ALWAYS
+            } else {
+                binding.container.overScrollMode = View.OVER_SCROLL_NEVER
+            }
+            binding.container.isVerticalScrollBarEnabled = enableScrollMode
+            binding.container.isScrollbarFadingEnabled = !enableScrollMode
         }
     }
 }
