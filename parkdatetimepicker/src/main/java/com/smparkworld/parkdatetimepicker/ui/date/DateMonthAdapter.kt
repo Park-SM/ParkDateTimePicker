@@ -39,7 +39,7 @@ internal class DateMonthAdapter(
         notifyDataSetChanged()
     }
 
-    private fun onClickDayItem(monthUiModel: MonthUiModel, dayUiModel: DayUiModel) {
+    private fun onClickDayItem(dayUiModel: DayUiModel) {
         selectedDayUiModel?.let { oldDayUiModel ->
             oldDayUiModel.isSelected = false
             cachedDayAdapterMap[oldDayUiModel.monthId]?.notifyItemChanged(oldDayUiModel.position)
@@ -49,28 +49,30 @@ internal class DateMonthAdapter(
         dayUiModel.isSelected = true
         cachedDayAdapterMap[dayUiModel.monthId]?.notifyItemChanged(dayUiModel.position)
 
-        itemEventHandler.invoke(monthUiModel, dayUiModel)
+        items.find { it.id == dayUiModel.monthId }?.let { monthUiModel ->
+            itemEventHandler.invoke(monthUiModel, dayUiModel)
+        }
     }
 
     class MonthViewHolder(
         private val binding: PdtpItemDateMonthBinding,
         private val cachedDayAdapterMap: MutableMap<Int, DateDayAdapter>,
-        private val itemEventHandler: (MonthUiModel, DayUiModel) -> Unit
+        private val itemEventHandler: (DayUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(uiModel: MonthUiModel) {
             binding.container.itemAnimator = null
-            getAdapter(uiModel).submitList(uiModel.dayUiModels)
+            getAdapter(uiModel.id).submitList(uiModel.dayUiModels)
         }
 
-        private fun getAdapter(monthUiModel: MonthUiModel): DateDayAdapter {
+        private fun getAdapter(monthId: Int): DateDayAdapter {
             val adapter = (binding.container.adapter as? DateDayAdapter) ?: DateDayAdapter { dayUiModel ->
-                itemEventHandler.invoke(monthUiModel, dayUiModel)
+                itemEventHandler.invoke(dayUiModel)
             }.also { newDayAdapter ->
                 binding.container.adapter = newDayAdapter
             }
 
-            cachedDayAdapterMap[monthUiModel.id] = adapter
+            cachedDayAdapterMap[monthId] = adapter
             return adapter
         }
     }

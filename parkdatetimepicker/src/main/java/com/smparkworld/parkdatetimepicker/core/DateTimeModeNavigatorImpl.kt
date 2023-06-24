@@ -19,9 +19,9 @@ internal class DateTimeModeNavigatorImpl(
     private val selectedDates = mutableListOf<DateResult>()
     private val selectedTimes = mutableListOf<TimeResult>()
 
-    override fun init(mode: DateTimeMode, listener: BaseListener?): PhaseTransactionData {
+    override fun init(mode: DateTimeMode, doneListener: BaseListener?): PhaseTransactionData {
         this.mode = mode
-        listenerManager.init(mode, listener)
+        listenerManager.init(mode, doneListener)
 
         return getNextPhase()
     }
@@ -73,6 +73,43 @@ internal class DateTimeModeNavigatorImpl(
 
         return PhaseTransactionData(currentPhase, newPhase).also {
             currentPhase = newPhase
+        }
+    }
+
+    override fun resetPhase(): PhaseTransactionData {
+        selectedDates.clear()
+        selectedTimes.clear()
+        currentPhase = Phase.INIT
+        return getNextPhase()
+    }
+
+    override fun isValidPhase(
+        selectedDate: DateResult?,
+        selectedTime: TimeResult?
+    ): Boolean {
+        return when(mode) {
+            DateTimeMode.DATETIME -> {
+                when(currentPhase) {
+                    Phase.INIT -> true
+                    Phase.DATE -> (selectedDate != null)
+                    Phase.TIME -> (selectedTime != null)
+                    else -> false
+                }
+            }
+            DateTimeMode.DATE -> {
+                when (currentPhase) {
+                    Phase.INIT -> true
+                    Phase.DATE -> (selectedDate != null)
+                    else -> false
+                }
+            }
+            DateTimeMode.TIME -> {
+                when (currentPhase) {
+                    Phase.INIT -> true
+                    Phase.TIME -> (selectedTime != null)
+                    else -> false
+                }
+            }
         }
     }
 

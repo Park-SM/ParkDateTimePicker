@@ -1,37 +1,53 @@
 package com.smparkworld.parkdatetimepicker.ui.applier
 
-import com.smparkworld.parkdatetimepicker.model.formatter.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.model.formatter.TimeTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.DateResultFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.MonthTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.TimeResultFormatter
 
 internal object FormatArgumentApplier {
 
-    private var dateTitleFormatter: DateTitleFormatter =
-        DateTitleFormatter { year, month ->
+    private var monthTitleFormatter: MonthTitleFormatter =
+        MonthTitleFormatter { year, month ->
             "${year}.${String.format("%02d", month)}"
         }
 
-    private var timeTitleFormatter: TimeTitleFormatter =
-        TimeTitleFormatter { amPm, hour, minute ->
-            "$amPm $hour : ${String.format("%02d", minute)}"
+    private var dateResultFormatter: DateResultFormatter =
+        DateResultFormatter { _, month, day ->
+            "${String.format("%02d", month)}.${String.format("%02d", day)}"
+        }
+
+    private var timeResultFormatter: TimeResultFormatter =
+        TimeResultFormatter { amPm, hour, minute ->
+            "$amPm ${String.format("%02d", hour)} : ${String.format("%02d", minute)}"
         }
 
     @JvmStatic
-    fun setDateTitleFormatter(formatter: DateTitleFormatter) {
-        this.dateTitleFormatter = formatter
+    fun setMonthTitleFormatter(formatter: MonthTitleFormatter) {
+        this.monthTitleFormatter = formatter
     }
 
     @JvmStatic
-    fun setTimeTitleFormatter(formatter: TimeTitleFormatter) {
-        this.timeTitleFormatter = formatter
+    fun setDateResultFormatter(formatter: DateResultFormatter) {
+        this.dateResultFormatter = formatter
+    }
+
+    @JvmStatic
+    fun setTimeResultFormatter(formatter: TimeResultFormatter) {
+        this.timeResultFormatter = formatter
     }
 
     @JvmStatic
     fun formatDateTitle(year: Int, month: Int): String {
-        return dateTitleFormatter.onChangeTitle(year, month)
+        return monthTitleFormatter.onTitleChanged(year, month)
     }
 
     @JvmStatic
-    fun formatTimeTitle(amPm: String, hour: Int, minute: Int): String {
-        return timeTitleFormatter.onChangeTitle(amPm, hour, minute)
+    fun formatDateResult(year: Int, month: Int, day: Int): String {
+        return dateResultFormatter.onResultChanged(year, month, day)
+    }
+
+    @JvmStatic
+    fun formatTimeResult(amPm: String, hour: Int, minute: Int): String {
+        return timeResultFormatter.onResultChanged(amPm, hour, minute)
     }
 }

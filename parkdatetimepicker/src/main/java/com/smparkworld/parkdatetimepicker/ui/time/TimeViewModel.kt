@@ -2,19 +2,23 @@ package com.smparkworld.parkdatetimepicker.ui.time
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import com.smparkworld.parkdatetimepicker.extension.updateAssign
+import androidx.lifecycle.SavedStateHandle
+import com.smparkworld.parkdatetimepicker.core.DefaultOption
 import com.smparkworld.parkdatetimepicker.model.TimeResult
-import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
-import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
+import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.extras
+import com.smparkworld.parkdatetimepicker.ui.time.model.TimeExtras
 import com.smparkworld.parkdatetimepicker.ui.time.model.TimeUiModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 internal class TimeViewModel(
-    private val timeUiModelConverter: TimeUiModelConverter = TimeUiModelConverter()
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+    private val extras: TimeExtras by extras(savedStateHandle)
+
+    private val timeUiModelConverter: TimeUiModelConverter = TimeUiModelConverter()
 
     private val _selectedTime = MutableLiveData<TimeResult>()
     val selectedTime: LiveData<TimeResult> get() = _selectedTime
@@ -22,42 +26,54 @@ internal class TimeViewModel(
     private val _selectedTimeUiModel = MutableLiveData<TimeUiModel>()
     val selectedTimeUiModel: LiveData<TimeUiModel> get() = _selectedTimeUiModel
 
-    val selectedTimeTitle: LiveData<String> get() = Transformations.map(_selectedTimeUiModel) {
-        FormatArgumentApplier.formatTimeTitle(it.amPm, it.hour, it.minute)
-    }
+    private val _amPmTexts = MutableLiveData<List<String>>()
+    val amPmTexts: LiveData<List<String>> get() = _amPmTexts
 
     init {
+        initArguments()
         initCurrentTime()
     }
 
-    fun onClickDone() {
-        _selectedTimeUiModel.value?.let { uiModel ->
-            _selectedTime.value = timeUiModelConverter.convertToSelectedTime(uiModel)
+    fun onViewInitialized() {
+        _selectedTimeUiModel.value?.let { model ->
+            _selectedTime.value = timeUiModelConverter.convertToSelectedTime(model)
         }
     }
 
     fun onChangeValue(amPm: String? = null, hour: Int? = null, minute: Int? = null) {
-        _selectedTimeUiModel.updateAssign {
-            if (amPm != null) it.amPm = amPm
-            if (hour != null) it.hour = hour
-            if (minute != null) it.minute = minute
-        }
+        val newSelectedTime = _selectedTimeUiModel.value?.let { oldModel ->
+            oldModel.copy(
+                amPm = amPm ?: oldModel.amPm,
+                hour = hour ?: oldModel.hour,
+                minute = minute ?: oldModel.minute
+            )
+        } ?: return
+        _selectedTime.value = timeUiModelConverter.convertToSelectedTime(newSelectedTime)
+        _selectedTimeUiModel.value = newSelectedTime
+    }
+
+    fun onResetClicked() {
+        initCurrentTime()
+    }
+
+    private fun initArguments() {
+        _amPmTexts.value = extras.amPmTexts.takeIf { it.size == 2 } ?: DefaultOption.AM_PM
     }
 
     private fun initCurrentTime() {
-        val formatter = SimpleDateFormat("hh:mm", Locale.KOREA)
-        val (hour, minute) = formatter.format(System.currentTimeMillis()).split(":").map { it.toInt() }
-        val currentTime = if (hour > 12) {
+        val formatter = SimpleDateFormat("a:hh:mm", Locale.ENGLISH)
+        val (amPm, hour, minute) = formatter.format(System.currentTimeMillis()).split(":")
+        val currentTime = if (amPm.uppercase() == "AM") {
             TimeResult(
-                amPm = TextArgumentApplier.getPmText(),
-                hour = hour - 12,
-                minute = minute
+                amPm = extras.am ?: DefaultOption.AM,
+                hour = hour.toInt(),
+                minute = minute.toInt()
             )
         } else {
             TimeResult(
-                amPm = TextArgumentApplier.getAmText(),
-                hour = hour,
-                minute = minute
+                amPm = extras.pm ?: DefaultOption.PM,
+                hour = hour.toInt(),
+                minute = minute.toInt()
             )
         }
         _selectedTimeUiModel.value = timeUiModelConverter.convertToTimeUiModel(currentTime)

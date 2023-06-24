@@ -1,6 +1,6 @@
-package com.smparkworld.parkdatetimepicker.ui.datetime
+package com.smparkworld.parkdatetimepicker.ui.datetime.navigator
 
-import android.view.View
+import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import com.smparkworld.parkdatetimepicker.ui.datetime.model.Phase
@@ -14,13 +14,11 @@ internal interface DateTimeFragmentNavigator {
 
 internal interface PhaseTransaction {
 
+    fun setArguments(args: Bundle?): PhaseTransaction
+
     fun addOldPhase(oldPhase: Phase): PhaseTransaction
 
     fun addNewPhase(newPhase: Phase): PhaseTransaction
-
-    fun addOldPhaseHeaderView(oldHeaderView: View?): PhaseTransaction
-
-    fun addNewPhaseHeaderView(newHeaderView: View?): PhaseTransaction
 
     fun addOnDone(callback: () -> Unit): PhaseTransaction
 

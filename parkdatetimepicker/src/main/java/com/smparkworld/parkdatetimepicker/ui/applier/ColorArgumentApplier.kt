@@ -1,10 +1,14 @@
 package com.smparkworld.parkdatetimepicker.ui.applier
 
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.os.Build
 import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import com.smparkworld.parkdatetimepicker.ui.common.CircleButton
+import com.smparkworld.parkdatetimepicker.ui.common.RoundedButton
+
 
 internal object ColorArgumentApplier {
 
@@ -15,12 +19,12 @@ internal object ColorArgumentApplier {
     private var highLightColorInt: Int? = null
 
     @JvmStatic
-    fun setPrimaryColor(@ColorInt colorInt: Int) {
+    fun setPrimaryColorInt(@ColorInt colorInt: Int) {
         primaryColorInt = colorInt
     }
 
     @JvmStatic
-    fun setHighLightColor(@ColorInt colorInt: Int) {
+    fun setHighLightColorInt(@ColorInt colorInt: Int) {
         highLightColorInt = colorInt
     }
 
@@ -46,9 +50,16 @@ internal object ColorArgumentApplier {
     }
 
     @JvmStatic
-    fun applyPrimaryColor(view: CircleButton) {
-        primaryColorInt?.let {
-            view.setBackgroundColor(it)
+    fun applyPrimaryColor(view: RoundedButton) {
+        primaryColorInt?.let { color ->
+            if (view.textColors == ColorStateList.valueOf(Color.WHITE)) {
+                view.setFillColor(color)
+            } else {
+                view.setTextColor(color)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.compoundDrawableTintList = ColorStateList.valueOf(color)
+                }
+            }
         }
     }
 
@@ -56,6 +67,15 @@ internal object ColorArgumentApplier {
     fun applyPrimaryColor(view: ImageView) {
         primaryColorInt?.let {
             view.imageTintList = ColorStateList.valueOf(it)
+        }
+    }
+
+    @JvmStatic
+    fun applyPrimaryColor(view: NumberPicker) {
+        primaryColorInt?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                view.textColor = it
+            }
         }
     }
 

@@ -21,7 +21,7 @@
             app:layout_constraintBottom_toBottomOf="@id/done"
             tools:text="1월 5일 오후 7 : 15"/>
 
-        <com.smparkworld.parkdatetimepicker.ui.common.CircleButton
+        <com.smparkworld.parkdatetimepicker.ui.common.RoundedButton
             android:id="@+id/done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
