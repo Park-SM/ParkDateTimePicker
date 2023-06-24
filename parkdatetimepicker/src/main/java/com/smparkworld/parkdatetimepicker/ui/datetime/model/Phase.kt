@@ -1,5 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.datetime.model
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.smparkworld.parkdatetimepicker.ui.date.DateFragment
 import com.smparkworld.parkdatetimepicker.ui.datetime.DateTimeFragment
@@ -14,11 +15,11 @@ internal enum class Phase(
     TIME(TimeFragment::class),
     DONE(Nothing::class);
 
-    fun createFragment(): Fragment? {
+    fun createFragment(args: Bundle? = null): Fragment? {
         return when(this.fragment) {
-            DateTimeFragment::class -> DateTimeFragment()
-            DateFragment::class -> DateFragment()
-            TimeFragment::class -> TimeFragment()
+            DateTimeFragment::class -> DateTimeFragment().apply { arguments = args }
+            DateFragment::class -> DateFragment().apply { arguments = args }
+            TimeFragment::class -> TimeFragment().apply { arguments = args }
             else -> null
         }
     }

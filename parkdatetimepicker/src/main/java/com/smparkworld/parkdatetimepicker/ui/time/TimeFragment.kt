@@ -1,5 +1,6 @@
 package com.smparkworld.parkdatetimepicker.ui.time
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,7 @@ import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentTimeBinding
 import com.smparkworld.parkdatetimepicker.extension.parentViewModels
-import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
+import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.time.model.TimeUiModel
 
 internal class TimeFragment : Fragment() {
@@ -28,11 +29,10 @@ internal class TimeFragment : Fragment() {
     }
 
     private fun initViews(binding: PdtpFragmentTimeBinding) {
+        vm.onViewInitialized()
+
         binding.pickerAmPm.minValue = 0
         binding.pickerAmPm.maxValue = 1
-        binding.pickerAmPm.let {
-            TextArgumentApplier.applyAmPmTexts(it)
-        }
         binding.pickerAmPm.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         binding.pickerAmPm.setOnValueChangedListener { picker, _, value ->
             vm.onChangeValue(amPm = picker.displayedValues.getOrNull(value))
@@ -53,16 +53,23 @@ internal class TimeFragment : Fragment() {
         binding.pickerMinute.setOnValueChangedListener { _, _, value ->
             vm.onChangeValue(minute = value)
         }
+
+        ColorArgumentApplier.applyPrimaryColor(binding.pickerAmPm)
+        ColorArgumentApplier.applyPrimaryColor(binding.pickerHour)
+        ColorArgumentApplier.applyPrimaryColor(binding.pickerMinute)
     }
 
     private fun initObservers(binding: PdtpFragmentTimeBinding) {
+        vm.amPmTexts.observe(viewLifecycleOwner) { texts ->
+            binding.pickerAmPm.displayedValues = texts.toTypedArray()
+        }
         vm.selectedTimeUiModel.observe(viewLifecycleOwner) { uiModel ->
             applyTimeValues(binding, uiModel)
         }
     }
 
     private fun applyTimeValues(binding: PdtpFragmentTimeBinding, uiModel: TimeUiModel) {
-        val newValueIndex = binding.pickerAmPm.displayedValues.indexOf(uiModel.amPm)
+        val newValueIndex = binding.pickerAmPm.displayedValues?.indexOf(uiModel.amPm) ?: return
         if (binding.pickerAmPm.value != newValueIndex) {
             binding.pickerAmPm.value = newValueIndex
         }

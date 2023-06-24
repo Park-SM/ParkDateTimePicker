@@ -1,9 +1,9 @@
 package com.smparkworld.parkdatetimepicker
 
-import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
-import com.smparkworld.parkdatetimepicker.model.formatter.DateTitleFormatter
-import com.smparkworld.parkdatetimepicker.model.formatter.TimeTitleFormatter
+import androidx.annotation.ColorInt
+import com.smparkworld.parkdatetimepicker.model.formatter.DateResultFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.MonthTitleFormatter
+import com.smparkworld.parkdatetimepicker.model.formatter.TimeResultFormatter
 import com.smparkworld.parkdatetimepicker.model.listener.DateListener
 import com.smparkworld.parkdatetimepicker.model.listener.DateTimeListener
 import com.smparkworld.parkdatetimepicker.model.listener.TimeListener
@@ -18,25 +18,23 @@ interface ParkDateTimePickerBuilder {
 
     fun setTitle(title: String): ParkDateTimePickerBuilder
 
-    fun setTitle(@StringRes titleResId: Int): ParkDateTimePickerBuilder
-
     fun setDayOfWeekTexts(texts: Array<String>): ParkDateTimePickerBuilder
 
-    fun setTimeDoneText(text: String): ParkDateTimePickerBuilder
+    fun setResetText(text: String): ParkDateTimePickerBuilder
+
+    fun setDoneText(text: String): ParkDateTimePickerBuilder
 
     fun setAmPmTexts(texts: Array<String>): ParkDateTimePickerBuilder
 
-    fun setPrimaryColor(colorCode: String): ParkDateTimePickerBuilder
+    fun setPrimaryColorInt(@ColorInt colorInt: Int): ParkDateTimePickerBuilder
 
-    fun setPrimaryColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
+    fun setHighLightColorInt(@ColorInt colorInt: Int): ParkDateTimePickerBuilder
 
-    fun setHighLightColor(colorCode: String): ParkDateTimePickerBuilder
+    fun setMonthTitleFormatter(formatter: MonthTitleFormatter): ParkDateTimePickerBuilder
 
-    fun setHighLightColor(@ColorRes colorResId: Int): ParkDateTimePickerBuilder
+    fun setDateResultFormatter(formatter: DateResultFormatter): ParkDateTimePickerBuilder
 
-    fun setDateTitleFormatter(formatter: DateTitleFormatter): ParkDateTimePickerBuilder
-
-    fun setTimeTitleFormatter(formatter: TimeTitleFormatter): ParkDateTimePickerBuilder
+    fun setTimeResultFormatter(formatter: TimeResultFormatter): ParkDateTimePickerBuilder
 
     fun show()
 }

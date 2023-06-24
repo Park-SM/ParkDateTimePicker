@@ -12,5 +12,15 @@ internal interface DateTimeModeNavigator {
 
     fun setDoneListener(listener: BaseListener)
 
-    fun getNextPhase(selectedDate: DateResult? = null, selectedTime: TimeResult? = null): PhaseTransactionData
+    fun getNextPhase(
+        selectedDate: DateResult? = null,
+        selectedTime: TimeResult? = null
+    ): PhaseTransactionData
+
+    fun resetPhase(): PhaseTransactionData
+
+    fun isValidPhase(
+        selectedDate: DateResult? = null,
+        selectedTime: TimeResult? = null
+    ): Boolean
 }

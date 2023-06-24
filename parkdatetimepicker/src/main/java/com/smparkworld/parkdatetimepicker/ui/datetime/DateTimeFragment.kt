@@ -1,11 +1,12 @@
 package com.smparkworld.parkdatetimepicker.ui.datetime
 
-import android.graphics.Color
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.core.ExtraKey
@@ -13,10 +14,10 @@ import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentDatetimeBindin
 import com.smparkworld.parkdatetimepicker.extension.viewModels
 import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
 import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
-import com.smparkworld.parkdatetimepicker.ui.applier.TextArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.date.DateViewModel
-import com.smparkworld.parkdatetimepicker.ui.date.model.CalendarControlEvent
 import com.smparkworld.parkdatetimepicker.ui.datetime.model.Phase
+import com.smparkworld.parkdatetimepicker.ui.datetime.navigator.DateTimeFragmentNavigator
+import com.smparkworld.parkdatetimepicker.ui.datetime.navigator.DateTimeFragmentNavigatorImpl
 import com.smparkworld.parkdatetimepicker.ui.time.TimeViewModel
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
@@ -43,6 +44,13 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
+            behavior.skipCollapsed = true
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+    }
+
     override fun getTheme(): Int {
         return R.style.PDTP_BottomSheetDialogTheme
     }
@@ -54,100 +62,58 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     private fun initArguments(binding: PdtpFragmentDatetimeBinding) {
         vm.setDoneListener(listener)
 
-        arguments?.getString(ExtraKey.EXTRA_PRIMARY_COLOR_CODE)?.let {
-            ColorArgumentApplier.setPrimaryColor(Color.parseColor(it))
+        arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_INT, DEFAULT_INT)?.takeIf { it != DEFAULT_INT }?.let {
+            ColorArgumentApplier.setPrimaryColorInt(it)
         }
-        arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_RES_ID, -1)?.let {
-            if (it > 0) ColorArgumentApplier.setPrimaryColor(ContextCompat.getColor(requireContext(), it))
-        }
-        arguments?.getString(ExtraKey.EXTRA_HIGHLIGHT_COLOR_CODE)?.let {
-            ColorArgumentApplier.setHighLightColor(Color.parseColor(it))
-        }
-        arguments?.getInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_RES_ID, -1)?.let {
-            if (it > 0) ColorArgumentApplier.setHighLightColor(ContextCompat.getColor(requireContext(), it))
-        }
-        arguments?.getString(ExtraKey.EXTRA_TITLE)?.let {
-            TextArgumentApplier.setTitle(it)
-        }
-        arguments?.getStringArray(ExtraKey.EXTRA_DAY_OF_WEEK_TEXTS)?.let {
-            TextArgumentApplier.setDayOfWeekTexts(it)
-        }
-        arguments?.getString(ExtraKey.EXTRA_TIME_DONE_TEXT)?.let {
-            TextArgumentApplier.setTimeDoneText(it)
-        }
-        arguments?.getStringArray(ExtraKey.EXTRA_AM_PM_TEXTS)?.let {
-            TextArgumentApplier.setAmPmTexts(it)
-        }
-        arguments?.getInt(ExtraKey.EXTRA_TITLE_RES_ID, -1)?.let {
-            if (it > 0) binding.title.setText(it)
+        arguments?.getInt(ExtraKey.EXTRA_HIGHLIGHT_COLOR_INT, DEFAULT_INT)?.takeIf { it != DEFAULT_INT }?.let {
+            ColorArgumentApplier.setHighLightColorInt(it)
         }
     }
     
     private fun initViews(binding: PdtpFragmentDatetimeBinding) {
         navigator.clearFragments(childFragmentManager)
 
-        binding.layoutDateHeader.btnPrev.setOnClickListener {
-            dateVm.onClickCalendarControl(CalendarControlEvent.PrevPage)
+        binding.reset.setOnClickListener {
+            navigator.clearFragments(childFragmentManager)
+            vm.onResetClicked()
+            timeVm.onResetClicked()
         }
-        binding.layoutDateHeader.btnNext.setOnClickListener {
-            dateVm.onClickCalendarControl(CalendarControlEvent.NextPage)
-        }
-        binding.layoutTimeHeader.done.setOnClickListener {
-            timeVm.onClickDone()
+        binding.done.setOnClickListener {
+            vm.onDoneClicked()
         }
 
         ColorArgumentApplier.applyPrimaryColor(binding.title)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.title)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.btnPrev)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.btnNext)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.sun)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.mon)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.tue)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.wed)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.thu)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.fri)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutDateHeader.sat)
-        ColorArgumentApplier.applyPrimaryColor(binding.layoutTimeHeader.done)
-        ColorArgumentApplier.applyHighLightColor(binding.layoutTimeHeader.title)
-
-        TextArgumentApplier.applyTitle(binding.title)
-        TextArgumentApplier.applyDayOfWeekTexts(binding.layoutDateHeader)
-        TextArgumentApplier.applyTimeDoneText(binding.layoutTimeHeader)
+        ColorArgumentApplier.applyPrimaryColor(binding.reset)
+        ColorArgumentApplier.applyPrimaryColor(binding.done)
+        ColorArgumentApplier.applyHighLightColor(binding.result)
     }
 
     private fun initObservers(binding: PdtpFragmentDatetimeBinding) {
+        vm.viewState.observe(viewLifecycleOwner) { state ->
+            binding.state = state
+        }
         vm.phase.observe(viewLifecycleOwner) { phaseData ->
-            navigateFragment(binding, phaseData.oldPhase, phaseData.newPhase)
+            navigateFragment(phaseData.oldPhase, phaseData.newPhase)
         }
         dateVm.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
             vm.onSelectDate(selectedDate)
         }
-        dateVm.selectedDateTitle.observe(viewLifecycleOwner) { title ->
-            binding.layoutDateHeader.title.text = title
-        }
         timeVm.selectedTime.observe(viewLifecycleOwner) { selectedTime ->
             vm.onSelectTime(selectedTime)
         }
-        timeVm.selectedTimeTitle.observe(viewLifecycleOwner) { title ->
-            binding.layoutTimeHeader.title.text = title
-        }
     }
 
-    private fun navigateFragment(binding: PdtpFragmentDatetimeBinding, oldPhase: Phase, newPhase: Phase) {
+    private fun navigateFragment(oldPhase: Phase, newPhase: Phase) {
         navigator.beginTransaction()
+            .setArguments(arguments)
             .addOldPhase(oldPhase)
             .addNewPhase(newPhase)
-            .addOldPhaseHeaderView(getHeaderViewByPhase(binding, oldPhase))
-            .addNewPhaseHeaderView(getHeaderViewByPhase(binding, newPhase))
             .addOnDone(::dismiss)
             .commit(R.id.fragment_container, childFragmentManager)
     }
 
-    private fun getHeaderViewByPhase(binding: PdtpFragmentDatetimeBinding, phase: Phase): View? {
-        return when (phase) {
-            Phase.DATE -> binding.layoutDateHeader.root
-            Phase.TIME -> binding.layoutTimeHeader.root
-            else -> null
-        }
+    companion object {
+
+        private const val DEFAULT_INT = -971205
     }
 }

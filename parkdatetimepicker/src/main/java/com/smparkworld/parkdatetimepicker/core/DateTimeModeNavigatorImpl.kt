@@ -80,6 +80,43 @@ internal class DateTimeModeNavigatorImpl(
         }
     }
 
+    override fun resetPhase(): PhaseTransactionData {
+        selectedDates.clear()
+        selectedTimes.clear()
+        currentPhase = Phase.INIT
+        return getNextPhase()
+    }
+
+    override fun isValidPhase(
+        selectedDate: DateResult?,
+        selectedTime: TimeResult?
+    ): Boolean {
+        return when(mode) {
+            DateTimeMode.DATETIME -> {
+                when(currentPhase) {
+                    Phase.INIT -> true
+                    Phase.DATE -> (selectedDate != null)
+                    Phase.TIME -> (selectedTime != null)
+                    else -> false
+                }
+            }
+            DateTimeMode.DATE -> {
+                when (currentPhase) {
+                    Phase.INIT -> true
+                    Phase.DATE -> (selectedDate != null)
+                    else -> false
+                }
+            }
+            DateTimeMode.TIME -> {
+                when (currentPhase) {
+                    Phase.INIT -> true
+                    Phase.TIME -> (selectedTime != null)
+                    else -> false
+                }
+            }
+        }
+    }
+
     private fun assertInitialized() {
         if (!::mode.isInitialized) {
             throw IllegalStateException(ERROR_NOT_INITIALIZED)

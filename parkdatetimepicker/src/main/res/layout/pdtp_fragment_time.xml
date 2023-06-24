@@ -6,6 +6,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/header"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:background="@color/pdtp_white"
+            android:elevation="3dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <NumberPicker
             android:id="@+id/picker_am_pm"
             android:layout_width="80dp"

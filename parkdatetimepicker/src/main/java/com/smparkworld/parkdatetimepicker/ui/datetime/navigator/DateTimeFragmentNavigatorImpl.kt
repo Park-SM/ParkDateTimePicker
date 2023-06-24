@@ -1,6 +1,6 @@
-package com.smparkworld.parkdatetimepicker.ui.datetime
+package com.smparkworld.parkdatetimepicker.ui.datetime.navigator
 
-import android.view.View
+import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -21,20 +21,19 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
                 transaction.remove(fragment)
             }
         }
-        transaction.commitAllowingStateLoss()
+        transaction.commitNowAllowingStateLoss()
     }
 
-    private fun navigateTransaction(transaction: PhaseTransactionInternal, manager: FragmentManager, @IdRes containerId: Int) {
+    private fun navigateTransaction(
+        transaction: PhaseTransactionInternal,
+        manager: FragmentManager,
+        @IdRes containerId: Int,
+        arguments: Bundle?
+    ) {
         if (checkDonePhase(transaction, manager)) return
 
         val oldFragment = manager.findFragmentByTag(transaction.oldPhase.getFragmentTag())
         val newFragment = manager.findFragmentByTag(transaction.newPhase.getFragmentTag())
-
-        navigateHeaderTransaction(
-            oldHeaderView = transaction.oldHeaderView,
-            newHeaderView = transaction.newHeaderView,
-            withAnimation = (oldFragment == null || newFragment == null)
-        )
 
         commitFragmentTransaction(manager) { fragmentTransaction ->
             when {
@@ -48,7 +47,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
                         .show(newFragment)
                 }
                 (oldFragment != null && newFragment == null) -> {
-                    transaction.newPhase.createFragment()?.let { fragment ->
+                    transaction.newPhase.createFragment(arguments)?.let { fragment ->
                         fragmentTransaction
                             .hide(oldFragment)
                             .add(containerId, fragment, transaction.newPhase.getFragmentTag())
@@ -56,7 +55,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
                     }
                 }
                 (oldFragment == null && newFragment == null) -> {
-                    transaction.newPhase.createFragment()?.let { fragment ->
+                    transaction.newPhase.createFragment(arguments)?.let { fragment ->
                         fragmentTransaction
                             .add(containerId, fragment, transaction.newPhase.getFragmentTag())
                             .show(fragment)
@@ -77,63 +76,6 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
             .commitAllowingStateLoss()
     }
 
-    private fun navigateHeaderTransaction(oldHeaderView: View?, newHeaderView: View?, withAnimation: Boolean) {
-        when {
-            (oldHeaderView != null && newHeaderView != null) -> {
-                if (withAnimation) {
-                    hideHeaderView(oldHeaderView)
-                    showHeaderView(newHeaderView)
-                } else {
-                    setHeaderViewVisibility(oldHeaderView, false)
-                    setHeaderViewVisibility(newHeaderView, true)
-                }
-            }
-            (oldHeaderView == null && newHeaderView != null) -> {
-                setHeaderViewVisibility(newHeaderView, true)
-            }
-            (oldHeaderView != null && newHeaderView == null) -> {
-                if (withAnimation) {
-                    hideHeaderView(oldHeaderView)
-                } else {
-                    setHeaderViewVisibility(oldHeaderView, false)
-                }
-            }
-        }
-    }
-
-    private fun hideHeaderView(headerView: View, callback: (() -> Unit)? = null) {
-        headerView.alpha = 1f
-        headerView.animate()
-            .alphaBy(1f)
-            .alpha(0f)
-            .withEndAction {
-                headerView.visibility = View.GONE
-                callback?.invoke()
-            }
-            .duration = DURATION
-    }
-
-    private fun showHeaderView(headerView: View) {
-        headerView.alpha = 0f
-        headerView.animate()
-            .alphaBy(0f)
-            .alpha(1f)
-            .withStartAction {
-                headerView.visibility = View.VISIBLE
-            }
-            .duration = DURATION
-    }
-
-    private fun setHeaderViewVisibility(view: View, isVisible: Boolean) {
-        if (isVisible) {
-            view.alpha = 1f
-            view.visibility = View.VISIBLE
-        } else {
-            view.alpha = 0f
-            view.visibility = View.GONE
-        }
-    }
-
     private fun checkDonePhase(transaction: PhaseTransactionInternal, manager: FragmentManager): Boolean {
         if (transaction.newPhase == Phase.DONE) {
             clearFragments(manager)
@@ -144,7 +86,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
     }
 
     private class PhaseTransactionInternal(
-        private val onCommit: (transaction: PhaseTransactionInternal, manager: FragmentManager, containerId: Int) -> Unit
+        private val onCommit: (transaction: PhaseTransactionInternal, manager: FragmentManager, containerId: Int, arguments: Bundle?) -> Unit
     ) : PhaseTransaction {
 
         lateinit var oldPhase: Phase
@@ -153,14 +95,16 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
         lateinit var newPhase: Phase
             private set
 
-        var oldHeaderView: View? = null
-            private set
-
-        var newHeaderView: View? = null
+        var arguments: Bundle? = null
             private set
 
         var onDone: (() -> Unit)? = null
             private set
+
+        override fun setArguments(args: Bundle?): PhaseTransaction {
+            this.arguments = args
+            return this
+        }
 
         override fun addOldPhase(oldPhase: Phase): PhaseTransaction {
             this.oldPhase = oldPhase
@@ -172,16 +116,6 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
             return this
         }
 
-        override fun addOldPhaseHeaderView(oldHeaderView: View?): PhaseTransaction {
-            this.oldHeaderView = oldHeaderView
-            return this
-        }
-
-        override fun addNewPhaseHeaderView(newHeaderView: View?): PhaseTransaction {
-            this.newHeaderView = newHeaderView
-            return this
-        }
-
         override fun addOnDone(callback: () -> Unit): PhaseTransaction {
             this.onDone = callback
             return this
@@ -189,7 +123,7 @@ internal class DateTimeFragmentNavigatorImpl : DateTimeFragmentNavigator {
 
         override fun commit(@IdRes containerId: Int, manager: FragmentManager) {
             checkValidation()
-            onCommit.invoke(this, manager, containerId)
+            onCommit.invoke(this, manager, containerId, arguments)
         }
 
         private fun checkValidation() {

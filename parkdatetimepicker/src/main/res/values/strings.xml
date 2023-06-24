@@ -8,6 +8,8 @@
     <string name="pdtp_label_fri">금</string>
     <string name="pdtp_label_sat">토</string>
     <string name="pdtp_label_sun">일</string>
+    <string name="pdtp_label_done">선택 완료</string>
+    <string name="pdtp_label_reset">초기화</string>
 
     <string name="pdtp_time_divider">:</string>
 </resources>
