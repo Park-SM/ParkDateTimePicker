@@ -52,11 +52,11 @@ internal class DateViewModel(
         initWeekParams()
     }
 
-    fun onScrollMode(isScrollMode: Boolean) {
+    fun setScrollMode(isScrollMode: Boolean) {
         _isScrollMode.value = isScrollMode
     }
 
-    fun onScrollMonth(position: Int) {
+    fun onMonthScrolled(position: Int) {
         _monthPosition.value = position
     }
 

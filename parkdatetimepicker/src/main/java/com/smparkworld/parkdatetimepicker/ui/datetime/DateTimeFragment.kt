@@ -12,8 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.smparkworld.parkdatetimepicker.R
 import com.smparkworld.parkdatetimepicker.core.ExtraKey
 import com.smparkworld.parkdatetimepicker.databinding.PdtpFragmentDatetimeBinding
-import com.smparkworld.parkdatetimepicker.extension.toDp
-import com.smparkworld.parkdatetimepicker.extension.toPx
 import com.smparkworld.parkdatetimepicker.extension.viewModels
 import com.smparkworld.parkdatetimepicker.model.listener.BaseListener
 import com.smparkworld.parkdatetimepicker.ui.applier.ColorArgumentApplier
@@ -127,7 +125,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
 
                     if (dialogHeightCurrentDP < dialogHeightMaxDP) {
                         params.height = (contentHeightMaxDP - (dialogHeightMaxDP - dialogHeightCurrentDP))
-                        dateVm.onScrollMode(true)
+                        dateVm.setScrollMode(true)
                     }
                 }
                 binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)

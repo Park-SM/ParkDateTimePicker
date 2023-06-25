@@ -15,9 +15,6 @@ internal fun <T> MutableCollection<T>.addIfNonNull(element: T?): Boolean {
     }
 }
 
-internal val Int.toDp: Int
-    get() = (this / Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-
 internal val Int.toPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
