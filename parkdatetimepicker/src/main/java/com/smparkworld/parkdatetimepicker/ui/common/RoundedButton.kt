@@ -36,10 +36,10 @@ internal class RoundedButton @JvmOverloads constructor(
 
     init {
         attrs?.let {
-            context.obtainStyledAttributes(it, R.styleable.RoundedButton).apply {
-                radius = getDimension(R.styleable.RoundedButton_radius, RADIUS.toPx.toFloat())
-                validFillColor = getColor(R.styleable.RoundedButton_fillColor, Color.TRANSPARENT)
-                invalidFillColor = getColor(R.styleable.RoundedButton_invalidFillColor, Color.TRANSPARENT)
+            context.obtainStyledAttributes(it, R.styleable.PDTP_RoundedButton).apply {
+                radius = getDimension(R.styleable.PDTP_RoundedButton_radius, RADIUS.toPx.toFloat())
+                validFillColor = getColor(R.styleable.PDTP_RoundedButton_fillColor, Color.TRANSPARENT)
+                invalidFillColor = getColor(R.styleable.PDTP_RoundedButton_invalidFillColor, Color.TRANSPARENT)
             }.recycle()
         }
     }
