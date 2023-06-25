@@ -120,13 +120,13 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     private fun handleMaxHeight(binding: PdtpFragmentDatetimeBinding) {
         binding.root.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                binding.fragmentContainer.layoutParams = binding.fragmentContainer.layoutParams.apply {
-                    val contentHeightMaxDP = 355
-                    val dialogHeightMaxDP = 480
-                    val dialogHeightCurrentDP = binding.root.height.toDp
+                binding.fragmentContainer.layoutParams = binding.fragmentContainer.layoutParams.also { params ->
+                    val contentHeightMaxDP = resources.getDimension(R.dimen.pdtp_view_content_max_height).toInt()
+                    val dialogHeightMaxDP = resources.getDimension(R.dimen.pdtp_view_bottom_sheet_max_height).toInt()
+                    val dialogHeightCurrentDP = binding.root.height
 
                     if (dialogHeightCurrentDP < dialogHeightMaxDP) {
-                        height = (contentHeightMaxDP - (dialogHeightMaxDP - dialogHeightCurrentDP)).toPx
+                        params.height = (contentHeightMaxDP - (dialogHeightMaxDP - dialogHeightCurrentDP))
                         dateVm.onScrollMode(true)
                     }
                 }
