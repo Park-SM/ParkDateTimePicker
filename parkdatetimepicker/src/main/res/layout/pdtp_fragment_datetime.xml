@@ -42,14 +42,20 @@
 
         <TextView
             android:id="@+id/result"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="25dp"
+            android:layout_marginStart="10dp"
             android:textColor="@color/pdtp_blue"
             android:text="@{state.result}"
             android:textSize="13dp"
             android:textStyle="bold"
+            android:gravity="end"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/title"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="12.05"/>
