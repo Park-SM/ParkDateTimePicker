@@ -15,6 +15,7 @@ internal class DateUiModelConverter {
                 id = from.id,
                 year = from.year,
                 month = from.month,
+                isSelected = false,
                 dayUiModels = from.days.map {
                     dayUiModel.convert(it)
                 }

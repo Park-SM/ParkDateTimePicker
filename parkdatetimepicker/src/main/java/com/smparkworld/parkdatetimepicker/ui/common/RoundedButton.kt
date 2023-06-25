@@ -16,7 +16,6 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.smparkworld.parkdatetimepicker.R
-import com.smparkworld.parkdatetimepicker.extension.toDp
 import com.smparkworld.parkdatetimepicker.extension.toPx
 
 

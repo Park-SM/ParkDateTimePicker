@@ -71,9 +71,9 @@ internal class DateFragment : Fragment() {
             binding.fri.text = weeks.getOrNull(5)
             binding.sat.text = weeks.getOrNull(6)
         }
-        vm.months.observe(viewLifecycleOwner) { monthsData ->
-            (binding.container.adapter as? DateMonthAdapter)?.submitList(monthsData.first)
-            binding.container.setCurrentItem(monthsData.second, false)
+        vm.months.observe(viewLifecycleOwner) { monthsInitModel ->
+            (binding.container.adapter as? DateMonthAdapter)?.submitList(monthsInitModel.months)
+            binding.container.setCurrentItem(monthsInitModel.initPosition, false)
         }
         vm.monthPosition.observe(viewLifecycleOwner) { position ->
             if (binding.container.currentItem != position) {

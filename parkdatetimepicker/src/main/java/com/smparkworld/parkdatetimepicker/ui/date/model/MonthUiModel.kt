@@ -10,6 +10,8 @@ internal data class MonthUiModel(
 
     val month: Int,
 
+    var isSelected: Boolean,
+
     var dayUiModels: List<DayUiModel>,
 
 ) : UiModel

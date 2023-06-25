@@ -10,6 +10,7 @@ import com.smparkworld.parkdatetimepicker.data.DateRepository
 import com.smparkworld.parkdatetimepicker.data.DateRepositoryImpl
 import com.smparkworld.parkdatetimepicker.model.DateData
 import com.smparkworld.parkdatetimepicker.model.DateResult
+import com.smparkworld.parkdatetimepicker.model.MonthsInitModel
 import com.smparkworld.parkdatetimepicker.ui.applier.FormatArgumentApplier
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.extras
@@ -18,8 +19,6 @@ import com.smparkworld.parkdatetimepicker.ui.date.model.DateExtras
 import com.smparkworld.parkdatetimepicker.ui.date.model.DayUiModel
 import com.smparkworld.parkdatetimepicker.ui.date.model.MonthUiModel
 import kotlinx.coroutines.launch
-
-internal typealias MonthsData = Pair<List<MonthUiModel>, Int>
 
 internal class DateViewModel(
     savedStateHandle: SavedStateHandle
@@ -30,8 +29,8 @@ internal class DateViewModel(
     private val dateRepository: DateRepository = DateRepositoryImpl()
     private val dateUiModelConverter: DateUiModelConverter = DateUiModelConverter()
 
-    private val _dateData = MutableLiveData<DateData>()
-    val months: LiveData<MonthsData> get() = Transformations.map(_dateData, ::convertToMonthUiModels)
+    private val _dateData = MutableLiveData<MonthsInitModel>()
+    val months: LiveData<MonthsInitModel> get() = _dateData// Transformations.map(_dateData, ::convertToMonthUiModels)
 
     private val _selectedDate = MutableLiveData<DateResult>()
     val selectedDate: LiveData<DateResult> get() = _selectedDate
@@ -58,6 +57,7 @@ internal class DateViewModel(
 
     fun onMonthScrolled(position: Int) {
         _monthPosition.value = position
+        _dateData.value?.initPosition = position
     }
 
     fun onClickCalendarControl(event: CalendarControlEvent) {
@@ -101,7 +101,7 @@ internal class DateViewModel(
         if (_dateData.value != null) return
 
         viewModelScope.launch {
-            _dateData.value = dateRepository.getDateData(minYearDiff, maxYearDiff)
+            _dateData.value = convertToMonthsInitModel(dateRepository.getDateData(minYearDiff, maxYearDiff))
         }
     }
 
@@ -110,8 +110,11 @@ internal class DateViewModel(
             ?: DefaultOption.DAY_OF_WEEK
     }
 
-    private fun convertToMonthUiModels(dateData: DateData): MonthsData {
-        return (dateUiModelConverter.convertToMonthUiModel(dateData) to dateData.currentMonthPosition)
+    private fun convertToMonthsInitModel(dateData: DateData): MonthsInitModel {
+        return MonthsInitModel(
+            months = dateUiModelConverter.convertToMonthUiModel(dateData),
+            initPosition = dateData.currentMonthPosition
+        )
     }
 
     private fun getPrevPage(currentPage: Int?): Int? {

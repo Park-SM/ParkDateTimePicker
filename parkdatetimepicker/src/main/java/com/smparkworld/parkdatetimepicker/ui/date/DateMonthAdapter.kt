@@ -51,11 +51,10 @@ internal class DateMonthAdapter(
             oldDayUiModel.isSelected = false
             cachedDayAdapterMap[oldDayUiModel.monthId]?.notifyItemChanged(oldDayUiModel.position)
         }
-        selectedDayUiModel = dayUiModel
-
-        dayUiModel.isSelected = true
-        cachedDayAdapterMap[dayUiModel.monthId]?.notifyItemChanged(dayUiModel.position)
-
+        selectedDayUiModel = dayUiModel.also { newDayUiModel ->
+            newDayUiModel.isSelected = true
+            cachedDayAdapterMap[newDayUiModel.monthId]?.notifyItemChanged(newDayUiModel.position)
+        }
         items.find { it.id == dayUiModel.monthId }?.let { monthUiModel ->
             itemEventHandler.invoke(monthUiModel, dayUiModel)
         }
@@ -80,7 +79,6 @@ internal class DateMonthAdapter(
             }.also { newDayAdapter ->
                 binding.container.adapter = newDayAdapter
             }
-
             cachedDayAdapterMap[monthId] = adapter
             return adapter
         }
