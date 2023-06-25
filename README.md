@@ -1,6 +1,6 @@
 ![Generic badge](https://img.shields.io/badge/Platform-Android-green.svg)&nbsp;
 ![Generic badge](https://img.shields.io/badge/Repository-MavenCentral-blue.svg)&nbsp;
-![Generic badge](https://img.shields.io/badge/Version-v1.0.1-red.svg)&nbsp;
+![Generic badge](https://img.shields.io/badge/Version-v1.1.0-red.svg)&nbsp;
 ![Generic badge](https://img.shields.io/badge/License-Apache2.0-3DB7CC.svg)&nbsp;
 
 # ParkDateTimePicker
@@ -48,7 +48,7 @@ repositories {
 // build.gradle(:app)
 dependencies {
 
-    implementation "com.smparkworld.parkdatetimepicker:parkdatetimepicker:1.0.1"
+    implementation "com.smparkworld.parkdatetimepicker:parkdatetimepicker:1.1.0"
 }
 
 // ParkDateTimePicker use DataBinding.
@@ -77,15 +77,17 @@ ParkDateTimePicker.builder(this)
 ```kotlin
 ParkDateTimePicker.builder(this)
     .setTitle("Custom Title")
-    .setTitle(R.string.custom_title)
     .setDayOfWeekTexts(arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
-    .setDateTitleFormatter { year, month ->
+    .setResetText("Custom Reset")
+    .setDoneText("Custom Done")
+    .setPrimaryColorInt(ContextCompat.getColor(this, R.color.custom_primary))
+    .setHighLightColorInt(ContextCompat.getColor(this, R.color.custom_high_light))
+    .setMonthTitleFormatter { year, month ->
         "${year}-${String.format("%02d", month)}"
     }
-    .setPrimaryColor("#FF0000")
-    .setPrimaryColor(R.color.red)
-    .setHighLightColor("#00FF00")
-    .setHighLightColor(R.color.green)
+    .setDateResultFormatter { year, month, day ->
+        "${year}-${String.format("%02d", month)}-${String.format("%02d", day)}"
+    }
     .setDateListener { date ->
         ....
     }
@@ -109,16 +111,14 @@ ParkDateTimePicker.builder(this)
 ```kotlin
 ParkDateTimePicker.builder(this)
     .setTitle("Custom Title")
-    .setTitle(R.string.custom_title)
     .setAmPmTexts(arrayOf("CustomAM", "CustomPM"))
-    .setTimeDoneText("Done!!")
-    .setTimeTitleFormatter { amPm, hour, minute ->
-        "$amPm ${hour}h ${minute}m"
+    .setResetText("Custom Reset")
+    .setDoneText("Custom Done")
+    .setPrimaryColorInt(ContextCompat.getColor(this, R.color.custom_primary))
+    .setHighLightColorInt(ContextCompat.getColor(this, R.color.custom_high_light))
+    .setTimeResultFormatter { amPm, hour, minute ->
+        "${amPm} ${String.format("%02d", hour)}h ${String.format("%02d", minute)}m"
     }
-    .setPrimaryColor("#FF0000")
-    .setPrimaryColor(R.color.red)
-    .setHighLightColor("#00FF00")
-    .setHighLightColor(R.color.green)
     .setTimeListener { time ->
         ....
     }
@@ -141,20 +141,21 @@ ParkDateTimePicker.builder(this)
 ```kotlin
 ParkDateTimePicker.builder(this)
     .setTitle("Custom Title")
-    .setTitle(R.string.custom_title)
-    .setAmPmTexts(arrayOf("CustomAM", "CustomPM"))
     .setDayOfWeekTexts(arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
-    .setTimeDoneText("Done!!")
-    .setDateTitleFormatter { year, month ->
+    .setAmPmTexts(arrayOf("CustomAM", "CustomPM"))
+    .setResetText("Custom Reset")
+    .setDoneText("Custom Done")
+    .setPrimaryColorInt(ContextCompat.getColor(this, R.color.custom_primary))
+    .setHighLightColorInt(ContextCompat.getColor(this, R.color.custom_high_light))
+    .setMonthTitleFormatter { year, month ->
         "${year}-${String.format("%02d", month)}"
     }
-    .setTimeTitleFormatter { amPm, hour, minute ->
-        "$amPm ${hour}h ${minute}m"
+    .setDateResultFormatter { year, month, day ->
+        "${year}-${String.format("%02d", month)}-${String.format("%02d", day)}"
     }
-    .setPrimaryColor("#FF0000")
-    .setPrimaryColor(R.color.red)
-    .setHighLightColor("#00FF00")
-    .setHighLightColor(R.color.green)
+    .setTimeResultFormatter { amPm, hour, minute ->
+        "${amPm} ${String.format("%02d", hour)}h ${String.format("%02d", minute)}m"
+    }
     .setDateTimeListener { dateTime ->
         ....
     }
