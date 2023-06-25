@@ -78,6 +78,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.reset.setOnClickListener {
             navigator.clearFragments(childFragmentManager)
             vm.onResetClicked()
+            dateVm.onResetClicked()
             timeVm.onResetClicked()
         }
         binding.done.setOnClickListener {
