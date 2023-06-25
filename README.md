@@ -25,13 +25,13 @@ Android library for selecting date and time from BottomSheet UI. **ParkDateTimeP
 
 ## # UI Design
 #### *DatePicker clip*
-https://user-images.githubusercontent.com/47319426/204150101-829a207e-6cf4-4cb1-a677-601ca03ca9b3.mp4
+https://github.com/Park-SM/ParkDateTimePicker/assets/47319426/426a9050-2552-4343-b25d-99deb7843c6d
 
 #### *TimePicker clip*
-https://user-images.githubusercontent.com/47319426/204150124-9e7ae320-ebf3-41d2-9b2e-cd9526c8dfbf.mp4
+https://github.com/Park-SM/ParkDateTimePicker/assets/47319426/88c98780-f1d8-403b-965f-3e2b385a5986
 
 #### *DateTimePicker clip*
-https://user-images.githubusercontent.com/47319426/204150160-ec3deaa6-bc2b-4689-800a-707daa7b6f29.mp4
+https://github.com/Park-SM/ParkDateTimePicker/assets/47319426/6bd073e7-666a-4769-87ab-d2ffc14f741c
 
 <br>
 
