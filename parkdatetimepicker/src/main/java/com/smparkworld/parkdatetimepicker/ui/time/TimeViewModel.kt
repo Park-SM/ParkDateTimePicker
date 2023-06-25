@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.smparkworld.parkdatetimepicker.core.DefaultOption
+import com.smparkworld.parkdatetimepicker.core.SingleLiveEvent
 import com.smparkworld.parkdatetimepicker.model.TimeResult
 import com.smparkworld.parkdatetimepicker.ui.base.BaseViewModel
 import com.smparkworld.parkdatetimepicker.ui.base.parser.extra.extras
@@ -20,7 +21,7 @@ internal class TimeViewModel(
 
     private val timeUiModelConverter: TimeUiModelConverter = TimeUiModelConverter()
 
-    private val _selectedTime = MutableLiveData<TimeResult>()
+    private val _selectedTime = SingleLiveEvent<TimeResult>()
     val selectedTime: LiveData<TimeResult> get() = _selectedTime
 
     private val _selectedTimeUiModel = MutableLiveData<TimeUiModel>()

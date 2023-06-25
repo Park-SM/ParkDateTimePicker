@@ -19,11 +19,15 @@ internal class DateTimeModeNavigatorImpl(
     private val selectedDates = mutableListOf<DateResult>()
     private val selectedTimes = mutableListOf<TimeResult>()
 
-    override fun init(mode: DateTimeMode, doneListener: BaseListener?): PhaseTransactionData {
+    override fun init(mode: DateTimeMode): PhaseTransactionData {
         this.mode = mode
-        listenerManager.init(mode, doneListener)
-
         return getNextPhase()
+    }
+
+    override fun setDoneListener(listener: BaseListener) {
+        assertInitialized()
+
+        listenerManager.init(mode, listener)
     }
 
     override fun getNextPhase(

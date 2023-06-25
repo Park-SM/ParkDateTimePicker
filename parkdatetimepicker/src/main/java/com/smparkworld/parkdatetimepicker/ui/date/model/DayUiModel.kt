@@ -12,7 +12,7 @@ internal data class DayUiModel(
 
     val isEmptyDay: Boolean,
 
-    var isSelected: Boolean = false,
+    var isSelected: Boolean,
 
     var position: Int = -1
 

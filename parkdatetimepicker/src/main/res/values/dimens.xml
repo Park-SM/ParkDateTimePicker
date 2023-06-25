@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="pdtp_view_circle_button_default_padding">8dp</dimen>
+    <dimen name="pdtp_view_bottom_sheet_max_height">480dp</dimen>
+    <dimen name="pdtp_view_content_max_height">355dp</dimen>
 </resources>

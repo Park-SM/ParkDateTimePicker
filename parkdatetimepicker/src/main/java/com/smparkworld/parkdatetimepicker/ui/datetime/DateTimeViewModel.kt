@@ -34,16 +34,17 @@ internal class DateTimeViewModel(
     private var selectedDate: DateResult? = null
     private var selectedTime: TimeResult? = null
 
-    fun init(listener: BaseListener?) {
-        _phase.value = navigator.init(
-            mode = extras.mode ?: DateTimeMode.DEFAULT_MODE,
-            doneListener = listener
-        )
+    init {
+        initialize()
+    }
+
+    fun setDoneListener(listener: BaseListener?) {
+        listener?.let(navigator::setDoneListener)
     }
 
     fun onResetClicked() {
         _phase.value = navigator.resetPhase()
-        
+
         selectedDate = null
         selectedTime = null
         updateValidation()
@@ -113,5 +114,11 @@ internal class DateTimeViewModel(
         }
 
         return stringBuilder.toString()
+    }
+
+    private fun initialize() {
+        _phase.value = navigator.init(
+            mode = extras.mode ?: DateTimeMode.DEFAULT_MODE
+        )
     }
 }

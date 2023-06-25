@@ -154,12 +154,10 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
             android:clipChildren="false"
             android:clipToPadding="false"

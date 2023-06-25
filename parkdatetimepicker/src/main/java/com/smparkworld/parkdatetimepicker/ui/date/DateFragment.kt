@@ -18,7 +18,7 @@ internal class DateFragment : Fragment() {
     private val viewPagerCallback by lazy {
         object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                vm.onScrollMonth(position)
+                vm.onMonthScrolled(position)
             }
         }
     }
@@ -71,14 +71,17 @@ internal class DateFragment : Fragment() {
             binding.fri.text = weeks.getOrNull(5)
             binding.sat.text = weeks.getOrNull(6)
         }
-        vm.months.observe(viewLifecycleOwner) { monthsData ->
-            (binding.container.adapter as? DateMonthAdapter)?.submitList(monthsData.first)
-            binding.container.setCurrentItem(monthsData.second, false)
+        vm.monthsInitModel.observe(viewLifecycleOwner) { monthsInitModel ->
+            (binding.container.adapter as? DateMonthAdapter)?.submitList(monthsInitModel.months)
+            binding.container.setCurrentItem(monthsInitModel.initPosition, false)
         }
         vm.monthPosition.observe(viewLifecycleOwner) { position ->
             if (binding.container.currentItem != position) {
                 binding.container.currentItem = position
             }
+        }
+        vm.isScrollMode.observe(viewLifecycleOwner) { isScrollMode ->
+            (binding.container.adapter as? DateMonthAdapter)?.setScrollMode(isScrollMode)
         }
     }
 }

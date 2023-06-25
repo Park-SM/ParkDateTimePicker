@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,6 +20,7 @@ import com.smparkworld.parkdatetimepicker.ui.datetime.model.Phase
 import com.smparkworld.parkdatetimepicker.ui.datetime.navigator.DateTimeFragmentNavigator
 import com.smparkworld.parkdatetimepicker.ui.datetime.navigator.DateTimeFragmentNavigatorImpl
 import com.smparkworld.parkdatetimepicker.ui.time.TimeViewModel
+
 
 internal class DateTimeFragment : BottomSheetDialogFragment() {
 
@@ -60,7 +62,7 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
     }
 
     private fun initArguments(binding: PdtpFragmentDatetimeBinding) {
-        vm.init(listener)
+        vm.setDoneListener(listener)
 
         arguments?.getInt(ExtraKey.EXTRA_PRIMARY_COLOR_INT, DEFAULT_INT)?.takeIf { it != DEFAULT_INT }?.let {
             ColorArgumentApplier.setPrimaryColorInt(it)
@@ -76,12 +78,14 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
         binding.reset.setOnClickListener {
             navigator.clearFragments(childFragmentManager)
             vm.onResetClicked()
+            dateVm.onResetClicked()
             timeVm.onResetClicked()
         }
         binding.done.setOnClickListener {
             vm.onDoneClicked()
         }
 
+        handleMaxHeight(binding)
         ColorArgumentApplier.applyPrimaryColor(binding.title)
         ColorArgumentApplier.applyPrimaryColor(binding.reset)
         ColorArgumentApplier.applyPrimaryColor(binding.done)
@@ -110,6 +114,24 @@ internal class DateTimeFragment : BottomSheetDialogFragment() {
             .addNewPhase(newPhase)
             .addOnDone(::dismiss)
             .commit(R.id.fragment_container, childFragmentManager)
+    }
+
+    private fun handleMaxHeight(binding: PdtpFragmentDatetimeBinding) {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.fragmentContainer.layoutParams = binding.fragmentContainer.layoutParams.also { params ->
+                    val contentHeightMaxDP = resources.getDimension(R.dimen.pdtp_view_content_max_height).toInt()
+                    val dialogHeightMaxDP = resources.getDimension(R.dimen.pdtp_view_bottom_sheet_max_height).toInt()
+                    val dialogHeightCurrentDP = binding.root.height
+
+                    if (dialogHeightCurrentDP < dialogHeightMaxDP) {
+                        params.height = (contentHeightMaxDP - (dialogHeightMaxDP - dialogHeightCurrentDP))
+                        dateVm.setScrollMode(true)
+                    }
+                }
+                binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
     }
 
     companion object {

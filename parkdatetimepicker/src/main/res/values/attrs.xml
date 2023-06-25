@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="RoundedButton">
+    <declare-styleable name="PDTP_RoundedButton">
         <attr name="radius" format="dimension" />
         <attr name="fillColor" format="color" />
         <attr name="invalidFillColor" format="color" />
